@@ -4,6 +4,10 @@
   box-sizing: border-box;
 }
 
+.displayBlock {
+  display: block;
+}
+
 .post__list {
   width: 100%;
   padding: 20px;
@@ -29,4 +33,15 @@
   width: 100%;
   display: flex;
   justify-content: space-between;
+}
+
+.mb-1 {
+  margin-bottom: 1rem;
+}
+.mb-2 {
+  margin-bottom: 2rem;
+}
+
+.mt-2 {
+  margin-top: 2rem;
 }
