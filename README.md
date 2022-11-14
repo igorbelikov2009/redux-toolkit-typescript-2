@@ -4,6 +4,8 @@
 
 ### `npm install @reduxjs/toolkit react-redux @types/react-redux` устанавливаем react-redux, redux-toolkit и связываем всё с TypeScript
 
+### `npm i @reduxjs/toolkit@1.6.1`
+
 1. Создаём папку store и в ней создаём файл store.ts и папку reducers.
 2. В папке hooks, в файле redux.ts создаём хуки, которые нам понадобятся для работы с редакс.
 3. В папке reducers создаём редюсеры.
