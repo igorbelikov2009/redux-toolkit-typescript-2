@@ -36,20 +36,16 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 // Для того, чтобы использовать redux-thunk, мы создавали функцию, которая принимает
 // аргументом dispatch и возвращает другую фунцию. Теперь мы можем воспользоваться
 // уже специальной надстройкой - фунцией createAsyncThunk(), которая это делает за нас.
-// Первым аргументом мы указываем название этого асинхронного танка, а вторым аргументом
-// передаём колбэк, внутри которого мы будем реализовывать какие-то действия, в нашем случае
+// Первым аргументом мы указываем название этого асинхронного танка (name: "user", из UserSlice.ts),
+// а вторым аргументом передаём колбэк, внутри которого мы будем реализовывать какие-то действия, в нашем случае
 // мы должны отправить запрос и вернуть какие-то данные.
-
-// export const fetchUsers = createAsyncThunk("user/fetchAll", async (_, thunkAPI) => {
-//   const response = await axios.get<IUser[]>("https://jsonplaceholder.typicode.com/users");
-//   return response.data;
-// });
 
 export const fetchUsers = createAsyncThunk("user/fetchAll", async (_, thunkAPI) => {
   try {
     const response = await axios.get<IUser[]>("https://jsonplaceholder.typicode.com/users");
     return response.data;
-  } catch (e) {
-    return thunkAPI.rejectWithValue("Не удалось загрузить пользователей");
+  } catch (e: any) {
+    // return thunkAPI.rejectWithValue("Не удалось загрузить пользователей");
+    return thunkAPI.rejectWithValue(e.message);
   }
 });

@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import { useAppDispanch, useAppSelector } from "./hooks/redux";
 import { fetchUsers } from "./store/reducers/ActionCreater";
-import { userSlice } from "./store/reducers/UserSlice";
+// import { userSlice } from "./store/reducers/UserSlice";
 
 function App() {
   const dispatch = useAppDispanch();

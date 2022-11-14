@@ -60,20 +60,6 @@ export const userSlice = createSlice({
   reducers: {},
   // Когда мы в ActionCreater.ts используем createAsyncThunk, для нас уже создаётся
   // три состояния: pending (в ожидании), rejected (отклоненный) и fulfilled (выполненный)
-  // extraReducers: {
-  //   [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
-  //     state.isLoading = false;
-  //     state.error = ""; // обнуляем ошибку, на случай, если она была
-  //     state.users = action.payload; // меняем состояние, добавляем массив пользователей.
-  //   },
-  //   [fetchUsers.pending.type]: (state) => {
-  //     state.isLoading = true;
-  //   },
-  //   [fetchUsers.rejected.type]: (state, action: PayloadAction<string>) => {
-  //     state.isLoading = false;
-  //     state.error = action.payload;
-  //   },
-  // },
   extraReducers: {
     [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
       state.isLoading = false;
@@ -94,41 +80,3 @@ export const userSlice = createSlice({
 // и отдельный экшен-креатер. Например:
 
 export default userSlice.reducer;
-
-// import { IUser } from "../../models/IUser";
-// import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import { fetchUsers } from "./ActionCreater";
-
-// interface UserState {
-//   users: IUser[];
-//   isLoading: boolean;
-//   error: string;
-// }
-
-// const initialState: UserState = {
-//   users: [],
-//   isLoading: false,
-//   error: "",
-// };
-
-// export const userSlice = createSlice({
-//   name: "user",
-//   initialState,
-//   reducers: {},
-//   extraReducers: {
-//     [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
-//       state.isLoading = false;
-//       state.error = "";
-//       state.users = action.payload;
-//     },
-//     [fetchUsers.pending.type]: (state) => {
-//       state.isLoading = true;
-//     },
-//     [fetchUsers.rejected.type]: (state, action: PayloadAction<string>) => {
-//       state.isLoading = false;
-//       state.error = action.payload;
-//     },
-//   },
-// });
-
-// export default userSlice.reducer;
