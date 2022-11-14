@@ -1,9 +1,14 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
+import { postAPI } from "../services/PostService";
 import userReducer from "./reducers/UserSlice";
 
 // Создаём корневой редюсер
 const rootReducer = combineReducers({
   userReducer,
+
+  // Регистрируем редюсер с PostSerice.ts как ключ-значение
+  //               ключ: значение
+  [postAPI.reducerPath]: postAPI.reducer,
 });
 
 // Создаём функцию setupStore, с помощью её мы будем конфигурировать
@@ -12,6 +17,8 @@ const rootReducer = combineReducers({
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
+    // добавляем мидлвеер из нашего postAPI
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postAPI.middleware),
   });
 };
 

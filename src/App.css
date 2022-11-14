@@ -34,9 +34,19 @@
   margin-top: 15px;
   width: 100%;
   display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.postItem {
+  width: 100%;
+  display: flex;
   justify-content: space-between;
 }
 
+.displayFlex {
+  display: flex;
+}
 .mb-1 {
   margin-bottom: 1rem;
 }
@@ -46,4 +56,7 @@
 
 .mt-2 {
   margin-top: 2rem;
+}
+.ml-2 {
+  margin-left: 2rem;
 }

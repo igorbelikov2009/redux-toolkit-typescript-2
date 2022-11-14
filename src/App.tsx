@@ -1,5 +1,7 @@
 import React, { useEffect } from "react";
 import "./App.css";
+import PostContainer from "./components/PostContainer";
+import PostContainer2 from "./components/PostContainer2";
 import { useAppDispanch, useAppSelector } from "./hooks/redux";
 import { fetchUsers } from "./store/reducers/ActionCreater";
 // import { userSlice } from "./store/reducers/UserSlice";
@@ -27,7 +29,7 @@ function App() {
 
   return (
     <div className="user">
-      <div>
+      {/* <div>
         {isLoading && <h1> Идёт загрузка</h1>}
         <div>
           <>
@@ -38,7 +40,7 @@ function App() {
             )}
           </>
         </div>
-        {/* {JSON.stringify(users, null, 2)} */}
+      
 
         {users.map((user) => (
           <div key={user.id} className="mb-1">
@@ -81,6 +83,10 @@ function App() {
             </i>
           </div>
         ))}
+      </div> */}
+      <div className="displayFlex">
+        <PostContainer />
+        <PostContainer2 />
       </div>
     </div>
   );
