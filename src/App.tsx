@@ -2,6 +2,7 @@ import React, { useEffect } from "react";
 import "./App.css";
 import PostContainer from "./components/PostContainer";
 import PostContainer2 from "./components/PostContainer2";
+import TodoContainer from "./components/TodoContainer";
 import { useAppDispanch, useAppSelector } from "./hooks/redux";
 import { fetchUsers } from "./store/reducers/ActionCreater";
 // import { userSlice } from "./store/reducers/UserSlice";
@@ -87,6 +88,9 @@ function App() {
       <div className="displayFlex">
         <PostContainer />
         <PostContainer2 />
+      </div>
+      <div>
+        <TodoContainer />
       </div>
     </div>
   );

@@ -1,5 +1,6 @@
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { postAPI } from "../services/PostService";
+import { todoAPI } from "../services/TodoService";
 import userReducer from "./reducers/UserSlice";
 
 // Создаём корневой редюсер
@@ -9,6 +10,9 @@ const rootReducer = combineReducers({
   // Регистрируем редюсер с PostSerice.ts как ключ-значение
   //               ключ: значение
   [postAPI.reducerPath]: postAPI.reducer,
+  // Регистрируем редюсер с TodoSerice.ts как ключ-значение
+  //               ключ: значение
+  [todoAPI.reducerPath]: todoAPI.reducer,
 });
 
 // Создаём функцию setupStore, с помощью её мы будем конфигурировать
@@ -17,8 +21,9 @@ const rootReducer = combineReducers({
 export const setupStore = () => {
   return configureStore({
     reducer: rootReducer,
-    // добавляем мидлвеер из нашего postAPI
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postAPI.middleware),
+    // Добавляем к дефолтному мидлвееру, методом concat(), мидлвеер из нашего postAPI.
+    // Затем, методом concat(), добавляем мидлвеер из нашего todoAPI
+    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postAPI.middleware).concat(todoAPI.middleware),
   });
 };
 

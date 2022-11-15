@@ -16,6 +16,7 @@ const PostContainer = () => {
 
   return (
     <div>
+      <h3 className="textCenter">Список пользователей</h3>
       {isLoading && <h1> Идёт загрузка</h1>}
       <div>
         <>
