@@ -1,10 +1,22 @@
 import React from "react";
+import { IPost } from "../models/IPost";
 import { postAPI } from "../services/PostService";
 import PostItem from "./PostItem";
 
 const PostContainer2 = () => {
   // параметр 10 - это мы задаём значение для limit
-  const { data: posts, error, isLoading } = postAPI.useFetchAllPostsQuery(10);
+  const { data: posts, error, isLoading } = postAPI.useFetchAllPostsQuery(100);
+
+  // eslint-disable-next-line no-empty-pattern
+  const [deletePost, {}] = postAPI.useDeletePostMutation();
+  // eslint-disable-next-line no-empty-pattern
+  const [updatePost, {}] = postAPI.useUpdatePostMutation();
+  const handleRemove = (post: IPost) => {
+    deletePost(post);
+  };
+  const handleUpdate = (post: IPost) => {
+    updatePost(post);
+  };
 
   return (
     <div>
@@ -21,7 +33,10 @@ const PostContainer2 = () => {
       </div>
 
       {/* Добавляем проверку: если у нас есть посты, и оне не undefined  */}
-      <div className="post">{posts && posts.map((post) => <PostItem key={post.id} post={post} />)}</div>
+      <div className="post">
+        {posts &&
+          posts.map((post) => <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />)}
+      </div>
     </div>
   );
 };
