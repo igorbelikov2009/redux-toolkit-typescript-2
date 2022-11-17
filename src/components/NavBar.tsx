@@ -13,16 +13,16 @@ const NavBar: FC = () => {
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
             <Button variant="outline-primary" className="ml-2">
-              redux toolkit state change
+              State Change
             </Button>
             <Button variant="outline-primary" className="ml-2">
-              Link
+              createSlice()
             </Button>
             <Button variant="outline-primary" className="ml-2">
-              Home
+              createSlice() + createAsyncThunk()
             </Button>
             <Button variant="outline-primary" className="ml-2">
-              Link
+              ..............dfhsg
             </Button>
           </Nav>
         </Navbar.Collapse>

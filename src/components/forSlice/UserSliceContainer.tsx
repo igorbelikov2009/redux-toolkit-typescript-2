@@ -18,11 +18,12 @@ const UserSliceContainer: FC = () => {
     dispatch(fetchUsers);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+
   return (
     <Container>
       <Row>
         <div>
-          <h1 className="textCenter">Список пользователей</h1>
+          <h1 className="textCenter">Список пользователей from userSlice.reducer</h1>
           {isLoading && <h1> Идёт загрузка</h1>}
           <div>
             <>
