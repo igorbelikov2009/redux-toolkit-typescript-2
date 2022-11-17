@@ -1,36 +1,42 @@
 import React, { useEffect } from "react";
+import { Container, Row, Col } from "react-bootstrap";
 import "./App.css";
-import PostContainer from "./components/PostContainer";
-import PostContainer2 from "./components/PostContainer2";
+import NavBar from "./components/NavBar";
+
+// import PostContainer from "./components/PostContainer";
+// import PostContainer2 from "./components/PostContainer2";
 import TodoContainer from "./components/TodoContainer";
 import { useAppDispanch, useAppSelector } from "./hooks/redux";
-import { fetchUsers } from "./store/reducers/ActionCreater";
-// import { userSlice } from "./store/reducers/UserSlice";
+import SlicePage from "./pages/SlicePage";
+// import CounterPage from "./pages/CounterPage";
+import { fetchAsyncThunkUsers } from "./store/reducers/ActionCreater";
 
 function App() {
   const dispatch = useAppDispanch();
 
-  // Вытаскиваем, необходимые для нас, данные из состояния
-  const { users, isLoading, error } = useAppSelector((state) => state.userReducer);
-  console.log(users, isLoading, error);
+  // Вытаскиваем, необходимые для нас, данные из состояния при помощи типизированного
+  // в "./hooks/redux" селектора
+  const { users, isLoading, error } = useAppSelector((state) => state.userAsyncThunkReducer);
+  // console.log(users, isLoading, error);
 
-  // // Реализуем получение пользователей
-
-  // Если мы в ActionCreater.ts не используем createAsyncThunk, то fetchUsers без скобок()
-  // useEffect(() => {
-  //   dispatch(fetchUsers);
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  // }, []);
-
-  // Когда мы в ActionCreater.ts используем createAsyncThunk, то fetchUsers() со скобками
+  // // // Реализуем получение пользователей
+  // // //=======================================================================================
+  // // Когда мы в ActionCreater.ts используем createAsyncThunk, то fetchUsers() со скобками
   useEffect(() => {
-    dispatch(fetchUsers());
+    dispatch(fetchAsyncThunkUsers());
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
+  //  //=======================================================================================
 
   return (
-    <div className="user">
-      {/* <div>
+    <div>
+      <NavBar />
+      {/* <CounterPage /> */}
+      {/* <SlicePage /> */}
+
+      <div>
+        <h1 className="textCenter">Список пользователей AsyncThunk</h1>
+
         {isLoading && <h1> Идёт загрузка</h1>}
         <div>
           <>
@@ -41,7 +47,6 @@ function App() {
             )}
           </>
         </div>
-      
 
         {users.map((user) => (
           <div key={user.id} className="mb-1">
@@ -84,14 +89,25 @@ function App() {
             </i>
           </div>
         ))}
-      </div> */}
-      <div className="displayFlex">
-        <PostContainer />
-        <PostContainer2 />
       </div>
-      <div>
-        <TodoContainer />
-      </div>
+
+      <Container>
+        {/* <Row>
+          <Col md={6}>
+            <PostContainer />
+          </Col>
+
+          <Col md={6}>
+            <PostContainer2 />
+          </Col>
+        </Row> */}
+
+        <Row>
+          <Col md={12}></Col>
+
+          <TodoContainer />
+        </Row>
+      </Container>
     </div>
   );
 }

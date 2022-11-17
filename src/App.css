@@ -4,13 +4,11 @@
   box-sizing: border-box;
 }
 
-.displayBlock {
-  display: block;
-}
-
-.post__list {
+.card {
   width: 100%;
-  padding: 20px;
+  max-width: 960px;
+  padding: 24px;
+  margin: 12px auto;
 }
 
 .user {
@@ -22,10 +20,6 @@
   flex-direction: column;
   /* justify-content: space-between; */
   align-items: center;
-}
-
-.w100 {
-  width: 100%;
 }
 
 .post {
@@ -50,23 +44,55 @@
   justify-content: center;
   margin: 2rem, 0;
 }
-
-.displayFlex {
-  display: flex;
+.displayBlock {
+  display: block;
 }
+
+.post__list {
+  width: 100%;
+  padding: 20px;
+}
+
+.w100 {
+  width: 100%;
+}
+
 .mb-1 {
   margin-bottom: 1rem;
 }
 .mb-2 {
   margin-bottom: 2rem;
 }
+.mb-4 {
+  margin-bottom: 4rem;
+}
+.mb-5 {
+  margin-bottom: 5rem;
+}
+.mb-6 {
+  margin-bottom: 6rem;
+}
+
+.ml-2 {
+  margin-left: 2rem;
+}
+.ml-4 {
+  margin-left: 4rem;
+}
 
 .mt-2 {
   margin-top: 2rem;
 }
-.ml-2 {
-  margin-left: 2rem;
+.mt-4 {
+  margin-top: 4rem;
 }
+.mt-5 {
+  margin-top: 5rem;
+}
+.mt-6 {
+  margin-top: 46rem;
+}
+
 .textCenter {
   text-align: center;
 }

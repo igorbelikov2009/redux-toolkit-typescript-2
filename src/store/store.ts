@@ -2,10 +2,14 @@ import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { postAPI } from "../services/PostService";
 import { todoAPI } from "../services/TodoService";
 import userReducer from "./reducers/UserSlice";
+import userAsyncThunkReducer from "./reducers/UserAsyncThunkSlice";
+import counterReducer from "./reducers/CounterSlice";
 
 // Создаём корневой редюсер
 const rootReducer = combineReducers({
   userReducer,
+  userAsyncThunkReducer,
+  counterReducer,
 
   // Регистрируем редюсер с PostSerice.ts как ключ-значение
   //               ключ: значение

@@ -1,5 +1,4 @@
 import { IUser } from "./../../models/IUser";
-import { fetchUsers } from "./ActionCreater";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // В редакс редюсер - это просто по сути чистая функция, которая принимает
 // state, action. В зависимости от экшена как-то изменяет state и возвращает
@@ -31,45 +30,28 @@ export const userSlice = createSlice({
   // То есть, каждый case в данном случае, идёт, как отдельный редюсер.
   // И внутри его мы уже будем определять, как мы изменим наше состояние.
 
-  // Когда мы в ActionCreater.ts используем createAsyncThunk... reducers: {}
+  // // Когда мы в ActionCreater.ts используем createAsyncThunk... reducers: {}
 
-  // reducers: {
-  //   // C redux-toolkit нам не надо разворачивать весь ...state и менять в нём
-  //   // отдельное поле: return { ...state. field: action.payload }.
-  //   // В redux-toolkit мы сразу меняем поле: state.object.field = action.payload
-  //   // state.count += action.payload;
-  //   // обращаемся к полю count у state, и преплюсуем к нему то, что пришло к нам в экшене
-  //   // в поле payload с сервера. Обычно, туда передают какие-то данные, для того, чтобы
-  //   // поместить их в state.
-  //   // // Первый редюсер будет вызываться в тот момент, когда мы начинаем подгрузку пользователей.
-  //   usersFetching(state) {
-  //     state.isLoading = true;
-  //   },
-  //   // Второй редюсер будет вызываться в случае успешной загрузки
-  //   usersFetchingSuccess(state, action: PayloadAction<IUser[]>) {
-  //     state.isLoading = false;
-  //     state.error = ""; // обнуляем ошибку, на случай, если она была
-  //     state.users = action.payload; // меняем состояние, добавляем массив пользователей.
-  //   },
-  //   // Третий редюсер будет вызываться в случае загрузки с ошибкой
-  //   usersFetchingError(state, action: PayloadAction<string>) {
-  //     state.isLoading = false;
-  //     state.error = action.payload;
-  //   },
-  // },
-  reducers: {},
-  // Когда мы в ActionCreater.ts используем createAsyncThunk, для нас уже создаётся
-  // три состояния: pending (в ожидании), rejected (отклоненный) и fulfilled (выполненный)
-  extraReducers: {
-    [fetchUsers.fulfilled.type]: (state, action: PayloadAction<IUser[]>) => {
-      state.isLoading = false;
-      state.error = "";
-      state.users = action.payload;
-    },
-    [fetchUsers.pending.type]: (state) => {
+  reducers: {
+    // C redux-toolkit нам не надо разворачивать весь ...state и менять в нём
+    // отдельное поле: return { ...state. field: action.payload }.
+    // В redux-toolkit мы сразу меняем поле: state.object.field = action.payload
+    // state.count += action.payload;
+    // обращаемся к полю count у state, и преплюсуем к нему то, что пришло к нам в экшене
+    // в поле payload с сервера. Обычно, туда передают какие-то данные, для того, чтобы
+    // поместить их в state.
+    // // Первый редюсер будет вызываться в тот момент, когда мы начинаем подгрузку пользователей.
+    usersFetching(state) {
       state.isLoading = true;
     },
-    [fetchUsers.rejected.type]: (state, action: PayloadAction<string>) => {
+    // Второй редюсер будет вызываться в случае успешной загрузки
+    usersFetchingSuccess(state, action: PayloadAction<IUser[]>) {
+      state.isLoading = false;
+      state.error = ""; // обнуляем ошибку, на случай, если она была
+      state.users = action.payload; // меняем состояние, добавляем массив пользователей.
+    },
+    // Третий редюсер будет вызываться в случае загрузки с ошибкой
+    usersFetchingError(state, action: PayloadAction<string>) {
       state.isLoading = false;
       state.error = action.payload;
     },
