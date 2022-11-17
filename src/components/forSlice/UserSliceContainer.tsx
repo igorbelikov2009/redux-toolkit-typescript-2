@@ -23,7 +23,7 @@ const UserSliceContainer: FC = () => {
     <Container>
       <Row>
         <div>
-          <h1 className="textCenter">Список пользователей from userSlice.reducer</h1>
+          <h2 className="textCenter mb-4">Список пользователей from userSlice.reducer</h2>
           {isLoading && <h1> Идёт загрузка</h1>}
           <div>
             <>

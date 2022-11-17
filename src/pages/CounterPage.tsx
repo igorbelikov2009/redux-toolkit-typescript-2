@@ -21,7 +21,7 @@ const CounterPage: FC = () => {
   const dispatch = useAppDispanch();
 
   return (
-    <Container className="mb-4">
+    <Container className="mt-6 mb-4">
       <h1 className="textCenter mb-4">Изменение state в редюсере redux-toolkit counterSlice</h1>
       <h2 className="textCenter mb-5">Значение счётчика: {count}</h2>
       <Row className="mt-4">

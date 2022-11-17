@@ -1,20 +1,15 @@
 import React from "react";
+import { BrowserRouter } from "react-router-dom";
 import "./App.css";
+import AppRouter from "./components/AppRouter";
 import NavBar from "./components/NavBar";
-import ApiPage from "./pages/ApiPage";
-import AsyncThunkPage from "./pages/AsyncThunkPage";
-import MainPage from "./pages/MainPage";
-import SlicePage from "./pages/SlicePage";
 
 function App() {
   return (
-    <div>
-      <MainPage />
-      <ApiPage />
-      <AsyncThunkPage />
-      <SlicePage />
+    <BrowserRouter>
       <NavBar />
-    </div>
+      <AppRouter />
+    </BrowserRouter>
   );
 }
 

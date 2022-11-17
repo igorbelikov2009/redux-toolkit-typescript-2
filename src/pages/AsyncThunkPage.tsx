@@ -3,9 +3,9 @@ import UserAsyncSliceContainer from "../components/forAsuncThunc/UserAsyncSliceC
 
 const AsyncThunkPage: FC = () => {
   return (
-    <>
+    <div className="mt-6">
       <UserAsyncSliceContainer />
-    </>
+    </div>
   );
 };
 

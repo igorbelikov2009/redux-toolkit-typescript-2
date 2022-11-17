@@ -3,8 +3,12 @@ import Container from "react-bootstrap/Container";
 import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
+import { useHistory } from "react-router-dom";
+import { API_ROUTE, ASYNC_THUNK_ROUTE, COUNTER_ROUTE, SLICE_ROUTE } from "../routes";
 
 const NavBar: FC = () => {
+  const history = useHistory();
+
   return (
     <Navbar bg="dark" variant="dark" className="navbar mb-4">
       <Container>
@@ -12,16 +16,19 @@ const NavBar: FC = () => {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">
-            <Button variant="outline-primary" className="ml-2">
+            <Button onClick={() => history.push(COUNTER_ROUTE)} variant="outline-primary" className="ml-2">
               State Change
             </Button>
-            <Button variant="outline-primary" className="ml-2">
+
+            <Button onClick={() => history.push(SLICE_ROUTE)} variant="outline-primary" className="ml-2">
               createSlice()
             </Button>
-            <Button variant="outline-primary" className="ml-2">
+
+            <Button onClick={() => history.push(ASYNC_THUNK_ROUTE)} variant="outline-primary" className="ml-2">
               createSlice() + createAsyncThunk()
             </Button>
-            <Button variant="outline-primary" className="ml-2">
+
+            <Button onClick={() => history.push(API_ROUTE)} variant="outline-primary" className="ml-2">
               services createApi()
             </Button>
           </Nav>
