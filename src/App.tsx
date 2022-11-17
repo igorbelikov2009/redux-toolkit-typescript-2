@@ -1,40 +1,19 @@
 import React from "react";
-import { Container, Row, Col } from "react-bootstrap";
 import "./App.css";
 import NavBar from "./components/NavBar";
-
-// import PostContainer from "./components/PostContainer";
-// import PostContainer2 from "./components/PostContainer2";
-import TodoContainer from "./components/TodoContainer";
-import AsyncThunkSlicePage from "./pages/AsyncThunkSlicePage";
+import ApiPage from "./pages/ApiPage";
+import AsyncThunkPage from "./pages/AsyncThunkPage";
+import MainPage from "./pages/MainPage";
 import SlicePage from "./pages/SlicePage";
-// import CounterPage from "./pages/CounterPage";
 
 function App() {
   return (
     <div>
-      <NavBar />
-      <AsyncThunkSlicePage />
-      {/* <CounterPage /> */}
+      <MainPage />
+      <ApiPage />
+      <AsyncThunkPage />
       <SlicePage />
-
-      <Container>
-        {/* <Row>
-          <Col md={6}>
-            <PostContainer />
-          </Col>
-
-          <Col md={6}>
-            <PostContainer2 />
-          </Col>
-        </Row> */}
-
-        <Row>
-          <Col md={12}></Col>
-
-          <TodoContainer />
-        </Row>
-      </Container>
+      <NavBar />
     </div>
   );
 }

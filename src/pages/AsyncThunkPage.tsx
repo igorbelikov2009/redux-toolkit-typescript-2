@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import UserAsyncSliceContainer from "../components/forAsuncThunc/UserAsyncSliceContainer";
 
-const AsyncThunkSlicePage: FC = () => {
+const AsyncThunkPage: FC = () => {
   return (
     <>
       <UserAsyncSliceContainer />
@@ -9,4 +9,4 @@ const AsyncThunkSlicePage: FC = () => {
   );
 };
 
-export default AsyncThunkSlicePage;
+export default AsyncThunkPage;

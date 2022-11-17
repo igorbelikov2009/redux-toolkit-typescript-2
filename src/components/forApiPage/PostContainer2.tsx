@@ -1,7 +1,8 @@
 import React from "react";
-import { IPost } from "../models/IPost";
-import { postAPI } from "../services/PostService";
+import { IPost } from "../../models/IPost";
+import { postAPI } from "../../services/PostService";
 import PostItem from "./PostItem";
+// import PostItem from "./PostItem";
 
 const PostContainer2 = () => {
   // параметр 10 - это мы задаём значение для limit

@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 
 const NavBar: FC = () => {
   return (
-    <Navbar bg="dark" variant="dark" className="mb-4">
+    <Navbar bg="dark" variant="dark" className="navbar mb-4">
       <Container>
         <Navbar.Brand href="#home">Redux toolkit typescript 2</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
@@ -22,7 +22,7 @@ const NavBar: FC = () => {
               createSlice() + createAsyncThunk()
             </Button>
             <Button variant="outline-primary" className="ml-2">
-              ..............dfhsg
+              services createApi()
             </Button>
           </Nav>
         </Navbar.Collapse>
