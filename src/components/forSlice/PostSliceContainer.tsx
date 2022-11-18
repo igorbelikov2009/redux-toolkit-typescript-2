@@ -24,7 +24,8 @@ const PostSliceContainer: FC = () => {
     <Container>
       <Row>
         <div>
-          <h2 className="textCenter mb-4">Список постов из postSlice.reducer</h2>
+          <h2 className="textCenter mb-4">Список постов из postReducer</h2>
+
           {isLoading && <h1> Идёт загрузка</h1>}
 
           <div>

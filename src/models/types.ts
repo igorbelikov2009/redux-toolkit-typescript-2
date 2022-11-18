@@ -28,10 +28,10 @@ export interface IPhoto {
 }
 
 export interface ITodo {
-  userId: number;
+  userId?: number;
   id: number;
   title: string;
-  completed: string;
+  completed: boolean;
 }
 
 export interface IUser {

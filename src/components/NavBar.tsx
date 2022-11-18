@@ -12,7 +12,9 @@ const NavBar: FC = () => {
   return (
     <Navbar bg="dark" variant="dark" className="navbar mb-4">
       <Container>
-        <Navbar.Brand onClick={() => history.push(MAIN_ROUTE)}>Redux toolkit typescript 2</Navbar.Brand>
+        <Button onClick={() => history.push(MAIN_ROUTE)} variant="outline-primary">
+          Redux toolkit typescript, главная
+        </Button>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

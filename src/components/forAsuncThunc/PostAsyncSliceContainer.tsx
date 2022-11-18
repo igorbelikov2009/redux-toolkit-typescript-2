@@ -25,7 +25,7 @@ const PostAsyncSliceContainer: FC = () => {
     <Container>
       <Row>
         <div>
-          <h2 className="textCenter mb-4">Список постов из postAsuncThunkReducer.reducer</h2>
+          <h2 className="textCenter mb-4">Список постов из postAsuncThunkReducer</h2>
           {isLoading && <h1>Идёт загрузка</h1>}
 
           <div>{error && <h1>{error} </h1>}</div>

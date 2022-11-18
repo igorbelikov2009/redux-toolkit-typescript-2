@@ -21,11 +21,9 @@ const ApiPage: FC = () => {
             <PostContainer2 />
           </Col>
         </Row>
-
-        <Row>
-          <TodoContainer />
-        </Row>
       </Container>
+
+      <TodoContainer />
     </div>
   );
 };

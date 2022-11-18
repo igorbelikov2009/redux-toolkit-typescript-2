@@ -4,18 +4,39 @@ import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { Container } from "react-bootstrap";
 import PostSliceContainer from "../components/forSlice/PostSliceContainer";
+import CommentSliceContainer from "../components/forSlice/CommentSliceContainer";
+import AlbumSliceContainer from "../components/forSlice/AlbumSliceContainer";
 
 const SlicePage: FC = () => {
-  const [users, setUsers] = useState<boolean>(false);
   const [posts, setPosts] = useState<boolean>(false);
+  const [users, setUsers] = useState<boolean>(false);
+  const [comments, setComments] = useState<boolean>(false);
+  const [almums, setAlbums] = useState<boolean>(false);
 
   const handlePosts: () => void = () => {
     setPosts(true);
+    setComments(false);
+    setUsers(false);
+    setAlbums(false);
+  };
+  const handleComments: () => void = () => {
+    setComments(true);
+    setPosts(false);
+    setUsers(false);
+    setAlbums(false);
+  };
+  const handleAlbums: () => void = () => {
+    setAlbums(true);
+    setComments(false);
+    setPosts(false);
     setUsers(false);
   };
+
   const handleUsers: () => void = () => {
     setUsers(true);
+    setComments(false);
     setPosts(false);
+    setAlbums(false);
   };
 
   return (
@@ -25,8 +46,15 @@ const SlicePage: FC = () => {
           <Button onClick={handlePosts} variant="outline-primary">
             posts
           </Button>
-          <Button variant="outline-primary">comments</Button>
-          <Button variant="outline-primary">albums</Button>
+
+          <Button onClick={handleComments} variant="outline-primary">
+            comments
+          </Button>
+
+          <Button onClick={handleAlbums} variant="outline-primary">
+            albums
+          </Button>
+
           <Button variant="outline-primary">photos</Button>
           <Button variant="outline-primary">todos</Button>
 
@@ -36,8 +64,10 @@ const SlicePage: FC = () => {
         </ButtonGroup>
       </Container>
 
-      {users && <UserSliceContainer />}
       {posts && <PostSliceContainer />}
+      {comments && <CommentSliceContainer />}
+      {users && <UserSliceContainer />}
+      {almums && <AlbumSliceContainer />}
     </div>
   );
 };

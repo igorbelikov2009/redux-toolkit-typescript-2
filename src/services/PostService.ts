@@ -8,7 +8,7 @@ export const postAPI = createApi({
   // 2. baseQuery - здесь используем функцию fetchBaseQuery({baseUrl: '....'}), куда передаём базовый URL
   // 3. endpoints, здесь мы будем описывать все эндпоинты, на которые будем отправлять
   // запросы и как-то менять наше состояние. Это функция, которая возвращает объект.
-  // Фигурныt скобки оборачиваем в круглые({})
+  // Фигурные скобки оборачиваем в круглые({})
   reducerPath: "postAPI",
   // baseQuery: fetchBaseQuery({ baseUrl: "https://jsonplaceholder.typicode.com/" }),
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),

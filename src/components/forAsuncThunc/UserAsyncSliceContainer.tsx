@@ -23,7 +23,7 @@ const UserAsyncSliceContainer: FC = () => {
   return (
     <Container>
       <Row>
-        <h2 className="textCenter">Список пользователей userAsyncThunkSlice</h2>
+        <h2 className="textCenter">Список пользователей userAsyncThunkReducer</h2>
 
         {isLoading && <h1> Идёт загрузка</h1>}
         <div>
