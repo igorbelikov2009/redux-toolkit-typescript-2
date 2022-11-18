@@ -1,4 +1,4 @@
-import { IRoute } from "./models/IRoute";
+import { IRoute } from "./models/types";
 import ApiPage from "./pages/ApiPage";
 import AsyncThunkPage from "./pages/AsyncThunkPage";
 import CounterPage from "./pages/CounterPage";

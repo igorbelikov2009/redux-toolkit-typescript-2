@@ -34,16 +34,6 @@
       "id": 7,
       "title": "json-server 7",
       "author": "typicode"
-    },
-    {
-      "id": 8,
-      "title": "json-server 8",
-      "author": "typicode"
-    },
-    {
-      "title": "NEW POST",
-      "body": "NEW POST",
-      "id": 9
     }
   ],
   "comments": [

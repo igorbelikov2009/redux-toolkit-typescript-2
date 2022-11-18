@@ -1,4 +1,4 @@
-import { IUser } from "./../../models/IUser";
+import { IUser } from "./../../models/types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 // В редакс редюсер - это просто по сути чистая функция, которая принимает
 // state, action. В зависимости от экшена как-то изменяет state и возвращает

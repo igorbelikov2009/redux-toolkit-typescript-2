@@ -1,5 +1,5 @@
 import React from "react";
-import { IPost } from "../../models/IPost";
+import { IPost } from "../../models/types";
 import { postAPI } from "../../services/PostService";
 import PostItem from "./PostItem";
 // import PostItem from "./PostItem";

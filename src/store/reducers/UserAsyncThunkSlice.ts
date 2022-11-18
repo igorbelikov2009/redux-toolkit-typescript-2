@@ -1,6 +1,6 @@
 import { fetchAsyncThunkUsers } from "./ActionCreater";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { IUser } from "../../models/IUser";
+import { IUser } from "../../models/types";
 
 // Создаём интерфейс для initialState для слайс-редюсера
 interface IUserState {

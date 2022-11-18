@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IUser } from "../../models/IUser";
+import { IPost, IUser } from "../../models/types";
 
 // БЕЗ ИСПОЛЬЗОВАНИЯ СПЕЦИАЛЬНОЙ НАДСТРОЙКОЙ createAsyncThunk()
 import { AppDispacth } from "./../store";
@@ -8,6 +8,7 @@ import { userSlice } from "./UserSlice";
 // //======================
 // Для использования специальной надстройкИ createAsyncThunk()
 import { createAsyncThunk } from "@reduxjs/toolkit";
+import { postSlice } from "./PostSlice";
 // //=====================
 
 // Получение данных от сервера - это асинхронный процесс, поэтому создаём
@@ -20,8 +21,9 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 // // =====================================================================
 // Когда мы делаем запрос на сервер, неважно: создание это, обновление или
 // получение каких-то данных, нам нужно обработать три, самые распространённые,
-// ситуации: сам запрос, индикацию его загрузки, и обработка ошибки
-// //
+// ситуации: сам запрос, индикацию его загрузки, и обработка ошибки.
+
+// БЕЗ ИСПОЛЬЗОВАНИЯ СПЕЦИАЛЬНОЙ НАДСТРОЙКОЙ createAsyncThunk()
 export const fetchUsers = async (dispatch: AppDispacth) => {
   try {
     // Слайс создаёт для нас экшен-креатеры, поэтому, мы можем сразу их задиспачить.
@@ -38,6 +40,20 @@ export const fetchUsers = async (dispatch: AppDispacth) => {
     // dispatch(userSlice.actions.usersFetchingError("Произошла ошибка загрузки"));
   }
 };
+
+export const fetchPosts = async (dispatch: AppDispacth) => {
+  try {
+    // Перед тем, как делать запрос, мы диспачим экшен postsFetching()
+    dispatch(postSlice.actions.postsFetching());
+    const response = await axios.get<IPost[]>("https://jsonplaceholder.typicode.com/posts");
+    // После того, как запрос прошёл успешно, мы диспатчим экшен-креатер postsFetchingSuccess()
+    // и туда передаём массив постов - (response.data)
+    dispatch(postSlice.actions.postsFetchingSuccess(response.data));
+  } catch (e: any) {
+    dispatch(postSlice.actions.postsFetchingError(e.message));
+  }
+};
+
 // Мы обработали три сценария: загрузку, успешную загрузку, загрузку с ошибкой.
 // redux-toolkit позволяет немного упростить обработку этих сценариев.
 // Для того, чтобы использовать redux-thunk, мы создавали функцию, которая принимает
