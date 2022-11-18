@@ -4,7 +4,7 @@ import Nav from "react-bootstrap/Nav";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import { useHistory } from "react-router-dom";
-import { API_ROUTE, ASYNC_THUNK_ROUTE, COUNTER_ROUTE, SLICE_ROUTE } from "../routes";
+import { API_ROUTE, ASYNC_THUNK_ROUTE, COUNTER_ROUTE, SLICE_ROUTE, MAIN_ROUTE } from "../routes";
 
 const NavBar: FC = () => {
   const history = useHistory();
@@ -12,7 +12,7 @@ const NavBar: FC = () => {
   return (
     <Navbar bg="dark" variant="dark" className="navbar mb-4">
       <Container>
-        <Navbar.Brand href="#home">Redux toolkit typescript 2</Navbar.Brand>
+        <Navbar.Brand onClick={() => history.push(MAIN_ROUTE)}>Redux toolkit typescript 2</Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto">

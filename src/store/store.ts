@@ -4,13 +4,15 @@ import { todoAPI } from "../services/TodoService";
 import userReducer from "./reducers/UserSlice";
 import postReducer from "./reducers/PostSlice";
 import userAsyncThunkReducer from "./reducers/UserAsyncThunkSlice";
+import postAsuncThunkReducer from "./reducers/PostAsuncThunkSlice";
 import counterReducer from "./reducers/CounterSlice";
 
-// Создаём корневой редюсер
+// Создаём корневой редюсер, состоящий из комбинации всех редюсеров
 const rootReducer = combineReducers({
   userReducer,
   postReducer,
   userAsyncThunkReducer,
+  postAsuncThunkReducer,
   counterReducer,
 
   // Регистрируем редюсер с PostSerice.ts как ключ-значение

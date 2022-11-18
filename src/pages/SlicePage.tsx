@@ -9,11 +9,11 @@ const SlicePage: FC = () => {
   const [users, setUsers] = useState<boolean>(false);
   const [posts, setPosts] = useState<boolean>(false);
 
-  const handlePosts = () => {
+  const handlePosts: () => void = () => {
     setPosts(true);
     setUsers(false);
   };
-  const handleUsers = () => {
+  const handleUsers: () => void = () => {
     setUsers(true);
     setPosts(false);
   };

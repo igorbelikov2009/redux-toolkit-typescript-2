@@ -76,3 +76,12 @@ export const fetchAsyncThunkUsers = createAsyncThunk("userAsyncThunk/fetchAll", 
     // return thunkAPI.rejectWithValue(e.message);
   }
 });
+
+export const fetchAsyncThunkPosts = createAsyncThunk("postAsyncThunk/fetchAll", async (_, thunkAPI) => {
+  try {
+    const response = await axios.get<IPost[]>("https://jsonplaceholder.typicode.com/posts");
+    return response.data;
+  } catch (e: any) {
+    return thunkAPI.rejectWithValue("Не удалось загрузить список постов");
+  }
+});

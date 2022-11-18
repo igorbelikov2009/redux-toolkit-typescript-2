@@ -17,6 +17,17 @@ const MainPage: FC = () => {
         </ListGroup.Item>
 
         <ListGroup.Item>
+          <a
+            href="https://redux-toolkit.js.org/usage/usage-with-typescript#createasyncthunk"
+            target="_blank"
+            rel="noreferrer"
+            className="link"
+          >
+            Официальный Redux Toolkit createAsyncThunk()
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
           <a href="https://react-redux.js.org/api/hooks" target="_blank" rel="noreferrer" className="link">
             Официальный React Redux. Hooks: useSelector(), useDispatch(), useStore(), useActions().
           </a>
