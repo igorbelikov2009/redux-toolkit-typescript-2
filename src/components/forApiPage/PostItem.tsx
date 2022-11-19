@@ -1,5 +1,7 @@
 import React, { FC } from "react";
 import { IPost } from "../../models/types";
+import Card from "react-bootstrap/Card";
+import { Button } from "react-bootstrap";
 
 // задаём типы пропсов компонента
 interface PostItemProps {
@@ -21,17 +23,14 @@ const PostItem: FC<PostItemProps> = ({ post, remove, update }) => {
 
   return (
     // При нажатии на блок div, мы будем вызывать обновление нашего поста.
-    <div className="post" onClick={handleUpdate}>
+    <Card className="post" onClick={handleUpdate}>
       <div className="postItem">
         {post.id}. {post.title}
-        {/* <button className="ml-2" onClick={() => remove(post)}>
-          delete
-        </button> */}
-        <button className="ml-2" onClick={handleRemove}>
-          delete
-        </button>
+        <Button variant="outline-danger" className="ml-2" onClick={handleRemove}>
+          Удалить
+        </Button>
       </div>
-    </div>
+    </Card>
   );
 };
 

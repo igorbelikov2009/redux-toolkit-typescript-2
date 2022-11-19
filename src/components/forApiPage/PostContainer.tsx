@@ -3,6 +3,7 @@ import React, { useState } from "react";
 import { IPost } from "../../models/types";
 import { postAPI } from "../../services/PostService";
 import PostItem from "./PostItem";
+import { Button } from "react-bootstrap";
 
 const PostContainer = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -71,10 +72,13 @@ const PostContainer = () => {
 
   return (
     <div>
-      <h3 className="textCenter mb-1">Список пользователей</h3>
+      <h3 className="textCenter mb-2">Список пользователей</h3>
       {/* <button onClick={() => refetch()}>REFETCH</button> */}
+
       <div className="containerButton">
-        <button onClick={handleCreate}>Добавить новый пост</button>
+        <Button variant="outline-success" onClick={handleCreate}>
+          Добавить новый пост
+        </Button>
       </div>
 
       <div>
@@ -117,7 +121,7 @@ const PostContainer = () => {
         </>
       </div>
 
-      {/* Добавляем проверку: если у нас есть посты, и оне не undefined  */}
+      {/* Добавляем проверку: если у нас есть посты, и они не undefined  */}
       <div className="post">
         {posts &&
           posts.map((post) => <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />)}

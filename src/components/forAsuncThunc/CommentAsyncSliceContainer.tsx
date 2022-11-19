@@ -18,7 +18,7 @@ const CommentAsyncSliceContainer: FC = () => {
     <Container>
       <Row>
         <div>
-          <h2 className="textCenter mb-4"> Комеентарии к постам из commentAsyncThunkReducer</h2>
+          <h2 className="textCenter mb-4"> Коментарии к постам из commentAsyncThunkReducer</h2>
           {isLoading && <h1>Идёт загрузка</h1>}
 
           <div>{error && <h1> {error}</h1>}</div>

@@ -6,27 +6,40 @@ import { Container } from "react-bootstrap";
 import PostSliceContainer from "../components/forSlice/PostSliceContainer";
 import CommentSliceContainer from "../components/forSlice/CommentSliceContainer";
 import AlbumSliceContainer from "../components/forSlice/AlbumSliceContainer";
+import TodoSliceContainer from "../components/forSlice/TodoSliceContainer";
 
 const SlicePage: FC = () => {
   const [posts, setPosts] = useState<boolean>(false);
   const [users, setUsers] = useState<boolean>(false);
   const [comments, setComments] = useState<boolean>(false);
   const [almums, setAlbums] = useState<boolean>(false);
+  const [todos, setTodos] = useState<boolean>(false);
 
   const handlePosts: () => void = () => {
     setPosts(true);
     setComments(false);
     setUsers(false);
     setAlbums(false);
+    setTodos(false);
   };
   const handleComments: () => void = () => {
     setComments(true);
     setPosts(false);
     setUsers(false);
     setAlbums(false);
+    setTodos(false);
   };
   const handleAlbums: () => void = () => {
     setAlbums(true);
+    setComments(false);
+    setPosts(false);
+    setUsers(false);
+    setTodos(false);
+  };
+
+  const handleTodos: () => void = () => {
+    setTodos(true);
+    setAlbums(false);
     setComments(false);
     setPosts(false);
     setUsers(false);
@@ -37,6 +50,7 @@ const SlicePage: FC = () => {
     setComments(false);
     setPosts(false);
     setAlbums(false);
+    setTodos(false);
   };
 
   return (
@@ -56,7 +70,10 @@ const SlicePage: FC = () => {
           </Button>
 
           <Button variant="outline-primary">photos</Button>
-          <Button variant="outline-primary">todos</Button>
+
+          <Button onClick={handleTodos} variant="outline-primary">
+            todos
+          </Button>
 
           <Button onClick={handleUsers} variant="outline-primary">
             users
@@ -68,6 +85,7 @@ const SlicePage: FC = () => {
       {comments && <CommentSliceContainer />}
       {users && <UserSliceContainer />}
       {almums && <AlbumSliceContainer />}
+      {todos && <TodoSliceContainer />}
     </div>
   );
 };

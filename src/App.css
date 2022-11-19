@@ -43,6 +43,20 @@
   display: flex;
   justify-content: space-between;
 }
+.cardBlock {
+  width: 100%;
+  display: flex;
+}
+.cardDescription {
+  width: calc(75% - 24px);
+  /* width: 75%; */
+}
+.cardButton {
+  width: 25%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 .containerButton {
   width: 100%;
@@ -102,7 +116,9 @@
 .textCenter {
   text-align: center;
 }
-.maxWidth232 {
-  width: 100%;
-  max-width: 232px;
+.colorBlue {
+  color: blue;
+}
+.colorRed {
+  color: red;
 }

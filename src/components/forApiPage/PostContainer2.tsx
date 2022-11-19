@@ -21,7 +21,8 @@ const PostContainer2 = () => {
 
   return (
     <div>
-      <h3 className="textCenter">Список пользователей - 2</h3>
+      <h3 className="textCenter mb-5">Список пользователей - 2</h3>
+
       {isLoading && <h1> Идёт загрузка</h1>}
       <div>
         <>
@@ -33,10 +34,11 @@ const PostContainer2 = () => {
         </>
       </div>
 
-      {/* Добавляем проверку: если у нас есть посты, и оне не undefined  */}
+      {/* Добавляем проверку: если у нас есть посты, и они не undefined  */}
       <div className="post">
-        {posts &&
-          posts.map((post) => <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />)}
+        {posts?.map((post) => (
+          <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />
+        ))}
       </div>
     </div>
   );

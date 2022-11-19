@@ -9,31 +9,35 @@ interface TodoItemProps {
 
 const TodoItem: FC<TodoItemProps> = ({ todo }) => {
   const deleteTodo = () => {
-    console.log(todo);
+    console.log("deleteTodo ");
   };
 
   return (
     <Card className="post">
-      <Card.Title>
-        <i> У пользователя под номером: </i> <b> {todo.userId} </b>
-      </Card.Title>
+      <div className="cardBlock">
+        <div className="cardDescription">
+          <Card.Title>
+            <i> У пользователя под номером: </i> <b> {todo.userId} </b>
+          </Card.Title>
 
-      <i className="displayBlock">
-        <i> дело № </i> <b> {todo.id}</b>
-      </i>
+          <i className="displayBlock">
+            <i> дело № </i> <b> {todo.id}</b>
+          </i>
 
-      <i className="displayBlock">
-        <i> описание дела: </i> <b> {todo.title} </b>
-      </i>
+          <i className="displayBlock">
+            <i> описание дела: </i> <b> {todo.title} </b>
+          </i>
 
-      <i className="displayBlock">
-        <b> {todo.completed ? "Выполнено" : "Не выполнено"}</b>
-      </i>
+          <i className="displayBlock">
+            <b className={todo.completed ? "colorBlue" : "colorRed"}>{todo.completed ? "Выполнено" : "Не выполнено"}</b>
+          </i>
+        </div>
 
-      <div className="maxWidth232">
-        <Button variant="outline-danger" className="mt-2 " onClick={() => deleteTodo()}>
-          Удалить
-        </Button>
+        <div className="cardButton">
+          <Button variant="outline-danger" className="mt-2 " onClick={() => deleteTodo()}>
+            Удалить
+          </Button>
+        </div>
       </div>
     </Card>
   );

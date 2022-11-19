@@ -1,5 +1,5 @@
 import React, { FC, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Button } from "react-bootstrap";
 import Card from "react-bootstrap/Card";
 
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
@@ -14,6 +14,10 @@ const CommentSliceContainer: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleDelete = () => {
+    comments.filter((comment, index) => comment.id === index);
+  };
+
   return (
     <div>
       <Container>
@@ -23,23 +27,33 @@ const CommentSliceContainer: FC = () => {
 
           <div>{error && <h1>{error}</h1>}</div>
 
-          {comments.map((comment) => (
+          {comments.map((comment, index) => (
             <Card key={comment.id}>
-              <i>
-                <i> под постом номером: </i> <b> {comment.postId} </b>
-              </i>
+              <div className="cardBlock">
+                <div className="cardDescription">
+                  <i>
+                    <i> под постом номером: </i> <b> {comment.postId} </b>
+                  </i>
 
-              <i className="displayBlock">
-                <i>
-                  пользователь с <b> email: </b> {comment.email}
-                </i>
-              </i>
+                  <i className="displayBlock">
+                    <i>
+                      пользователь с <b> email: </b> {comment.email}
+                    </i>
+                  </i>
 
-              <i className="displayBlock">
-                <i>оставил комментарий: </i> <b>{comment.name}</b>
-              </i>
+                  <i className="displayBlock">
+                    <i>оставил комментарий: </i> <b>{comment.name}</b>
+                  </i>
 
-              <i className="displayBlock">{comment.body}</i>
+                  <i className="displayBlock">{comment.body}</i>
+                </div>
+
+                <div className="cardButton">
+                  <Button onClick={handleDelete} variant="outline-primary">
+                    Удалить
+                  </Button>
+                </div>
+              </div>
             </Card>
           ))}
         </Row>

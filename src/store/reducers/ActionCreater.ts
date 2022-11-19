@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IAlbum, IComment, IPost, IUser } from "../../models/types";
+import { IAlbum, IComment, IPost, ITodo, IUser } from "../../models/types";
 
 // БЕЗ ИСПОЛЬЗОВАНИЯ СПЕЦИАЛЬНОЙ НАДСТРОЙКОЙ createAsyncThunk()
 import { AppDispacth } from "./../store";
@@ -11,6 +11,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 import { postSlice } from "./PostSlice";
 import { commentSlice } from "./CommentSlice";
 import { albumSlice } from "./AlbumSlice";
+import { todoSlice } from "./TodoSlice";
+
 // //=====================
 
 // Получение данных от сервера - это асинхронный процесс, поэтому создаём
@@ -79,6 +81,16 @@ export const fetchAlbums = async (dispatch: AppDispacth) => {
     dispatch(albumSlice.actions.albumsFetchingSuccess(response.data));
   } catch (e: any) {
     dispatch(albumSlice.actions.albumsFetchingError(e.message));
+  }
+};
+
+export const fetchTodos = async (dispatch: AppDispacth) => {
+  try {
+    dispatch(todoSlice.actions.todosFetching());
+    const response = await axios.get<ITodo[]>("https://jsonplaceholder.typicode.com/todos");
+    dispatch(todoSlice.actions.todosFetchingSuccess(response.data));
+  } catch (e: any) {
+    dispatch(todoSlice.actions.todosFetchingError(e.message));
   }
 };
 
