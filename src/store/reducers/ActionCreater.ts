@@ -143,3 +143,12 @@ export const fetchAsyncThunkAlbums = createAsyncThunk("albumAsuncThunk/fetchAll"
     return thunkAPI.rejectWithValue("Не удалось загрузить список альбомов");
   }
 });
+
+export const fetchAsyncThunkTodos = createAsyncThunk("todoAsyncThunk/fetchAll", async (_, thunkAPI) => {
+  try {
+    const response = await axios.get<ITodo[]>("https://jsonplaceholder.typicode.com/todos");
+    return response.data;
+  } catch (e: any) {
+    return thunkAPI.rejectWithValue("Не удалось загрузить список дел");
+  }
+});

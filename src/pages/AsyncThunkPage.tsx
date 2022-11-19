@@ -6,34 +6,47 @@ import { Container } from "react-bootstrap";
 import PostAsyncSliceContainer from "../components/forAsuncThunc/PostAsyncSliceContainer";
 import CommentAsyncSliceContainer from "../components/forAsuncThunc/CommentAsyncSliceContainer";
 import AlbumAsyncSliceContainer from "../components/forAsuncThunc/AlbumAsyncSliceContainer";
+import TodoAsyncSliceContainer from "../components/forAsuncThunc/TodoAsyncSliceContainer";
 
 const AsyncThunkPage: FC = () => {
   const [posts, setPosts] = useState<boolean>(false);
   const [users, setUsers] = useState<boolean>(false);
   const [comments, setComments] = useState<boolean>(false);
   const [almums, setAlbums] = useState<boolean>(false);
+  const [todos, setTodos] = useState<boolean>(false);
 
   const handlePosts: () => void = () => {
     setPosts(true);
     setComments(false);
     setUsers(false);
     setAlbums(false);
+    setTodos(false);
   };
   const handleComments: () => void = () => {
     setComments(true);
     setPosts(false);
     setUsers(false);
     setAlbums(false);
+    setTodos(false);
   };
   const handleAlbums: () => void = () => {
     setAlbums(true);
     setComments(false);
     setPosts(false);
     setUsers(false);
+    setTodos(false);
   };
 
   const handleUsers: () => void = () => {
     setUsers(true);
+    setComments(false);
+    setPosts(false);
+    setAlbums(false);
+    setTodos(false);
+  };
+  const handleTodos: () => void = () => {
+    setTodos(true);
+    setUsers(false);
     setComments(false);
     setPosts(false);
     setAlbums(false);
@@ -56,7 +69,10 @@ const AsyncThunkPage: FC = () => {
           </Button>
 
           <Button variant="outline-primary">photos</Button>
-          <Button variant="outline-primary">todos</Button>
+
+          <Button onClick={handleTodos} variant="outline-primary">
+            todos
+          </Button>
 
           <Button onClick={handleUsers} variant="outline-primary">
             users
@@ -68,6 +84,7 @@ const AsyncThunkPage: FC = () => {
       {comments && <CommentAsyncSliceContainer />}
       {almums && <AlbumAsyncSliceContainer />}
       {users && <UserAsyncSliceContainer />}
+      {todos && <TodoAsyncSliceContainer />}
     </div>
   );
 };
