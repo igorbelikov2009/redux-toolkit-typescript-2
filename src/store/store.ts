@@ -6,6 +6,7 @@ import postReducer from "./reducers/PostSlice";
 import commentReducer from "./reducers/CommentSlice";
 import albumReducer from "./reducers/AlbumSlice";
 import todoReducer from "./reducers/TodoSlice";
+import photoReducer from "./reducers/PhotoSlice";
 import albumAsuncThunkReducer from "./reducers/AlbumAsuncThunkSlice";
 import userAsyncThunkReducer from "./reducers/UserAsyncThunkSlice";
 import postAsuncThunkReducer from "./reducers/PostAsuncThunkSlice";
@@ -25,6 +26,7 @@ const rootReducer = combineReducers({
   albumAsuncThunkReducer,
   todoReducer,
   todoAsyncThunkReducer,
+  photoReducer,
   counterReducer,
 
   // Регистрируем редюсер с PostSerice.ts как ключ-значение

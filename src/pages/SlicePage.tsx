@@ -7,6 +7,7 @@ import PostSliceContainer from "../components/forSlice/PostSliceContainer";
 import CommentSliceContainer from "../components/forSlice/CommentSliceContainer";
 import AlbumSliceContainer from "../components/forSlice/AlbumSliceContainer";
 import TodoSliceContainer from "../components/forSlice/TodoSliceContainer";
+import PhotoSliceContainer from "../components/forSlice/PhotoSliceContainer";
 
 const SlicePage: FC = () => {
   const [posts, setPosts] = useState<boolean>(false);
@@ -14,6 +15,7 @@ const SlicePage: FC = () => {
   const [comments, setComments] = useState<boolean>(false);
   const [almums, setAlbums] = useState<boolean>(false);
   const [todos, setTodos] = useState<boolean>(false);
+  const [photos, setPhotos] = useState<boolean>(false);
 
   const handlePosts: () => void = () => {
     setPosts(true);
@@ -21,6 +23,7 @@ const SlicePage: FC = () => {
     setUsers(false);
     setAlbums(false);
     setTodos(false);
+    setPhotos(false);
   };
   const handleComments: () => void = () => {
     setComments(true);
@@ -28,6 +31,7 @@ const SlicePage: FC = () => {
     setUsers(false);
     setAlbums(false);
     setTodos(false);
+    setPhotos(false);
   };
   const handleAlbums: () => void = () => {
     setAlbums(true);
@@ -35,6 +39,7 @@ const SlicePage: FC = () => {
     setPosts(false);
     setUsers(false);
     setTodos(false);
+    setPhotos(false);
   };
 
   const handleTodos: () => void = () => {
@@ -43,10 +48,21 @@ const SlicePage: FC = () => {
     setComments(false);
     setPosts(false);
     setUsers(false);
+    setPhotos(false);
   };
 
   const handleUsers: () => void = () => {
     setUsers(true);
+    setComments(false);
+    setPosts(false);
+    setAlbums(false);
+    setTodos(false);
+    setPhotos(false);
+  };
+
+  const handlePhotos: () => void = () => {
+    setPhotos(true);
+    setUsers(false);
     setComments(false);
     setPosts(false);
     setAlbums(false);
@@ -69,7 +85,9 @@ const SlicePage: FC = () => {
             albums
           </Button>
 
-          <Button variant="outline-primary">photos</Button>
+          <Button onClick={handlePhotos} variant="outline-primary">
+            photos
+          </Button>
 
           <Button onClick={handleTodos} variant="outline-primary">
             todos
@@ -86,6 +104,7 @@ const SlicePage: FC = () => {
       {users && <UserSliceContainer />}
       {almums && <AlbumSliceContainer />}
       {todos && <TodoSliceContainer />}
+      {photos && <PhotoSliceContainer />}
     </div>
   );
 };

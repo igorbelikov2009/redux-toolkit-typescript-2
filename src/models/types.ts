@@ -1,3 +1,5 @@
+import { LocationDescriptor } from "history";
+
 export interface IPost {
   userId?: number;
   id: number;
@@ -23,7 +25,7 @@ export interface IPhoto {
   albomId: number;
   id: number;
   title: string;
-  uri: string;
+  url: string;
   thumbnailUrl: string;
 }
 
@@ -57,4 +59,10 @@ export interface IUser {
 export interface IRoute {
   path: string;
   Component: React.FC<{}>;
+}
+export interface INavbarButton {
+  id: number;
+  route: LocationDescriptor<unknown>;
+  title: string;
+  active: boolean;
 }

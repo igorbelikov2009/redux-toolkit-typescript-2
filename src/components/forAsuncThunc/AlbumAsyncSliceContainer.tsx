@@ -16,7 +16,7 @@ const AlbumAsyncSliceContainer: FC = () => {
     <Container>
       <Row>
         <div>
-          <h2 className="textCenter mb-4">Список альбомов из albumReducer</h2>
+          <h2 className="textCenter mb-4">Список альбомов из albumAsuncThunkReducer</h2>
 
           {isLoading && <h1> Идёт загрузка</h1>}
 

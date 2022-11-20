@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IAlbum, IComment, IPost, ITodo, IUser } from "../../models/types";
+import { IAlbum, IComment, IPhoto, IPost, ITodo, IUser } from "../../models/types";
 
 // БЕЗ ИСПОЛЬЗОВАНИЯ СПЕЦИАЛЬНОЙ НАДСТРОЙКОЙ createAsyncThunk()
 import { AppDispacth } from "./../store";
@@ -12,6 +12,7 @@ import { postSlice } from "./PostSlice";
 import { commentSlice } from "./CommentSlice";
 import { albumSlice } from "./AlbumSlice";
 import { todoSlice } from "./TodoSlice";
+import { photoSlice } from "./PhotoSlice";
 
 // //=====================
 
@@ -91,6 +92,16 @@ export const fetchTodos = async (dispatch: AppDispacth) => {
     dispatch(todoSlice.actions.todosFetchingSuccess(response.data));
   } catch (e: any) {
     dispatch(todoSlice.actions.todosFetchingError(e.message));
+  }
+};
+
+export const fetchPhotos = async (dispatch: AppDispacth) => {
+  try {
+    dispatch(photoSlice.actions.photosFetching);
+    const response = await axios.get<IPhoto[]>("https://jsonplaceholder.typicode.com/photos?_limit=100");
+    dispatch(photoSlice.actions.photosFetchingSuccess(response.data));
+  } catch (e: any) {
+    dispatch(photoSlice.actions.photosFetchingError(e.message));
   }
 };
 
