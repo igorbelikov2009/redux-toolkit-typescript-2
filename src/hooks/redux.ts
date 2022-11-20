@@ -1,6 +1,6 @@
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { AppDispacth, RootState } from "../store/store"; // Базовые типы,
-// который мы получали в файле store.ts
+// которые мы получали в файле store.ts
 
 // По сути, это обычный useDispatch, который мы возвращаем, но здесь у нас происходит
 // типизация. Будем использовать типизированный диспатч.

@@ -1,16 +1,49 @@
-import React from "react";
+import React, { useState } from "react";
 import { IPost } from "../../models/types";
 import { postAPI } from "../../services/PostService";
+import { Button } from "react-bootstrap";
 import PostItem from "../items/PostItem";
 
 const PostContainer2 = () => {
-  // параметр 10 - это мы задаём значение для limit
-  const { data: posts, error, isLoading } = postAPI.useFetchAllPostsQuery(100);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [limit, setLimit] = useState(100);
 
-  // eslint-disable-next-line no-empty-pattern
-  const [deletePost, {}] = postAPI.useDeletePostMutation();
-  // eslint-disable-next-line no-empty-pattern
-  const [updatePost, {}] = postAPI.useUpdatePostMutation();
+  // параметр 100 - это мы задаём значение для limit
+  const { data: posts, error, isLoading } = postAPI.useFetchAllPostsQuery(limit);
+
+  // Подгружаем 2 разных списка, с разным лимитом, по одному запросу.
+  // Таким образом происходит кэширование данных.
+  // Это бывает крайне полезно, когда у нас есть, например, выпадающие списки
+  // с данными, которые подгружаются асинхронно. Эти списки используются в
+  // приложении и например, повсеместно, и чтобы получить данные для этих
+  // списков, нам достаточно использовать хуки и быть уверенными в том, что
+  // у нас не будет лишних запросов.
+
+  // Поскольку, мы уже описали эндпоинт в PostService - createPost, с помощью которого
+  // будем пост создавать, для нас был сгенерирован автоматически хук useCreatePostMutation,
+  // по названию того эндпоинта, который мы создавали. Этим хуком мы можем воспользоваться.
+  // В опциях () мы можем указывать селектор и получать какие-то определённые данные,
+  // то есть отфильтрованные по какому-то условию.
+  // Данный хук возвращает нам не объект с какими-то данными, а массив, где первый
+  // элемент - это функция, которую мы можем вызвать для того, чтобы произошла
+  // мутация. А второй - это объект, в котором находятся поля: isLoading, data, error и тд,
+  // которые мы, при необходимости, можем обрабатывать.
+  // И при загрузке данных и при создании поста, поле ошибки называется error, а
+  // поле индикации загрузки - isLoading. Чтобы не было путаницы, мы прямо здесь,
+  // через двоеточие, меняем название.
+  const [createPost, { error: createError, isLoading: createIsLoading }] = postAPI.useCreatePostMutation();
+
+  // Воспользуемся хуками, автоматически сгенерированными по именам эндпоинтов: deletePost и updatePost
+  const [deletePost, { error: deleteError }] = postAPI.useDeletePostMutation();
+  const [updatePost, { error: updateError }] = postAPI.useUpdatePostMutation();
+
+  // аргументом в асинхронную функцию createPost() нам надо передать объект типа IPost
+  // и поскольку ID у нас будет генерировать сервер, явно укажем, что объект as IPost
+  const handleCreate = async () => {
+    const title = prompt();
+    await createPost({ title, body: title } as IPost);
+  };
+
   const handleRemove = (post: IPost) => {
     deletePost(post);
   };
@@ -20,9 +53,20 @@ const PostContainer2 = () => {
 
   return (
     <div>
-      <h3 className="textCenter mb-5">Список пользователей - 2</h3>
+      <h3 className="textCenter mb-2">Список пользователей</h3>
 
-      {isLoading && <h1> Идёт загрузка</h1>}
+      <div className="containerButton">
+        <Button variant="outline-success" onClick={handleCreate}>
+          Добавить новый пост
+        </Button>
+      </div>
+
+      <div>
+        {isLoading && <h1> Идёт загрузка</h1>}
+
+        {createIsLoading && <h1>Создаётся новый пост</h1>}
+      </div>
+
       <div>
         <>
           {error && (
@@ -31,16 +75,38 @@ const PostContainer2 = () => {
             </h1>
           )}
         </>
+
+        <>
+          {createError && (
+            <h1>
+              <> Произошла ошибка при создании нового поста. </>
+            </h1>
+          )}
+        </>
+
+        <>
+          {deleteError && (
+            <h1>
+              <> Произошла ошибка при удалении поста. </>
+            </h1>
+          )}
+        </>
+
+        <>
+          {updateError && (
+            <h1>
+              <> Произошла ошибка при обновлении поста. </>
+            </h1>
+          )}
+        </>
       </div>
 
       {/* Добавляем проверку: если у нас есть посты, и они не undefined  */}
       <div className="post">
-        {posts?.map((post) => (
-          <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />
-        ))}
+        {posts &&
+          posts.map((post) => <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />)}
       </div>
     </div>
   );
 };
-
 export default PostContainer2;

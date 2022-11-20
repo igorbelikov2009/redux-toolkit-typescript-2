@@ -17,7 +17,7 @@ export const postAPI = createApi({
   // // В массиве мы можем указать несколько тегов.
   tagTypes: ["Post"],
   endpoints: (build) => ({
-    // В дженерике два типа: 1-ый - массив постов IPost[], 2-ой тип аргумента, который будет ожидать этот хук - number.
+    // В дженерике два типа: 1-ый тип массива постов IPost[]; 2-ой тип аргумента, который будет ожидать этот хук - number.
     // В данном случае будем делать пагинацию и нам необходимо указать limit
     // Фигурные скобки оборачиваем в круглые({})
     fetchAllPosts: build.query<IPost[], number>({
@@ -40,7 +40,7 @@ export const postAPI = createApi({
     }),
 
     // Создадим ещё один эндпоинт createPost, с помощью которого мы будем пост создавать, будем использовать не квери build.query,
-    // а мутейшен build.mutation, принцип описания тот же. Здесь у query() аргументом будетне лимит, а сам post,
+    // а мутейшен build.mutation, принцип описания тот же. Здесь у query() аргументом будет не лимит, а сам post,
     // то есть объект, который мы хотим сохранить в базе данных.
     // В дженерике мы указываем тип объекта, который нам вернётся и тип объекта, который мы ожидаем аргументом.
     // Фигурные скобки оборачиваем в круглые({})
@@ -54,7 +54,7 @@ export const postAPI = createApi({
         method: "POST",
         body: post,
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["Post"], // прежние данные делаем неактуальными при помощи этого тэга
     }),
     // обновление поста
     updatePost: build.mutation<IPost, IPost>({
@@ -68,7 +68,7 @@ export const postAPI = createApi({
         method: "PUT",
         body: post,
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["Post"], // прежние данные делаем неактуальными при помощи этого тэга
     }),
     // удаление поста
     deletePost: build.mutation<IPost, IPost>({
@@ -79,7 +79,7 @@ export const postAPI = createApi({
         // Поскольку это у нас DELETE-запрос, нам явно неообходимо указать method: 'DELETE',
         method: "DELETE",
       }),
-      invalidatesTags: ["Post"],
+      invalidatesTags: ["Post"], // прежние данные делаем неактуальными при помощи этого тэга
     }),
   }),
 });

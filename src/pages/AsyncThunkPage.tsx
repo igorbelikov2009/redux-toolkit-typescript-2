@@ -2,7 +2,7 @@ import React, { FC, useState } from "react";
 import UserAsyncSliceContainer from "../components/forAsuncThunc/UserAsyncSliceContainer";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import { Container } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import PostAsyncSliceContainer from "../components/forAsuncThunc/PostAsyncSliceContainer";
 import CommentAsyncSliceContainer from "../components/forAsuncThunc/CommentAsyncSliceContainer";
 import AlbumAsyncSliceContainer from "../components/forAsuncThunc/AlbumAsyncSliceContainer";
@@ -17,55 +17,40 @@ const AsyncThunkPage: FC = () => {
   const [todos, setTodos] = useState<boolean>(false);
   const [photos, setPhotos] = useState<boolean>(false);
 
-  const handlePosts: () => void = () => {
-    setPosts(true);
+  const handlersAllFalse: () => void = () => {
+    setPosts(false);
     setComments(false);
     setUsers(false);
     setAlbums(false);
     setTodos(false);
     setPhotos(false);
+  };
+
+  const handlePosts: () => void = () => {
+    handlersAllFalse();
+    setPosts(true);
   };
   const handleComments: () => void = () => {
+    handlersAllFalse();
     setComments(true);
-    setPosts(false);
-    setUsers(false);
-    setAlbums(false);
-    setTodos(false);
-    setPhotos(false);
   };
   const handleAlbums: () => void = () => {
+    handlersAllFalse();
     setAlbums(true);
-    setComments(false);
-    setPosts(false);
-    setUsers(false);
-    setTodos(false);
-    setPhotos(false);
   };
 
   const handleTodos: () => void = () => {
+    handlersAllFalse();
     setTodos(true);
-    setAlbums(false);
-    setComments(false);
-    setPosts(false);
-    setUsers(false);
-    setPhotos(false);
   };
 
   const handleUsers: () => void = () => {
+    handlersAllFalse();
     setUsers(true);
-    setComments(false);
-    setPosts(false);
-    setAlbums(false);
-    setTodos(false);
-    setPhotos(false);
   };
 
   const handlePhotos: () => void = () => {
-    setUsers(false);
-    setComments(false);
-    setPosts(false);
-    setAlbums(false);
-    setTodos(false);
+    handlersAllFalse();
     setPhotos(true);
   };
 
@@ -86,6 +71,9 @@ const AsyncThunkPage: FC = () => {
   return (
     <div className="mt-6">
       <Container className="card">
+        <Row>
+          <h2 className="textCenter mb-4"> Используем createSlice() и createAsyncThunk() </h2>
+        </Row>
         <ButtonGroup aria-label="Basic example">
           {buttons.map((button) => (
             <Button key={button.id} onClick={button.handle} variant="outline-primary">
