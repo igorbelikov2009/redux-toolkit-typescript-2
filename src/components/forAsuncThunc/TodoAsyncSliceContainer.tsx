@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { fetchAsyncThunkTodos } from "../../store/reducers/ActionCreater";
-import TodoItem from "../forApiPage/TodoItem";
+import TodoItem from "../items/TodoItem";
 
 const TodoAsyncSliceContainer: FC = () => {
   const dispatch = useAppDispanch();
@@ -17,9 +17,9 @@ const TodoAsyncSliceContainer: FC = () => {
     <Container>
       <Row>
         <div>
-          <h1 className="textCenter mt-6">Список дел пользователя из todoAsyncThunkReducer</h1>
+          <h2 className="textCenter mb-4">Список дел пользователя из todoAsyncThunkReducer</h2>
 
-          <div className="post">
+          <div>
             {isLoading && <h1>Идёт загрузка</h1>}
 
             <div>{error && <h1> {error} </h1>}</div>

@@ -7,6 +7,7 @@ import PostAsyncSliceContainer from "../components/forAsuncThunc/PostAsyncSliceC
 import CommentAsyncSliceContainer from "../components/forAsuncThunc/CommentAsyncSliceContainer";
 import AlbumAsyncSliceContainer from "../components/forAsuncThunc/AlbumAsyncSliceContainer";
 import TodoAsyncSliceContainer from "../components/forAsuncThunc/TodoAsyncSliceContainer";
+import PhotoAsyncSliceContainer from "../components/forAsuncThunc/PhotoAsyncSliceContainer";
 
 const AsyncThunkPage: FC = () => {
   const [posts, setPosts] = useState<boolean>(false);
@@ -14,6 +15,7 @@ const AsyncThunkPage: FC = () => {
   const [comments, setComments] = useState<boolean>(false);
   const [almums, setAlbums] = useState<boolean>(false);
   const [todos, setTodos] = useState<boolean>(false);
+  const [photos, setPhotos] = useState<boolean>(false);
 
   const handlePosts: () => void = () => {
     setPosts(true);
@@ -21,6 +23,7 @@ const AsyncThunkPage: FC = () => {
     setUsers(false);
     setAlbums(false);
     setTodos(false);
+    setPhotos(false);
   };
   const handleComments: () => void = () => {
     setComments(true);
@@ -28,6 +31,7 @@ const AsyncThunkPage: FC = () => {
     setUsers(false);
     setAlbums(false);
     setTodos(false);
+    setPhotos(false);
   };
   const handleAlbums: () => void = () => {
     setAlbums(true);
@@ -35,6 +39,16 @@ const AsyncThunkPage: FC = () => {
     setPosts(false);
     setUsers(false);
     setTodos(false);
+    setPhotos(false);
+  };
+
+  const handleTodos: () => void = () => {
+    setTodos(true);
+    setAlbums(false);
+    setComments(false);
+    setPosts(false);
+    setUsers(false);
+    setPhotos(false);
   };
 
   const handleUsers: () => void = () => {
@@ -43,40 +57,41 @@ const AsyncThunkPage: FC = () => {
     setPosts(false);
     setAlbums(false);
     setTodos(false);
+    setPhotos(false);
   };
-  const handleTodos: () => void = () => {
-    setTodos(true);
+
+  const handlePhotos: () => void = () => {
     setUsers(false);
     setComments(false);
     setPosts(false);
     setAlbums(false);
+    setTodos(false);
+    setPhotos(true);
   };
 
+  interface IButton {
+    id: number;
+    handle: () => void;
+    title: string;
+  }
+
+  const buttons: IButton[] = [
+    { id: 0, handle: handlePosts, title: "posts" },
+    { id: 1, handle: handleComments, title: "comments" },
+    { id: 2, handle: handleAlbums, title: "albums" },
+    { id: 3, handle: handlePhotos, title: "photos" },
+    { id: 4, handle: handleTodos, title: "todos" },
+    { id: 5, handle: handleUsers, title: "users" },
+  ];
   return (
     <div className="mt-6">
       <Container className="card">
         <ButtonGroup aria-label="Basic example">
-          <Button onClick={handlePosts} variant="outline-primary">
-            posts
-          </Button>
-
-          <Button onClick={handleComments} variant="outline-primary">
-            comments
-          </Button>
-
-          <Button onClick={handleAlbums} variant="outline-primary">
-            albums
-          </Button>
-
-          <Button variant="outline-primary">photos</Button>
-
-          <Button onClick={handleTodos} variant="outline-primary">
-            todos
-          </Button>
-
-          <Button onClick={handleUsers} variant="outline-primary">
-            users
-          </Button>
+          {buttons.map((button) => (
+            <Button key={button.id} onClick={button.handle} variant="outline-primary">
+              {button.title}
+            </Button>
+          ))}
         </ButtonGroup>
       </Container>
 
@@ -85,6 +100,7 @@ const AsyncThunkPage: FC = () => {
       {almums && <AlbumAsyncSliceContainer />}
       {users && <UserAsyncSliceContainer />}
       {todos && <TodoAsyncSliceContainer />}
+      {photos && <PhotoAsyncSliceContainer />}
     </div>
   );
 };

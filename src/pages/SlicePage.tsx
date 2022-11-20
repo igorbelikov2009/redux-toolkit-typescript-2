@@ -61,50 +61,47 @@ const SlicePage: FC = () => {
   };
 
   const handlePhotos: () => void = () => {
-    setPhotos(true);
     setUsers(false);
     setComments(false);
     setPosts(false);
     setAlbums(false);
     setTodos(false);
+    setPhotos(true);
   };
+
+  interface IButton {
+    id: number;
+    handle: () => void;
+    title: string;
+  }
+
+  const buttons: IButton[] = [
+    { id: 0, handle: handlePosts, title: "posts" },
+    { id: 1, handle: handleComments, title: "comments" },
+    { id: 2, handle: handleAlbums, title: "albums" },
+    { id: 3, handle: handlePhotos, title: "photos" },
+    { id: 4, handle: handleTodos, title: "todos" },
+    { id: 5, handle: handleUsers, title: "users" },
+  ];
 
   return (
     <div className="mt-6">
       <Container className="card">
         <ButtonGroup aria-label="Basic example">
-          <Button onClick={handlePosts} variant="outline-primary">
-            posts
-          </Button>
-
-          <Button onClick={handleComments} variant="outline-primary">
-            comments
-          </Button>
-
-          <Button onClick={handleAlbums} variant="outline-primary">
-            albums
-          </Button>
-
-          <Button onClick={handlePhotos} variant="outline-primary">
-            photos
-          </Button>
-
-          <Button onClick={handleTodos} variant="outline-primary">
-            todos
-          </Button>
-
-          <Button onClick={handleUsers} variant="outline-primary">
-            users
-          </Button>
+          {buttons.map((button) => (
+            <Button key={button.id} onClick={button.handle} variant="outline-primary">
+              {button.title}
+            </Button>
+          ))}
         </ButtonGroup>
       </Container>
 
       {posts && <PostSliceContainer />}
       {comments && <CommentSliceContainer />}
-      {users && <UserSliceContainer />}
       {almums && <AlbumSliceContainer />}
-      {todos && <TodoSliceContainer />}
       {photos && <PhotoSliceContainer />}
+      {todos && <TodoSliceContainer />}
+      {users && <UserSliceContainer />}
     </div>
   );
 };

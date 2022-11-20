@@ -2,8 +2,8 @@
 import React, { useState } from "react";
 import { IPost } from "../../models/types";
 import { postAPI } from "../../services/PostService";
-import PostItem from "./PostItem";
 import { Button } from "react-bootstrap";
+import PostItem from "../items/PostItem";
 
 const PostContainer = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars

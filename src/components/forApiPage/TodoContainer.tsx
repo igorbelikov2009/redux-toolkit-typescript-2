@@ -1,7 +1,7 @@
 import React from "react";
 import { Container, Row } from "react-bootstrap";
 import { todoAPI } from "../../services/TodoService";
-import TodoItem from "./TodoItem";
+import TodoItem from "../items/TodoItem";
 
 const TodoContainer = () => {
   // параметр 100 - это мы задаём значение для limit

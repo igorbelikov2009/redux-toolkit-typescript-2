@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { fetchTodos } from "../../store/reducers/ActionCreater";
-import TodoItem from "../forApiPage/TodoItem";
+import TodoItem from "../items/TodoItem";
 
 const TodoSliceContainer: FC = () => {
   //
@@ -30,7 +30,7 @@ const TodoSliceContainer: FC = () => {
             </>
           </div>
 
-          <div className="post">
+          <div>
             {todos?.map((todo) => (
               <TodoItem key={todo.id} todo={todo} />
             ))}

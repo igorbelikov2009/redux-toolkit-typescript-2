@@ -163,3 +163,12 @@ export const fetchAsyncThunkTodos = createAsyncThunk("todoAsyncThunk/fetchAll", 
     return thunkAPI.rejectWithValue("Не удалось загрузить список дел");
   }
 });
+
+export const fetchAsyncThunkPhotos = createAsyncThunk("photoAsyncThunk/fetchAll", async (_, thunkAPI) => {
+  try {
+    const response = await axios.get<IPhoto[]>("https://jsonplaceholder.typicode.com/photos?_limit=100");
+    return response.data;
+  } catch (e: any) {
+    return thunkAPI.rejectWithValue("Не удалось загрузить список фото");
+  }
+});
