@@ -1,15 +1,12 @@
 import React, { FC, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import ButtonsBlock from "../components/ButtonsBlock";
 import CommentApiContainer from "../components/forApiPage/CommentApiContainer";
 import PostCombinedContainer from "../components/forApiPage/PostCombinedContainer";
 
-import PostContainer2 from "../components/forApiPage/PostContainer2";
-import PostContainer3 from "../components/forApiPage/PostContainer3";
 import TodoContainer from "../components/forApiPage/TodoContainer";
 
 const ApiPage: FC = () => {
-  const [posts, setPosts] = useState<boolean>(false);
   const [postCombined, setPostCombined] = useState<boolean>(false);
   const [users, setUsers] = useState<boolean>(false);
   const [comments, setComments] = useState<boolean>(false);
@@ -18,7 +15,6 @@ const ApiPage: FC = () => {
   const [photos, setPhotos] = useState<boolean>(false);
 
   const handlersAllFalse: () => void = () => {
-    setPosts(false);
     setComments(false);
     setUsers(false);
     setAlbums(false);
@@ -26,10 +22,7 @@ const ApiPage: FC = () => {
     setPhotos(false);
     setPostCombined(false);
   };
-  const handlePosts: () => void = () => {
-    handlersAllFalse();
-    setPosts(true);
-  };
+
   const handlePostsCombined: () => void = () => {
     handlersAllFalse();
     setPostCombined(true);
@@ -62,7 +55,6 @@ const ApiPage: FC = () => {
   }
 
   const buttons: IButton[] = [
-    { id: 0, handle: handlePosts, title: "posts" },
     { id: 1, handle: handlePostsCombined, title: "postsCombined" },
     { id: 2, handle: handleComments, title: "comments" },
     { id: 3, handle: handleAlbums, title: "albums" },
@@ -80,6 +72,7 @@ const ApiPage: FC = () => {
 
         <ButtonsBlock buttons={buttons} />
       </Container>
+
       {comments && <CommentApiContainer />}
       {postCombined && <PostCombinedContainer />}
       {todos && <TodoContainer />}

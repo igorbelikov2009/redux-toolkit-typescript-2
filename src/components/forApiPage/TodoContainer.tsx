@@ -1,11 +1,29 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Container, Row, Card } from "react-bootstrap";
 import { todoAPI } from "../../services/TodoService";
 import TodoItem from "../items/TodoItem";
 
 const TodoContainer: FC = () => {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [limit, setLimit] = useState(100);
   // параметр 100 - это мы задаём значение для limit
-  const { data: todos, error, isLoading } = todoAPI.useFetchAllTodosQuery(100);
+
+  // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ FetchAllTodos
+  // const { data: todos, error, isLoading } = todoAPI.useFetchAllTodosQuery(limit);
+
+  // Функцию refetch достаём из списка при деструктуризации. Она нам нужна только в том
+  // случае, когда нам необходимо, по какой-то причине, перезаписать данные, обновить.
+  // И в таком, случае, данные будут подгружены заново. Если refetch  нам не нужна, мы
+  // не достаём её из списка при деструктуризации. (В данный момент не нужна.)
+  // const { data: todos, error, isLoading, refetch } = todoAPI.useFetchAllTodosQuery(limit);
+
+  // Если нужно производить обновление подгрузки автоматически, в определённый промежуток
+  // времени, мы можем использовать pollingInterval. pollingInterval - объект, второй аргумент
+  // автоматически сгенерированного хука useFetchAllPostsQuery(). pollingInterval, это когда в
+  // определённый промежуток времени у нас отправляется новый запрос, и мы, в данном случае,
+  // ежесекундно получаем обновлённые данные. Это можно использовать в чатах, уведомлениях,
+  // своего рода - аналог вэбсокетов.
+  const { data: todos, error, isLoading } = todoAPI.useFetchAllTodosQuery(limit, { pollingInterval: 1000 });
 
   return (
     <Container className="card">
@@ -16,6 +34,40 @@ const TodoContainer: FC = () => {
             в терминале
             <i className=" colorRed"> json-server --watch db.json --port 5000</i>
           </h4>
+        </Card>
+      </Row>
+
+      <Row>
+        <Card>
+          <p>
+            {" "}
+            Если возникнет ситуация, когда данные, по какой-то причине, необходимо перезаписать, то есть функция
+            refetch(), которую мы можем вызывать на какое-то событие. И в таком, случае, данные будут подгружены заново.
+            refetch достаём из списка при деструктуризации автоматически сгенерированного хука useFetchAllPostsQuery().
+          </p>
+
+          <p>
+            {" "}
+            Работу функции refetch() можем наблюдать в списке постов <b>posts</b> и в списке комментов <b>comments</b>{" "}
+          </p>
+
+          <p>
+            Если нужно производить обновление подгрузки регулярно, автоматически, в определённый промежуток времени, мы
+            можем использовать <b> pollingInterval </b>.
+          </p>
+
+          <p>
+            {" "}
+            <b> pollingInterval </b> - это <i> объект </i>, второй аргумент автоматически сгенерированного хука
+            useFetchAllPostsQuery().
+          </p>
+
+          <p>
+            {" "}
+            <b> pollingInterval </b>, это когда в определённый промежуток времени у нас отправляется новый запрос, и мы,
+            в данном случае, ежесекундно получаем обновлённые данные. Это можно использовать в чатах, уведомлениях,
+            своего рода - аналог вэбсокетов. Смотри в списке дел: <b> todos</b>.
+          </p>
         </Card>
       </Row>
 
