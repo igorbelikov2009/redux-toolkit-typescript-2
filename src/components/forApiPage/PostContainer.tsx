@@ -10,9 +10,10 @@ const PostContainer = () => {
   const [limit, setLimit] = useState(100);
 
   // параметр 100 - это мы задаём значение для limit
-  const { data: posts, error, isLoading } = postAPI.useFetchAllPostsQuery(limit);
+  // const { data: posts, error, isLoading } = postAPI.useFetchAllPostsQuery(limit);
 
-  // const { data: posts, error, isLoading, refetch } = postAPI.useFetchAllPostsQuery(limit);
+  const { data: posts, error, isLoading, refetch } = postAPI.useFetchAllPostsQuery(limit);
+  // refetch достаём из списка при деструктуризации.
 
   // const { data: posts, error, isLoading } = postAPI.useFetchAllPostsQuery(limit, { pollingInterval: 1000 });
 
@@ -73,7 +74,11 @@ const PostContainer = () => {
   return (
     <div>
       <h3 className="textCenter mb-2">Список пользователей</h3>
-      {/* <button onClick={() => refetch()}>REFETCH</button> */}
+      <div className="containerButton">
+        <Button onClick={() => refetch()} variant="outline-success">
+          REFETCH
+        </Button>
+      </div>
 
       <div className="containerButton">
         <Button variant="outline-success" onClick={handleCreate}>

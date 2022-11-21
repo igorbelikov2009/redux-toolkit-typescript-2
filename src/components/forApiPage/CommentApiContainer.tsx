@@ -7,7 +7,13 @@ import CommentItem from "../items/CommentItem";
 const CommentApiContainer: FC = () => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [limit, setLimit] = useState(100);
-  const { data: comments, error, isLoading } = commentAPI.useFetchAllCommentsQuery(limit);
+
+  // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ FetchAllComment
+  const { data: comments, error, isLoading, refetch } = commentAPI.useFetchAllCommentsQuery(limit);
+  // Функцию refetch достаём из списка при деструктуризации. Она нам нужна только в том
+  // случае, когда нам необходимо, по какой-то причине, перезаписать данные, обновить.
+  // И в таком, случае, данные будут подгружены заново. Если refetch  нам не нужна, мы
+  // не достаём её из списка при деструктуризации.
 
   // Поскольку, мы уже описали эндпоинт в CommentService - createComment, с помощью которого
   // будем comment создавать, для нас был сгенерирован автоматически
@@ -50,6 +56,21 @@ const CommentApiContainer: FC = () => {
 
   return (
     <Container className="card">
+      <div className="containerButton mb-4">
+        <Button onClick={() => refetch()} variant="outline-success">
+          REFETCH
+        </Button>
+      </div>
+
+      <Row>
+        <Card className="mb-4">
+          <h6>
+            Работу функции refetch() наблюдаем в рабочей консоле, в вкладке "Сеть". Счётчик запросов (Запросы: 37)
+            увеличивается с каждым кликом по кнопке.
+          </h6>
+        </Card>
+      </Row>
+
       <Row>
         <Card className="mb-4">
           <h3 className="textCenter">Подымаем сервер этого приложения на порту 5000 командой </h3>

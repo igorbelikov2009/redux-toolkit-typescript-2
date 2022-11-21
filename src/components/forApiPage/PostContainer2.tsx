@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { IPost } from "../../models/types";
 import { postAPI } from "../../services/PostService";
-import { Button } from "react-bootstrap";
+import { Button, Row, Card } from "react-bootstrap";
 import PostItem from "../items/PostItem";
 
 const PostContainer2 = () => {
@@ -9,7 +9,15 @@ const PostContainer2 = () => {
   const [limit, setLimit] = useState(100);
 
   // параметр 100 - это мы задаём значение для limit
-  const { data: posts, error, isLoading } = postAPI.useFetchAllPostsQuery(limit);
+
+  // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ FetchAllPosts
+  // Первым аргументом хука useFetchAllPostsQuery(limit) ожидается параметр, который
+  // будет использоваться в запросе.
+  // const { data: posts, error, isLoading } = postAPI.useFetchAllPostsQuery(limit);
+
+  // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ FetchAllPosts
+  const { data: posts, error, isLoading, refetch } = postAPI.useFetchAllPostsQuery(limit);
+  // refetch достаём из списка при деструктуризации.
 
   // Подгружаем 2 разных списка, с разным лимитом, по одному запросу.
   // Таким образом происходит кэширование данных.
@@ -31,11 +39,21 @@ const PostContainer2 = () => {
   // И при загрузке данных и при создании поста, поле ошибки называется error, а
   // поле индикации загрузки - isLoading. Чтобы не было путаницы, мы прямо здесь,
   // через двоеточие, меняем название.
+
+  // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ createPost
   const [createPost, { error: createError, isLoading: createIsLoading }] = postAPI.useCreatePostMutation();
 
-  // Воспользуемся хуками, автоматически сгенерированными по именам эндпоинтов: deletePost и updatePost
+  // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ deletePost
   const [deletePost, { error: deleteError }] = postAPI.useDeletePostMutation();
+
+  // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ updatePost
   const [updatePost, { error: updateError }] = postAPI.useUpdatePostMutation();
+
+  useEffect(() => {
+    setTimeout(() => {
+      setLimit(3);
+    }, 2000);
+  }, [limit]);
 
   // аргументом в асинхронную функцию createPost() нам надо передать объект типа IPost
   // и поскольку ID у нас будет генерировать сервер, явно укажем, что объект as IPost
@@ -54,6 +72,21 @@ const PostContainer2 = () => {
   return (
     <div>
       <h3 className="textCenter mb-2">Список пользователей</h3>
+
+      <div className="containerButton mb-4">
+        <Button onClick={() => refetch()} variant="outline-success">
+          REFETCH
+        </Button>
+      </div>
+
+      <Row>
+        <Card className="mb-4">
+          <h6>
+            Работу функции refetch() наблюдаем в рабочей консоле, в вкладке "Сеть". Счётчик запросов (Запросы: 37)
+            увеличивается с каждым кликом по кнопке.
+          </h6>
+        </Card>
+      </Row>
 
       <div className="containerButton">
         <Button variant="outline-success" onClick={handleCreate}>
@@ -104,7 +137,9 @@ const PostContainer2 = () => {
       {/* Добавляем проверку: если у нас есть посты, и они не undefined  */}
       <div className="post">
         {posts &&
-          posts.map((post) => <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />)}
+          posts.map((post: IPost) => (
+            <PostItem key={post.id} post={post} remove={handleRemove} update={handleUpdate} />
+          ))}
       </div>
     </div>
   );
