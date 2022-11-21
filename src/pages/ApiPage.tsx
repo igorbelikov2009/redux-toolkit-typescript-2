@@ -1,6 +1,7 @@
 import React, { FC, useState } from "react";
 import { Container, Row, Col } from "react-bootstrap";
 import ButtonsBlock from "../components/ButtonsBlock";
+import CommentApiContainer from "../components/forApiPage/CommentApiContainer";
 import PostCombinedContainer from "../components/forApiPage/PostCombinedContainer";
 
 import PostContainer2 from "../components/forApiPage/PostContainer2";
@@ -79,7 +80,7 @@ const ApiPage: FC = () => {
 
         <ButtonsBlock buttons={buttons} />
       </Container>
-
+      {comments && <CommentApiContainer />}
       {postCombined && <PostCombinedContainer />}
       {todos && <TodoContainer />}
     </div>

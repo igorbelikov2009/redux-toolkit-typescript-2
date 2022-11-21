@@ -14,6 +14,7 @@ import postAsuncThunkReducer from "./reducers/PostAsuncThunkSlice";
 import commentAsyncThunkReducer from "./reducers/CommentAsyncThunkSlice";
 import todoAsyncThunkReducer from "./reducers/TodoAsyncThunkSlice";
 import counterReducer from "./reducers/CounterSlice";
+import { commentAPI } from "../services/CommentService";
 
 // Создаём корневой редюсер, состоящий из комбинации всех редюсеров
 const rootReducer = combineReducers({
@@ -31,12 +32,15 @@ const rootReducer = combineReducers({
   photoAsuncThunkReducer,
   counterReducer,
 
-  // Регистрируем редюсер с PostSerice.ts как ключ-значение
+  // Регистрируем редюсер с PostService.ts как ключ-значение
   //               ключ: значение
   [postAPI.reducerPath]: postAPI.reducer,
-  // Регистрируем редюсер с TodoSerice.ts как ключ-значение
+  // Регистрируем редюсер с TodoService.ts как ключ-значение
   //               ключ: значение
   [todoAPI.reducerPath]: todoAPI.reducer,
+  // Регистрируем редюсер с CommentService.ts как ключ-значение
+  //               ключ: значение
+  [commentAPI.reducerPath]: commentAPI.reducer,
 });
 
 // Создаём функцию setupStore, с помощью её мы будем конфигурировать
@@ -47,7 +51,9 @@ export const setupStore = () => {
     reducer: rootReducer,
     // Добавляем к дефолтному мидлвееру, методом concat(), мидлвеер из нашего postAPI.
     // Затем, методом concat(), добавляем мидлвеер из нашего todoAPI
-    middleware: (getDefaultMiddleware) => getDefaultMiddleware().concat(postAPI.middleware).concat(todoAPI.middleware),
+    // Затем, методом concat(), добавляем мидлвеер из нашего commentAPI
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().concat(postAPI.middleware).concat(todoAPI.middleware).concat(commentAPI.middleware),
   });
 };
 
