@@ -112,13 +112,18 @@
 .mt-6 {
   margin-top: 6rem;
 }
-
 .textCenter {
   text-align: center;
+}
+.fontBold {
+  font-weight: bold;
 }
 .colorBlue {
   color: blue;
 }
 .colorRed {
   color: red;
+}
+.colorGreen {
+  color: green;
 }

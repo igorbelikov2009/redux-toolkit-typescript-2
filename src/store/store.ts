@@ -15,6 +15,7 @@ import commentAsyncThunkReducer from "./reducers/CommentAsyncThunkSlice";
 import todoAsyncThunkReducer from "./reducers/TodoAsyncThunkSlice";
 import counterReducer from "./reducers/CounterSlice";
 import { commentAPI } from "../services/CommentService";
+import { albumAPI } from "../services/AlbumService";
 
 // Создаём корневой редюсер, состоящий из комбинации всех редюсеров
 const rootReducer = combineReducers({
@@ -41,6 +42,8 @@ const rootReducer = combineReducers({
   // Регистрируем редюсер с CommentService.ts как ключ-значение
   //               ключ: значение
   [commentAPI.reducerPath]: commentAPI.reducer,
+  // Регистрируем редюсер с AlbumService.ts
+  [albumAPI.reducerPath]: albumAPI.reducer,
 });
 
 // Создаём функцию setupStore, с помощью её мы будем конфигурировать
@@ -53,7 +56,11 @@ export const setupStore = () => {
     // Затем, методом concat(), добавляем мидлвеер из нашего todoAPI
     // Затем, методом concat(), добавляем мидлвеер из нашего commentAPI
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(postAPI.middleware).concat(todoAPI.middleware).concat(commentAPI.middleware),
+      getDefaultMiddleware()
+        .concat(postAPI.middleware)
+        .concat(todoAPI.middleware)
+        .concat(commentAPI.middleware)
+        .concat(albumAPI.middleware),
   });
 };
 

@@ -36,16 +36,6 @@ const PostCombinedContainer: FC = () => {
       </Row>
 
       <Row>
-        <Card className="mb-4">
-          <h3 className="textCenter">Подымаем сервер этого приложения на порту 5000 командой </h3>
-          <h4 className="textCenter">
-            в терминале
-            <i className=" colorRed"> json-server --watch db.json --port 5000</i>
-          </h4>
-        </Card>
-      </Row>
-
-      <Row>
         <Col md={6}>
           <PostContainer2 />
         </Col>

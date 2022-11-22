@@ -24,7 +24,7 @@ const CommentItem: FC<CommentItemProps> = ({ comment, update, remove }) => {
   };
 
   return (
-    <Card key={comment.id} onClick={handleUpdate}>
+    <Card onClick={handleUpdate}>
       <div className="cardBlock">
         <div className="cardDescription">
           <i>

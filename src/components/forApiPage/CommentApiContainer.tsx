@@ -72,16 +72,6 @@ const CommentApiContainer: FC = () => {
       </Row>
 
       <Row>
-        <Card className="mb-4">
-          <h3 className="textCenter">Подымаем сервер этого приложения на порту 5000 командой </h3>
-          <h4 className="textCenter">
-            в терминале
-            <i className=" colorRed"> json-server --watch db.json --port 5000 </i>
-          </h4>
-        </Card>
-      </Row>
-
-      <Row>
         <div>
           <h3 className="textCenter">Список комментов от пользователей из commentAPI</h3>
 
