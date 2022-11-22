@@ -3,6 +3,7 @@ import { Container, Row, Card } from "react-bootstrap";
 import ButtonsBlock from "../components/ButtonsBlock";
 import AlbumApiContainer from "../components/forApiPage/AlbumApiContainer";
 import CommentApiContainer from "../components/forApiPage/CommentApiContainer";
+import PhotoApiContainer from "../components/forApiPage/PhotoApiContainer";
 import PostCombinedContainer from "../components/forApiPage/PostCombinedContainer";
 
 import TodoContainer from "../components/forApiPage/TodoContainer";
@@ -157,6 +158,7 @@ const ApiPage: FC = () => {
       {postCombined && <PostCombinedContainer />}
       {todos && <TodoContainer />}
       {albums && <AlbumApiContainer />}
+      {photos && <PhotoApiContainer />}
     </div>
   );
 };

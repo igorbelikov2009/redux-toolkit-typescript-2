@@ -4,20 +4,39 @@ import { Card, Button } from "react-bootstrap";
 
 interface AlbumItemProps {
   album: IAlbum;
+  update: (album: IAlbum) => void;
+  remove: (album: IAlbum) => void;
 }
 
-const AlbumItem: FC<AlbumItemProps> = ({ album }) => {
+const AlbumItem: FC<AlbumItemProps> = ({ album, update, remove }) => {
+  const handleUpdate = (event: React.MouseEvent) => {
+    const userId = prompt("Введите номер пользователя") || "";
+    const title = prompt("Введите название альбома") || "";
+    update({ ...album, userId, title });
+  };
+
+  const handleRemove = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    remove(album);
+  };
+
   return (
-    <Card>
+    <Card onClick={handleUpdate}>
       <div className="cardBlock">
-        <div className="cardDescription">
+        <div className="cardPhoto">
+          <img className="albumImage" src={album.imgUri} alt="avatar" />
+        </div>
+
+        <div className="cardPhotoDescription">
           <i>
             <b> {album.userId}. </b> {album.title}
           </i>
         </div>
 
         <div className="cardButton">
-          <Button variant="outline-primary">Удалить</Button>
+          <Button onClick={handleRemove} variant="outline-primary">
+            Удалить
+          </Button>
         </div>
       </div>
     </Card>

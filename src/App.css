@@ -46,10 +46,17 @@
 .cardBlock {
   width: 100%;
   display: flex;
+  justify-content: space-between;
+}
+.cardPhoto {
+  width: 64px;
 }
 .cardDescription {
   width: calc(75% - 24px);
   /* width: 75%; */
+}
+.cardPhotoDescription {
+  width: calc(75% - 88px);
 }
 .cardButton {
   width: 25%;
@@ -57,7 +64,10 @@
   justify-content: center;
   align-items: center;
 }
-
+.albumImage {
+  width: 64px;
+  height: 64px;
+}
 .containerButton {
   width: 100%;
   display: flex;

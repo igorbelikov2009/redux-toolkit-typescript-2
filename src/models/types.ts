@@ -1,7 +1,7 @@
 import { LocationDescriptor } from "history";
 
 export interface IPost {
-  userId?: number;
+  userId?: number | string | null;
   id: number;
   title: string;
   body: string;
@@ -16,13 +16,14 @@ export interface IComment {
 }
 
 export interface IAlbum {
-  userId: number;
+  userId: number | string | null;
   id: number;
-  title: string;
+  title: string | null;
+  imgUri?: string;
 }
 
 export interface IPhoto {
-  albomId: number;
+  albomId: number | string | null;
   id: number;
   title: string;
   url: string;
@@ -30,14 +31,14 @@ export interface IPhoto {
 }
 
 export interface ITodo {
-  userId?: number;
+  userId?: number | string | null;
   id: number;
   title: string;
   completed: boolean;
 }
 
 export interface IUser {
-  id: number;
+  id: number | string | null;
   name: string;
   username: string;
   email: string;
@@ -60,9 +61,14 @@ export interface IRoute {
   path: string;
   Component: React.FC<{}>;
 }
+
 export interface INavbarButton {
   id: number;
   route: LocationDescriptor<unknown>;
   title: string;
   active: boolean;
+}
+
+export interface IAvatar {
+  avatarUrl: string;
 }
