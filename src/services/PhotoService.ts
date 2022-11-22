@@ -21,6 +21,36 @@ export const photoAPI = createApi({
       }),
       providesTags: (result) => ["Photo"],
     }),
+
+    // Эндпоинт создания фото:___
+    createPhoto: build.mutation<IPhoto, IPhoto>({
+      query: (photo) => ({
+        url: "/photos",
+        method: "POST",
+        body: photo,
+      }),
+      invalidatesTags: ["Photo"],
+    }),
+
+    // Эндпоинт обновления фото:___
+    updatePhoto: build.mutation<IPhoto, IPhoto>({
+      query: (photo) => ({
+        // указываем id фото, который мы ходим обновить
+        url: `/photos/${photo.id}`,
+        method: "PUT",
+        body: photo,
+      }),
+      invalidatesTags: ["Photo"],
+    }),
+
+    // Эндпоинт удаления фото:___
+    deletePhoto: build.mutation<IPhoto, IPhoto>({
+      query: (photo) => ({
+        url: `/photos/${photo.id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Photo"],
+    }),
   }),
 });
 

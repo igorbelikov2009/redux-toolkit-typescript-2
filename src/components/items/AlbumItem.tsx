@@ -29,7 +29,8 @@ const AlbumItem: FC<AlbumItemProps> = ({ album, update, remove }) => {
 
         <div className="cardPhotoDescription">
           <i>
-            <b> {album.userId}. </b> {album.title}
+            <b>{album.id}. </b>
+            {album.title}
           </i>
         </div>
 

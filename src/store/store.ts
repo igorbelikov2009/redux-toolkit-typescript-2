@@ -1,3 +1,4 @@
+import { userAPI } from "./../services/UserService";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { postAPI } from "../services/PostService";
 import { todoAPI } from "../services/TodoService";
@@ -46,6 +47,7 @@ const rootReducer = combineReducers({
   // Регистрируем редюсер с AlbumService.ts
   [albumAPI.reducerPath]: albumAPI.reducer,
   [photoAPI.reducerPath]: photoAPI.reducer,
+  [userAPI.reducerPath]: userAPI.reducer,
 });
 
 // Создаём функцию setupStore, с помощью её мы будем конфигурировать
@@ -63,7 +65,8 @@ export const setupStore = () => {
         .concat(todoAPI.middleware)
         .concat(commentAPI.middleware)
         .concat(albumAPI.middleware)
-        .concat(photoAPI.middleware),
+        .concat(photoAPI.middleware)
+        .concat(userAPI.middleware),
   });
 };
 

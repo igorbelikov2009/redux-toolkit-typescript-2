@@ -28,7 +28,7 @@ const NavBar: FC = () => {
             key={button.id}
             onClick={() => {
               history.push(button.route);
-              console.log(index, button.id);
+              // console.log(index, button.id);
             }}
           >
             {button.title}

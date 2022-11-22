@@ -7,6 +7,7 @@ import PhotoApiContainer from "../components/forApiPage/PhotoApiContainer";
 import PostCombinedContainer from "../components/forApiPage/PostCombinedContainer";
 
 import TodoContainer from "../components/forApiPage/TodoContainer";
+import UserApiContainer from "../components/forApiPage/UserApiContainer";
 
 const ApiPage: FC = () => {
   const [startPage, setStartPage] = useState<boolean>(true);
@@ -159,6 +160,7 @@ const ApiPage: FC = () => {
       {todos && <TodoContainer />}
       {albums && <AlbumApiContainer />}
       {photos && <PhotoApiContainer />}
+      {users && <UserApiContainer />}
     </div>
   );
 };

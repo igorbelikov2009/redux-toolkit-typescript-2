@@ -23,7 +23,7 @@ export interface IAlbum {
 }
 
 export interface IPhoto {
-  albomId: number | string | null;
+  albumId: number | string | null;
   id: number;
   title: string;
   url: string;
@@ -44,16 +44,21 @@ export interface IUser {
   email: string;
   phone: string;
   website: string;
-
   address: {
     street: string;
     suite: string;
     city: string;
     zipcode: string;
+    geo?: {
+      lat: string | null;
+      lng: string | null;
+    };
   };
 
   company: {
     name: string;
+    catchPhrase?: string | null;
+    bs?: string | null;
   };
 }
 

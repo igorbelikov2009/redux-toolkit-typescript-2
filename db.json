@@ -86,13 +86,6 @@
     },
     {
       "postId": 3,
-      "id": 13,
-      "name": "aut inventore non pariatur sit vitae voluptatem sapiente",
-      "email": "Kariane@jadyn.tv",
-      "body": "fuga eos qui dolor rerum\ninventore corporis exercitationem\ncorporis cupiditate et deserunt recusandae est sed quis culpa\neum maiores corporis et"
-    },
-    {
-      "postId": 3,
       "id": 14,
       "name": "et officiis id praesentium hic aut ipsa dolorem repudiandae",
       "email": "Nathan@solon.io",
@@ -134,12 +127,6 @@
       "body": "doloribus est illo sed minima aperiam\nut dignissimos accusantium tempore atque et aut molestiae\nmagni ut accusamus voluptatem quos ut voluptates\nquisquam porro sed architecto ut"
     },
     {
-      "email": "igor@ss.oo",
-      "name": "Надо учиться",
-      "body": "Надо хорошо учиться",
-      "id": 23
-    },
-    {
       "postId": "2",
       "email": "OLGA",
       "name": "Path",
@@ -147,62 +134,7 @@
       "id": 24
     }
   ],
-  "albums": [
-    {
-      "userId": "123",
-      "id": 2,
-      "title": "My Working",
-      "imgUri": "https://i.pravatar.cc/"
-    },
-    {
-      "userId": 1,
-      "id": 3,
-      "title": "omnis laborum odio",
-      "imgUri": "https://i.pravatar.cc/"
-    },
-    {
-      "userId": 1,
-      "id": 4,
-      "title": "non esse culpa molestiae omnis sed optio",
-      "imgUri": "https://i.pravatar.cc/"
-    },
-    {
-      "userId": 1,
-      "id": 5,
-      "title": "eaque aut omnis a",
-      "imgUri": "https://i.pravatar.cc/"
-    },
-    {
-      "userId": 1,
-      "id": 6,
-      "title": "natus impedit quibusdam illo est",
-      "imgUri": "https://i.pravatar.cc/"
-    },
-    {
-      "userId": 1,
-      "id": 7,
-      "title": "quibusdam autem aliquid et et quia",
-      "imgUri": "https://i.pravatar.cc/"
-    },
-    {
-      "userId": 1,
-      "id": 8,
-      "title": "qui fuga est a eum",
-      "imgUri": "https://i.pravatar.cc/"
-    },
-    {
-      "userId": "125 My fish",
-      "title": "ffffffffff",
-      "id": 9,
-      "imgUri": "https://i.pravatar.cc/"
-    },
-    {
-      "userId": "128",
-      "title": "My kapli",
-      "id": 10,
-      "imgUri": "https://i.pravatar.cc/"
-    }
-  ],
+  "albums": [],
   "products": [
     {
       "id": 1,
@@ -445,111 +377,231 @@
       }
     }
   ],
-  "photos": [
+  "photos": [],
+  "users": [
     {
-      "albumId": 1,
-      "id": 1,
-      "title": "accusamus beatae ad facilis cum similique qui sunt",
-      "url": "https://via.placeholder.com/600/92c952",
-      "thumbnailUrl": "https://via.placeholder.com/150/92c952"
-    },
-    {
-      "albumId": 1,
       "id": 2,
-      "title": "reprehenderit est deserunt velit ipsam",
-      "url": "https://via.placeholder.com/600/771796",
-      "thumbnailUrl": "https://via.placeholder.com/150/771796"
+      "name": "Ervin Howell",
+      "username": "Antonette",
+      "email": "Shanna@melissa.tv",
+      "address": {
+        "street": "Victor Plains",
+        "suite": "Suite 879",
+        "city": "Wisokyburgh",
+        "zipcode": "90566-7771",
+        "geo": {
+          "lat": "-43.9509",
+          "lng": "-34.4618"
+        }
+      },
+      "phone": "010-692-6593 x09125",
+      "website": "anastasia.net",
+      "company": {
+        "name": "Deckow-Crist",
+        "catchPhrase": "Proactive didactic contingency",
+        "bs": "synergize scalable supply-chains"
+      }
     },
     {
-      "albumId": 1,
       "id": 3,
-      "title": "officia porro iure quia iusto qui ipsa ut modi",
-      "url": "https://via.placeholder.com/600/24f355",
-      "thumbnailUrl": "https://via.placeholder.com/150/24f355"
+      "name": "Clementine Bauch",
+      "username": "Samantha",
+      "email": "Nathan@yesenia.net",
+      "address": {
+        "street": "Douglas Extension",
+        "suite": "Suite 847",
+        "city": "McKenziehaven",
+        "zipcode": "59590-4157",
+        "geo": {
+          "lat": "-68.6102",
+          "lng": "-47.0653"
+        }
+      },
+      "phone": "1-463-123-4447",
+      "website": "ramiro.info",
+      "company": {
+        "name": "Romaguera-Jacobson",
+        "catchPhrase": "Face to face bifurcated interface",
+        "bs": "e-enable strategic applications"
+      }
     },
     {
-      "albumId": 1,
       "id": 4,
-      "title": "culpa odio esse rerum omnis laboriosam voluptate repudiandae",
-      "url": "https://via.placeholder.com/600/d32776",
-      "thumbnailUrl": "https://via.placeholder.com/150/d32776"
+      "name": "Patricia Lebsack",
+      "username": "Karianne",
+      "email": "Julianne.OConner@kory.org",
+      "address": {
+        "street": "Hoeger Mall",
+        "suite": "Apt. 692",
+        "city": "South Elvis",
+        "zipcode": "53919-4257",
+        "geo": {
+          "lat": "29.4572",
+          "lng": "-164.2990"
+        }
+      },
+      "phone": "493-170-9623 x156",
+      "website": "kale.biz",
+      "company": {
+        "name": "Robel-Corkery",
+        "catchPhrase": "Multi-tiered zero tolerance productivity",
+        "bs": "transition cutting-edge web services"
+      }
     },
     {
-      "albumId": 1,
       "id": 5,
-      "title": "natus nisi omnis corporis facere molestiae rerum in",
-      "url": "https://via.placeholder.com/600/f66b97",
-      "thumbnailUrl": "https://via.placeholder.com/150/f66b97"
+      "name": "Chelsey Dietrich",
+      "username": "Kamren",
+      "email": "Lucio_Hettinger@annie.ca",
+      "address": {
+        "street": "Skiles Walks",
+        "suite": "Suite 351",
+        "city": "Roscoeview",
+        "zipcode": "33263",
+        "geo": {
+          "lat": "-31.8129",
+          "lng": "62.5342"
+        }
+      },
+      "phone": "(254)954-1289",
+      "website": "demarco.info",
+      "company": {
+        "name": "Keebler LLC",
+        "catchPhrase": "User-centric fault-tolerant solution",
+        "bs": "revolutionize end-to-end systems"
+      }
     },
     {
-      "albumId": 1,
-      "id": 6,
-      "title": "accusamus ea aliquid et amet sequi nemo",
-      "url": "https://via.placeholder.com/600/56a8c2",
-      "thumbnailUrl": "https://via.placeholder.com/150/56a8c2"
-    },
-    {
-      "albumId": 1,
       "id": 7,
-      "title": "officia delectus consequatur vero aut veniam explicabo molestias",
-      "url": "https://via.placeholder.com/600/b0f7cc",
-      "thumbnailUrl": "https://via.placeholder.com/150/b0f7cc"
+      "name": "Kurtis Weissnat",
+      "username": "Elwyn.Skiles",
+      "email": "Telly.Hoeger@billy.biz",
+      "address": {
+        "street": "Rex Trail",
+        "suite": "Suite 280",
+        "city": "Howemouth",
+        "zipcode": "58804-1099",
+        "geo": {
+          "lat": "24.8918",
+          "lng": "21.8984"
+        }
+      },
+      "phone": "210.067.6132",
+      "website": "elvis.io",
+      "company": {
+        "name": "Johns Group",
+        "catchPhrase": "Configurable multimedia task-force",
+        "bs": "generate enterprise e-tailers"
+      }
     },
     {
-      "albumId": 1,
       "id": 8,
-      "title": "aut porro officiis laborum odit ea laudantium corporis",
-      "url": "https://via.placeholder.com/600/54176f",
-      "thumbnailUrl": "https://via.placeholder.com/150/54176f"
+      "name": "Nicholas Runolfsdottir V",
+      "username": "Maxime_Nienow",
+      "email": "Sherwood@rosamond.me",
+      "address": {
+        "street": "Ellsworth Summit",
+        "suite": "Suite 729",
+        "city": "Aliyaview",
+        "zipcode": "45169",
+        "geo": {
+          "lat": "-14.3990",
+          "lng": "-120.7677"
+        }
+      },
+      "phone": "586.493.6943 x140",
+      "website": "jacynthe.com",
+      "company": {
+        "name": "Abernathy Group",
+        "catchPhrase": "Implemented secondary concept",
+        "bs": "e-enable extensible e-tailers"
+      }
     },
     {
-      "albumId": 1,
       "id": 9,
-      "title": "qui eius qui autem sed",
-      "url": "https://via.placeholder.com/600/51aa97",
-      "thumbnailUrl": "https://via.placeholder.com/150/51aa97"
+      "name": "Glenna Reichert",
+      "username": "Delphine",
+      "email": "Chaim_McDermott@dana.io",
+      "address": {
+        "street": "Dayna Park",
+        "suite": "Suite 449",
+        "city": "Bartholomebury",
+        "zipcode": "76495-3109",
+        "geo": {
+          "lat": "24.6463",
+          "lng": "-168.8889"
+        }
+      },
+      "phone": "(775)976-6794 x41206",
+      "website": "conrad.com",
+      "company": {
+        "name": "Yost and Sons",
+        "catchPhrase": "Switchable contextually-based project",
+        "bs": "aggregate real-time technologies"
+      }
     },
     {
-      "albumId": 1,
       "id": 10,
-      "title": "beatae et provident et ut vel",
-      "url": "https://via.placeholder.com/600/810b14",
-      "thumbnailUrl": "https://via.placeholder.com/150/810b14"
+      "name": "Clementina DuBuque",
+      "username": "Moriah.Stanton",
+      "email": "Rey.Padberg@karina.biz",
+      "address": {
+        "street": "Kattie Turnpike",
+        "suite": "Suite 198",
+        "city": "Lebsackbury",
+        "zipcode": "31428-2261",
+        "geo": {
+          "lat": "-38.2386",
+          "lng": "57.2232"
+        }
+      },
+      "phone": "024-648-3804",
+      "website": "ambrose.net",
+      "company": {
+        "name": "Hoeger LLC",
+        "catchPhrase": "Centralized empowering task-force",
+        "bs": "target end-to-end models"
+      }
     },
     {
-      "albumId": 1,
-      "id": 11,
-      "title": "nihil at amet non hic quia qui",
-      "url": "https://via.placeholder.com/600/1ee8a4",
-      "thumbnailUrl": "https://via.placeholder.com/150/1ee8a4"
+      "name": "dgagf",
+      "username": "gffsdf",
+      "email": "ffsdfs",
+      "phone": "fshs",
+      "website": "dfgsdf",
+      "address": {
+        "street": "agdf",
+        "suite": "afgadf",
+        "city": "agfadfg",
+        "zipcode": "asgdadf"
+      },
+      "company": {
+        "name": "dgagf"
+      },
+      "id": 11
     },
     {
-      "albumId": 1,
-      "id": 12,
-      "title": "mollitia soluta ut rerum eos aliquam consequatur perspiciatis maiores",
-      "url": "https://via.placeholder.com/600/66b7d2",
-      "thumbnailUrl": "https://via.placeholder.com/150/66b7d2"
-    },
-    {
-      "albumId": 1,
-      "id": 13,
-      "title": "repudiandae iusto deleniti rerum",
-      "url": "https://via.placeholder.com/600/197d29",
-      "thumbnailUrl": "https://via.placeholder.com/150/197d29"
-    },
-    {
-      "albumId": 1,
-      "id": 14,
-      "title": "est necessitatibus architecto ut laborum",
-      "url": "https://via.placeholder.com/600/61a65",
-      "thumbnailUrl": "https://via.placeholder.com/150/61a65"
-    },
-    {
-      "albumId": 1,
-      "id": 15,
-      "title": "harum dicta similique quis dolore earum ex qui",
-      "url": "https://via.placeholder.com/600/f9cee5",
-      "thumbnailUrl": "https://via.placeholder.com/150/f9cee5"
+      "name": "Жанна",
+      "username": "Дарк",
+      "email": "емайл",
+      "phone": "11111184898",
+      "website": "фыпфвапф.ру",
+      "address": {
+        "street": "врыап",
+        "suite": "ыапрыапры",
+        "city": "ырпыапрыап",
+        "zipcode": "ыпрыапрыап",
+        "geo": {
+          "lat": "ыпрыапрыап",
+          "lng": "ыапрыапрыа"
+        }
+      },
+      "company": {
+        "name": "прыапрыап",
+        "catchPhrase": "ыапрыапрыап",
+        "bs": "ыпрыапр"
+      },
+      "id": 12
     }
   ]
 }

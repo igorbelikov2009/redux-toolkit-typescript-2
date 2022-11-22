@@ -3,30 +3,28 @@ import { IPhoto } from "../../models/types";
 import Card from "react-bootstrap/Card";
 import { Button } from "react-bootstrap";
 
-interface PhotoItemProps {
+interface PhotoItemApiProps {
   photo: IPhoto;
-  // update: (photo: IPhoto) => void;
-  // remove: (photo: IPhoto) => void;
+  update: (photo: IPhoto) => void;
+  remove: (photo: IPhoto) => void;
 }
 
-// const PhotoItem: FC<PhotoItemProps> = ({ photo, update, remove }) => {
-//   const handleUpdate = (event: React.MouseEvent) => {
-//     const albumId = prompt("Введите номер альбома") || "";
-//     const title = prompt("Введите название фото") || "";
-//     const url = prompt("Введите url фото") || "";
-//     const thumbnailUrl = prompt("Введите thumbnailUrl фото") || "";
-//     update({ ...photo, albumId, title, url, thumbnailUrl });
-//   };
+const PhotoItemApi: FC<PhotoItemApiProps> = ({ photo, update, remove }) => {
+  const handleUpdate = (event: React.MouseEvent) => {
+    const albumId = prompt("Введите номер альбома") || "";
+    const title = prompt("Введите название фото") || "";
+    const url = prompt("Введите url фото") || "";
+    const thumbnailUrl = prompt("Введите thumbnailUrl фото") || "";
+    update({ ...photo, albumId, title, url, thumbnailUrl });
+  };
 
-//   const handleRemove = (event: React.MouseEvent) => {
-//     event.stopPropagation();
-//     remove(photo);
-//   };
+  const handleRemove = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    remove(photo);
+  };
 
-const PhotoItem: FC<PhotoItemProps> = ({ photo }) => {
-  // onClick={handleUpdate}
   return (
-    <Card className="post">
+    <Card className="post" onClick={handleUpdate}>
       <div className="cardBlock">
         <div className="cardDescription">
           <Card.Title>
@@ -57,9 +55,8 @@ const PhotoItem: FC<PhotoItemProps> = ({ photo }) => {
           </i>
         </div>
 
-        {/* onClick={handleRemove} */}
         <div className="cardButton">
-          <Button variant="outline-danger" className="mt-2 ">
+          <Button variant="outline-danger" className="mt-2 " onClick={handleRemove}>
             Удалить
           </Button>
         </div>
@@ -68,4 +65,4 @@ const PhotoItem: FC<PhotoItemProps> = ({ photo }) => {
   );
 };
 
-export default PhotoItem;
+export default PhotoItemApi;
