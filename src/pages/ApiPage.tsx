@@ -162,7 +162,7 @@ const ApiPage: FC = () => {
       {albums && <AlbumApiContainer />}
       {photos && <PhotoApiContainer />}
       {users && <UserApiContainer />}
-      <ProductApiContainer />
+      {products && <ProductApiContainer />}
     </div>
   );
 };

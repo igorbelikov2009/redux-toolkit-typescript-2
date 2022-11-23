@@ -87,6 +87,18 @@
   text-decoration: none;
 }
 
+.containerImageProduct {
+  width: 100%;
+  display: flex;
+  /* justify-content: center; */
+}
+.sizeImgProduct {
+  width: 100%;
+  max-width: 16.6667%;
+  height: auto;
+  margin: auto;
+}
+
 .mb-1 {
   margin-bottom: 1rem;
 }

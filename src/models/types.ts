@@ -73,15 +73,15 @@ export interface INavbarButton {
   active: boolean;
 }
 
-export interface IProducts {
+export interface IProduct {
   id: number;
   title: string;
-  price: number;
+  price: number | string;
   description: string;
   category: string;
   image: string;
   rating: {
-    rate: number;
-    count: number;
+    rate: number | string;
+    count: number | string;
   };
 }
