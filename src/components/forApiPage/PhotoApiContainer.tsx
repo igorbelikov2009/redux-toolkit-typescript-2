@@ -12,11 +12,10 @@ const PhotoApiContainer: FC = () => {
   const [deletePhoto, { error: deleteError }] = photoAPI.useDeletePhotoMutation();
 
   const handleCreate = async () => {
-    const albumId = prompt("Введите номер альбома") || "";
     const title = prompt("Введите название фото") || "";
     const url = prompt("Введите url фото") || "";
     const thumbnailUrl = prompt("Введите thumbnailUrl фото") || "";
-    await createPhoto({ albumId, title, url, thumbnailUrl } as IPhoto);
+    await createPhoto({ title, url, thumbnailUrl } as IPhoto);
   };
 
   const handleUpdate = (photo: IPhoto) => {

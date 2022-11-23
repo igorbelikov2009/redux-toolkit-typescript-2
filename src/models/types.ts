@@ -23,7 +23,7 @@ export interface IAlbum {
 }
 
 export interface IPhoto {
-  albumId: number | string | null;
+  albumId?: number | string | null;
   id: number;
   title: string;
   url: string;

@@ -11,11 +11,10 @@ interface PhotoItemApiProps {
 
 const PhotoItemApi: FC<PhotoItemApiProps> = ({ photo, update, remove }) => {
   const handleUpdate = (event: React.MouseEvent) => {
-    const albumId = prompt("Введите номер альбома") || "";
     const title = prompt("Введите название фото") || "";
     const url = prompt("Введите url фото") || "";
     const thumbnailUrl = prompt("Введите thumbnailUrl фото") || "";
-    update({ ...photo, albumId, title, url, thumbnailUrl });
+    update({ ...photo, title, url, thumbnailUrl });
   };
 
   const handleRemove = (event: React.MouseEvent) => {
@@ -28,12 +27,8 @@ const PhotoItemApi: FC<PhotoItemApiProps> = ({ photo, update, remove }) => {
       <div className="cardBlock">
         <div className="cardDescription">
           <Card.Title>
-            <i> Из альбома №: </i> <b> {photo.albumId} </b>
-          </Card.Title>
-
-          <i className="displayBlock">
             <i> фото № </i> <b> {photo.id}</b>
-          </i>
+          </Card.Title>
 
           <i className="displayBlock">
             <i>

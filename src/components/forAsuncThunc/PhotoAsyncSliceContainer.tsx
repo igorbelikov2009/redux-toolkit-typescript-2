@@ -1,8 +1,6 @@
 import React, { FC, useEffect } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-import { IPhoto } from "../../models/types";
 import { fetchAsyncThunkPhotos } from "../../store/reducers/ActionCreater";
 import PhotoItem from "../items/PhotoItem";
 
@@ -15,14 +13,6 @@ const PhotoAsyncSliceContainer: FC = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  // const handleUpdate: () => void = () => {
-  //   console.log("handleUpdate");
-  // };
-
-  // const handleRemove: () => void = () => {
-  //   console.log("handleRemove");
-  // };
-
   return (
     <Container>
       <Row>
@@ -33,10 +23,7 @@ const PhotoAsyncSliceContainer: FC = () => {
 
           {error && <h1>{error} </h1>}
 
-          {photos?.map((photo) => (
-            // <PhotoItem photo={photo} key={photo.id} update={handleUpdate} remove={handleRemove} />
-            <PhotoItem photo={photo} key={photo.id} />
-          ))}
+          {photos && photos.map((photo) => <PhotoItem photo={photo} key={photo.id} />)}
         </div>
       </Row>
     </Container>
