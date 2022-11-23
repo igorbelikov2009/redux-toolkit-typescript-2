@@ -32,9 +32,18 @@ const AlbumSliceContainer: FC = () => {
 
           {albums.map((album) => (
             <Card key={album.id}>
-              <i>
-                <b> {album.userId}</b> {album.title}
-              </i>
+              <div className="cardBlock">
+                <div className="cardPhoto">
+                  <img className="albumImage" src="https://i.pravatar.cc/" alt="avatar" />
+                </div>
+
+                <div className="cardPhotoDescription">
+                  <i>
+                    <b>{album.id}. </b>
+                    {album.title}
+                  </i>
+                </div>
+              </div>
             </Card>
           ))}
         </div>

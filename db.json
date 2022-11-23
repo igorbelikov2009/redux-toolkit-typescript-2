@@ -134,7 +134,124 @@
       "id": 24
     }
   ],
-  "albums": [],
+  "albums": [
+    {
+      "id": 1,
+      "title": "quidem molestiae enim"
+    },
+    {
+      "id": 2,
+      "title": "sunt qui excepturi placeat culpa"
+    },
+    {
+      "id": 4,
+      "title": "non esse culpa molestiae omnis sed optio"
+    },
+    {
+      "id": 5,
+      "title": "eaque aut omnis a"
+    },
+    {
+      "id": 6,
+      "title": "natus impedit quibusdam illo est"
+    },
+    {
+      "id": 7,
+      "title": "quibusdam autem aliquid et et quia"
+    },
+    {
+      "id": 8,
+      "title": "qui fuga est a eum"
+    },
+    {
+      "id": 9,
+      "title": "saepe unde necessitatibus rem"
+    },
+    {
+      "id": 10,
+      "title": "distinctio laborum qui"
+    },
+    {
+      "id": 11,
+      "title": "quam nostrum impedit mollitia quod et dolor"
+    },
+    {
+      "id": 12,
+      "title": "consequatur autem doloribus natus consectetur"
+    },
+    {
+      "id": 13,
+      "title": "ab rerum non rerum consequatur ut ea unde"
+    },
+    {
+      "id": 14,
+      "title": "ducimus molestias eos animi atque nihil"
+    },
+    {
+      "id": 15,
+      "title": "ut pariatur rerum ipsum natus repellendus praesentium"
+    },
+    {
+      "id": 16,
+      "title": "voluptatem aut maxime inventore autem magnam atque repellat"
+    },
+    {
+      "id": 17,
+      "title": "aut minima voluptatem ut velit"
+    },
+    {
+      "id": 18,
+      "title": "nesciunt quia et doloremque"
+    },
+    {
+      "id": 19,
+      "title": "velit pariatur quaerat similique libero omnis quia"
+    },
+    {
+      "id": 20,
+      "title": "voluptas rerum iure ut enim"
+    },
+    {
+      "id": 21,
+      "title": "repudiandae voluptatem optio est consequatur rem in temporibus et"
+    },
+    {
+      "id": 22,
+      "title": "et rem non provident vel ut"
+    },
+    {
+      "id": 23,
+      "title": "incidunt quisquam hic adipisci sequi"
+    },
+    {
+      "id": 24,
+      "title": "dolores ut et facere placeat"
+    },
+    {
+      "id": 25,
+      "title": "vero maxime id possimus sunt neque et consequatur"
+    },
+    {
+      "id": 26,
+      "title": "quibusdam saepe ipsa vel harum"
+    },
+    {
+      "id": 27,
+      "title": "id non nostrum expedita"
+    },
+    {
+      "id": 28,
+      "title": "omnis neque exercitationem sed dolor atque maxime aut cum"
+    },
+    {
+      "id": 29,
+      "title": "inventore ut quasi magnam itaque est fugit"
+    },
+    {
+      "id": 30,
+      "title": "tempora assumenda et similique odit distinctio error"
+    }
+  ],
   "products": [
     {
       "id": 1,

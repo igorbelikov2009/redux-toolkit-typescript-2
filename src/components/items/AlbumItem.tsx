@@ -10,9 +10,8 @@ interface AlbumItemProps {
 
 const AlbumItem: FC<AlbumItemProps> = ({ album, update, remove }) => {
   const handleUpdate = (event: React.MouseEvent) => {
-    const userId = prompt("Введите номер пользователя") || "";
     const title = prompt("Введите название альбома") || "";
-    update({ ...album, userId, title });
+    update({ ...album, title });
   };
 
   const handleRemove = (event: React.MouseEvent) => {
@@ -24,7 +23,7 @@ const AlbumItem: FC<AlbumItemProps> = ({ album, update, remove }) => {
     <Card onClick={handleUpdate}>
       <div className="cardBlock">
         <div className="cardPhoto">
-          <img className="albumImage" src={album.imgUri} alt="avatar" />
+          <img className="albumImage" src="https://i.pravatar.cc/" alt="avatar" />
         </div>
 
         <div className="cardPhotoDescription">

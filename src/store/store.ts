@@ -1,3 +1,4 @@
+import { productAPI } from "./../services/ProductsService";
 import { userAPI } from "./../services/UserService";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
 import { postAPI } from "../services/PostService";
@@ -48,6 +49,7 @@ const rootReducer = combineReducers({
   [albumAPI.reducerPath]: albumAPI.reducer,
   [photoAPI.reducerPath]: photoAPI.reducer,
   [userAPI.reducerPath]: userAPI.reducer,
+  [productAPI.reducerPath]: productAPI.reducer,
 });
 
 // Создаём функцию setupStore, с помощью её мы будем конфигурировать
@@ -66,7 +68,8 @@ export const setupStore = () => {
         .concat(commentAPI.middleware)
         .concat(albumAPI.middleware)
         .concat(photoAPI.middleware)
-        .concat(userAPI.middleware),
+        .concat(userAPI.middleware)
+        .concat(productAPI.middleware),
   });
 };
 

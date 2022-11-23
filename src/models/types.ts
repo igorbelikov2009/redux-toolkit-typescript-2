@@ -16,7 +16,6 @@ export interface IComment {
 }
 
 export interface IAlbum {
-  userId: number | string | null;
   id: number;
   title: string | null;
   imgUri?: string;
@@ -74,6 +73,15 @@ export interface INavbarButton {
   active: boolean;
 }
 
-export interface IAvatar {
-  avatarUrl: string;
+export interface IProducts {
+  id: number;
+  title: string;
+  price: number;
+  description: string;
+  category: string;
+  image: string;
+  rating: {
+    rate: number;
+    count: number;
+  };
 }

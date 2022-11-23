@@ -18,9 +18,8 @@ const AlbumApiContainer: FC = () => {
   const [deleteAlbum, { isLoading: deleteIsLoading }] = albumAPI.useDeleteAlbumMutation();
 
   const handleCreate = async () => {
-    const userId = prompt("Введите номер пользователя") || "";
     const title = prompt("Введите название альбома") || "";
-    await createAlbum({ userId, title } as IAlbum);
+    await createAlbum({ title } as IAlbum);
   };
 
   const handleUpdate = (album: IAlbum) => {
