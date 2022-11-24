@@ -1,8 +1,7 @@
 import React, { FC, useEffect } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Container, Row, Card } from "react-bootstrap";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { fetchAsyncThunkTodos } from "../../store/reducers/ActionCreater";
-import TodoItem from "../items/TodoItem";
 
 const TodoAsyncSliceContainer: FC = () => {
   const dispatch = useAppDispanch();
@@ -26,7 +25,29 @@ const TodoAsyncSliceContainer: FC = () => {
 
             <div>
               {todos?.map((todo) => (
-                <TodoItem key={todo.id} todo={todo} />
+                <Card className="post">
+                  <div className="cardBlock">
+                    <div className="cardDescription">
+                      <Card.Title>
+                        <i> У пользователя под номером: </i> <b> {todo.userId} </b>
+                      </Card.Title>
+
+                      <i className="displayBlock">
+                        <i> дело № </i> <b> {todo.id}</b>
+                      </i>
+
+                      <i className="displayBlock">
+                        <i> описание дела: </i> <b> {todo.title} </b>
+                      </i>
+
+                      <i className="displayBlock">
+                        <span className={todo.completed ? "colorBlue textLine" : "colorRed"}>
+                          {todo.completed ? "Выполнено" : "Не выполнено"}
+                        </span>
+                      </i>
+                    </div>
+                  </div>
+                </Card>
               ))}
             </div>
           </div>

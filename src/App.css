@@ -164,6 +164,9 @@
 .textCenter {
   text-align: center;
 }
+.textLine {
+  text-decoration: line-through;
+}
 .fontBold {
   font-weight: bold;
 }

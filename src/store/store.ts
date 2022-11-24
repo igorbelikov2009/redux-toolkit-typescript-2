@@ -50,6 +50,7 @@ const rootReducer = combineReducers({
   [photoAPI.reducerPath]: photoAPI.reducer,
   [userAPI.reducerPath]: userAPI.reducer,
   [productAPI.reducerPath]: productAPI.reducer,
+  [todoAPI.reducerPath]: todoAPI.reducer,
 });
 
 // Создаём функцию setupStore, с помощью её мы будем конфигурировать
@@ -69,7 +70,8 @@ export const setupStore = () => {
         .concat(albumAPI.middleware)
         .concat(photoAPI.middleware)
         .concat(userAPI.middleware)
-        .concat(productAPI.middleware),
+        .concat(productAPI.middleware)
+        .concat(todoAPI.middleware),
   });
 };
 

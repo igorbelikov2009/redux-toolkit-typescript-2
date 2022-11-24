@@ -4,7 +4,7 @@ import { ITodo } from "../models/types";
 
 export const todoAPI = createApi({
   reducerPath: "todoApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "https://jsonplaceholder.typicode.com/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),
   endpoints: (builder) => ({
     fetchAllTodos: builder.query<ITodo[], number>({
       query: (limit: number = 10) => ({
