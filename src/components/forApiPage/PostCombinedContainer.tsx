@@ -1,11 +1,25 @@
 import React, { FC } from "react";
-import { Container, Row, Col, Card } from "react-bootstrap";
+import { Container, Row, Col, Card, Button } from "react-bootstrap";
 import PostContainer2 from "./PostContainer2";
 import PostContainer3 from "./PostContainer3";
 
-const PostCombinedContainer: FC = () => {
+interface PostCombinedContainerProps {
+  topOfPage: () => void;
+}
+
+const PostCombinedContainer: FC<PostCombinedContainerProps> = ({ topOfPage }) => {
+  const handleTransition = () => {
+    topOfPage();
+  };
+
   return (
     <Container className="card">
+      <div className="containerButton">
+        <Button variant="outline-info mr-4 mb-4" onClick={handleTransition}>
+          В начало страницы services createApi()
+        </Button>
+      </div>
+
       <Row>
         <Card>
           <p>

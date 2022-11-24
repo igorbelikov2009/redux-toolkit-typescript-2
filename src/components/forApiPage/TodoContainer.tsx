@@ -1,9 +1,14 @@
 import React, { FC, useState } from "react";
-import { Container, Row, Card } from "react-bootstrap";
+import { Container, Row } from "react-bootstrap";
 import { todoAPI } from "../../services/TodoService";
 import TodoItem from "../items/TodoItem";
+import { Button } from "react-bootstrap";
 
-const TodoContainer: FC = () => {
+interface TodoContainerProps {
+  topOfPage: () => void;
+}
+
+const TodoContainer: FC<TodoContainerProps> = ({ topOfPage }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [limit, setLimit] = useState(100);
   // параметр 100 - это мы задаём значение для limit
@@ -25,8 +30,17 @@ const TodoContainer: FC = () => {
   // своего рода - аналог вэбсокетов.
   const { data: todos, error, isLoading } = todoAPI.useFetchAllTodosQuery(limit, { pollingInterval: 1000 });
 
+  const handleTransition = () => {
+    topOfPage();
+  };
+
   return (
     <Container className="card">
+      <div className="containerButton">
+        <Button variant="outline-info mr-4 mb-4" onClick={handleTransition}>
+          В начало страницы services createApi()
+        </Button>
+      </div>
       <Row>
         <div>
           <h1 className="textCenter">Список дел пользователей</h1>

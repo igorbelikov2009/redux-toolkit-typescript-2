@@ -4,7 +4,11 @@ import { IUser } from "../../models/types";
 import { userAPI } from "../../services/UserService";
 import UserItem from "../items/UserItem";
 
-const UserApiContainer: FC = () => {
+interface UserApiContainerProps {
+  topOfPage: () => void;
+}
+
+const UserApiContainer: FC<UserApiContainerProps> = ({ topOfPage }) => {
   const { data: users, error, isLoading } = userAPI.useFetchAllUsersQuery(20);
   const [createUser, { isError }] = userAPI.useCreateUserMutation();
   const [updateUser, { isError: updateIsError }] = userAPI.useUpdateUserMutation();
@@ -46,6 +50,10 @@ const UserApiContainer: FC = () => {
     deleteUser(user);
   };
 
+  const handleTransition = () => {
+    topOfPage();
+  };
+
   return (
     <Container className="card">
       <Row>
@@ -54,6 +62,10 @@ const UserApiContainer: FC = () => {
             <h1 className="textCenter">Список пользователей из userAPI</h1>
 
             <div className="containerButton">
+              <Button variant="outline-info mr-4 mb-4" onClick={handleTransition}>
+                В начало страницы services createApi()
+              </Button>
+
               <Button variant="outline-success mb-4" onClick={handleCreate}>
                 Добавить нового пользователя
               </Button>

@@ -65,6 +65,13 @@ export interface IRoute {
   path: string;
   Component: React.FC<{}>;
 }
+export interface IButton {
+  id: number;
+  handle: () => void;
+  title: string;
+  active: boolean;
+  variant?: string | undefined;
+}
 
 export interface INavbarButton {
   id: number;

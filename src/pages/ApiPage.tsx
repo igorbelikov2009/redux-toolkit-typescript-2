@@ -9,9 +9,10 @@ import ProductApiContainer from "../components/forApiPage/ProductApiContainer";
 
 import TodoContainer from "../components/forApiPage/TodoContainer";
 import UserApiContainer from "../components/forApiPage/UserApiContainer";
+import { IButton } from "../models/types";
 
 const ApiPage: FC = () => {
-  const [startPage, setStartPage] = useState<boolean>(true);
+  const [startPage, setStartPage] = useState<boolean>(true); // true
   const [postCombined, setPostCombined] = useState<boolean>(false);
   const [users, setUsers] = useState<boolean>(false);
   const [comments, setComments] = useState<boolean>(false);
@@ -33,54 +34,54 @@ const ApiPage: FC = () => {
 
   const handlePostsCombined: () => void = () => {
     handlersAllFalse();
-    setPostCombined(true);
+    setPostCombined((prev) => !prev);
   };
   const handleComments: () => void = () => {
     handlersAllFalse();
-    setComments(true);
+    setComments((prev) => !prev);
   };
   const handleAlbums: () => void = () => {
     handlersAllFalse();
-    setAlbums(true);
+    setAlbums((prev) => !prev);
   };
   const handleTodos: () => void = () => {
     handlersAllFalse();
-    setTodos(true);
+    setTodos((prev) => !prev);
   };
   const handleUsers: () => void = () => {
     handlersAllFalse();
-    setUsers(true);
+    setUsers((prev) => !prev);
   };
   const handlePhotos: () => void = () => {
     handlersAllFalse();
-    setPhotos(true);
+    setPhotos((prev) => !prev);
   };
   const handleProducts: () => void = () => {
     handlersAllFalse();
-    setProducts(true);
+    setProducts((prev) => !prev);
+  };
+  const handleTransition: () => void = () => {
+    handlersAllFalse();
+    setStartPage(true);
   };
 
-  interface IButton {
-    id: number;
-    handle: () => void;
-    title: string;
-  }
-
   const buttons: IButton[] = [
-    { id: 1, handle: handlePostsCombined, title: "postsCombined" },
-    { id: 2, handle: handleComments, title: "comments" },
-    { id: 3, handle: handleAlbums, title: "albums" },
-    { id: 4, handle: handlePhotos, title: "photos" },
-    { id: 5, handle: handleTodos, title: "todos" },
-    { id: 6, handle: handleUsers, title: "users" },
-    { id: 7, handle: handleProducts, title: "products" },
+    { id: 1, handle: handlePostsCombined, title: "postsCombined", active: postCombined, variant: "outline-primary" },
+    { id: 2, handle: handleComments, title: "comments", active: comments, variant: "outline-primary" },
+    { id: 3, handle: handleAlbums, title: "albums", active: albums, variant: "outline-primary" },
+    { id: 4, handle: handlePhotos, title: "photos", active: photos, variant: "outline-primary" },
+    { id: 5, handle: handleTodos, title: "todos", active: todos, variant: "outline-primary" },
+    { id: 6, handle: handleUsers, title: "users", active: users, variant: "outline-primary" },
+    { id: 7, handle: handleProducts, title: "products", active: products, variant: "outline-primary" },
   ];
 
   return (
     <div className="mt-6">
       <Container className="card">
+        <ButtonsBlock buttons={buttons} />
+
         {startPage && (
-          <div>
+          <div className="mt-4">
             <Row>
               <h2 className="textCenter mb-4 ">Используем ApiPage</h2>
             </Row>
@@ -152,17 +153,15 @@ const ApiPage: FC = () => {
             </Row>
           </div>
         )}
-
-        <ButtonsBlock buttons={buttons} />
       </Container>
 
-      {comments && <CommentApiContainer />}
-      {postCombined && <PostCombinedContainer />}
-      {todos && <TodoContainer />}
-      {albums && <AlbumApiContainer />}
-      {photos && <PhotoApiContainer />}
-      {users && <UserApiContainer />}
-      {products && <ProductApiContainer />}
+      {comments && <CommentApiContainer topOfPage={handleTransition} />}
+      {postCombined && <PostCombinedContainer topOfPage={handleTransition} />}
+      {todos && <TodoContainer topOfPage={handleTransition} />}
+      {albums && <AlbumApiContainer topOfPage={handleTransition} />}
+      {photos && <PhotoApiContainer topOfPage={handleTransition} />}
+      {users && <UserApiContainer topOfPage={handleTransition} />}
+      {products && <ProductApiContainer topOfPage={handleTransition} />}
     </div>
   );
 };

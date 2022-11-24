@@ -4,7 +4,11 @@ import { Container, Row, Button } from "react-bootstrap";
 import AlbumItem from "../items/AlbumItem";
 import { IAlbum } from "../../models/types";
 
-const AlbumApiContainer: FC = () => {
+interface AlbumApiContainerProps {
+  topOfPage: () => void;
+}
+
+const AlbumApiContainer: FC<AlbumApiContainerProps> = ({ topOfPage }) => {
   // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ fetchAllAlbums
   const { data: albums, error, isLoading } = albumAPI.useFetchAllAlbumsQuery(25);
 
@@ -29,6 +33,10 @@ const AlbumApiContainer: FC = () => {
     deleteAlbum(album);
   };
 
+  const handleTransition = () => {
+    topOfPage();
+  };
+
   return (
     <Container className="card">
       <Row>
@@ -36,6 +44,10 @@ const AlbumApiContainer: FC = () => {
           <h3 className="textCenter">Список альбомов из albumAPI </h3>
 
           <div className="containerButton">
+            <Button variant="outline-info mr-4" onClick={handleTransition}>
+              В начало страницы services createApi()
+            </Button>
+
             <Button variant="outline-success" onClick={handleCreate}>
               Добавить новый альбом
             </Button>

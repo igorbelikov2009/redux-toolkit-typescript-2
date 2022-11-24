@@ -1,15 +1,16 @@
 import React, { FC, useState } from "react";
 import UserAsyncSliceContainer from "../components/forAsuncThunc/UserAsyncSliceContainer";
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
 import { Container, Row } from "react-bootstrap";
 import PostAsyncSliceContainer from "../components/forAsuncThunc/PostAsyncSliceContainer";
 import CommentAsyncSliceContainer from "../components/forAsuncThunc/CommentAsyncSliceContainer";
 import AlbumAsyncSliceContainer from "../components/forAsuncThunc/AlbumAsyncSliceContainer";
 import TodoAsyncSliceContainer from "../components/forAsuncThunc/TodoAsyncSliceContainer";
 import PhotoAsyncSliceContainer from "../components/forAsuncThunc/PhotoAsyncSliceContainer";
+import { IButton } from "../models/types";
+import ButtonsBlock from "../components/ButtonsBlock";
 
 const AsyncThunkPage: FC = () => {
+  const [startPage, setStartPage] = useState<boolean>(true); // true
   const [posts, setPosts] = useState<boolean>(false);
   const [users, setUsers] = useState<boolean>(false);
   const [comments, setComments] = useState<boolean>(false);
@@ -18,6 +19,7 @@ const AsyncThunkPage: FC = () => {
   const [photos, setPhotos] = useState<boolean>(false);
 
   const handlersAllFalse: () => void = () => {
+    setStartPage(false);
     setPosts(false);
     setComments(false);
     setUsers(false);
@@ -28,45 +30,45 @@ const AsyncThunkPage: FC = () => {
 
   const handlePosts: () => void = () => {
     handlersAllFalse();
-    setPosts(true);
+    setPosts((prev) => !prev);
   };
   const handleComments: () => void = () => {
     handlersAllFalse();
-    setComments(true);
+    setComments((prev) => !prev);
   };
   const handleAlbums: () => void = () => {
     handlersAllFalse();
-    setAlbums(true);
+    setAlbums((prev) => !prev);
   };
 
   const handleTodos: () => void = () => {
     handlersAllFalse();
-    setTodos(true);
+    setTodos((prev) => !prev);
   };
 
   const handleUsers: () => void = () => {
     handlersAllFalse();
-    setUsers(true);
+    setUsers((prev) => !prev);
   };
 
   const handlePhotos: () => void = () => {
     handlersAllFalse();
-    setPhotos(true);
+    setPhotos((prev) => !prev);
   };
 
-  interface IButton {
-    id: number;
-    handle: () => void;
-    title: string;
-  }
+  const handleTransition: () => void = () => {
+    handlersAllFalse();
+    setStartPage(true);
+  };
 
   const buttons: IButton[] = [
-    { id: 0, handle: handlePosts, title: "posts" },
-    { id: 1, handle: handleComments, title: "comments" },
-    { id: 2, handle: handleAlbums, title: "albums" },
-    { id: 3, handle: handlePhotos, title: "photos" },
-    { id: 4, handle: handleTodos, title: "todos" },
-    { id: 5, handle: handleUsers, title: "users" },
+    { id: 0, handle: handlePosts, title: "posts", active: posts, variant: "outline-primary" },
+    { id: 1, handle: handleComments, title: "comments", active: comments, variant: "outline-primary" },
+    { id: 2, handle: handleAlbums, title: "albums", active: almums, variant: "outline-primary" },
+    { id: 3, handle: handlePhotos, title: "photos", active: photos, variant: "outline-primary" },
+    { id: 4, handle: handleTodos, title: "todos", active: todos, variant: "outline-primary" },
+    { id: 5, handle: handleUsers, title: "users", active: users, variant: "outline-primary" },
+    { id: 6, handle: handleTransition, title: "На верх страницы", active: startPage, variant: "outline-dark" },
   ];
   return (
     <div className="mt-6">
@@ -74,13 +76,8 @@ const AsyncThunkPage: FC = () => {
         <Row>
           <h2 className="textCenter mb-4"> Используем createSlice() и createAsyncThunk() </h2>
         </Row>
-        <ButtonGroup aria-label="Basic example">
-          {buttons.map((button) => (
-            <Button key={button.id} onClick={button.handle} variant="outline-primary">
-              {button.title}
-            </Button>
-          ))}
-        </ButtonGroup>
+
+        <ButtonsBlock buttons={buttons} />
       </Container>
 
       {posts && <PostAsyncSliceContainer />}

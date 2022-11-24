@@ -1,11 +1,14 @@
 import React, { FC } from "react";
 import { photoAPI } from "../../services/PhotoService";
 import { Container, Row, Button } from "react-bootstrap";
-// import PhotoItem from "../items/PhotoItem";
 import { IPhoto } from "../../models/types";
 import PhotoItemApi from "../items/PhotoItemApi";
 
-const PhotoApiContainer: FC = () => {
+interface PhotoApiContainerProps {
+  topOfPage: () => void;
+}
+
+const PhotoApiContainer: FC<PhotoApiContainerProps> = ({ topOfPage }) => {
   const { data: photos, isLoading, error } = photoAPI.useFetchAllPhotosQuery(25);
   const [createPhoto, { isError: createIsError }] = photoAPI.useCreatePhotoMutation();
   const [updatePhoto, { isError: updateError }] = photoAPI.useUpdatePhotoMutation();
@@ -26,6 +29,10 @@ const PhotoApiContainer: FC = () => {
     deletePhoto(photo);
   };
 
+  const handleTransition = () => {
+    topOfPage();
+  };
+
   return (
     <Container className="card">
       <Row>
@@ -33,6 +40,10 @@ const PhotoApiContainer: FC = () => {
           <h3 className="textCenter">Список фоток из photoAPI</h3>
 
           <div className="containerButton">
+            <Button variant="outline-info mr-4" onClick={handleTransition}>
+              В начало страницы services createApi()
+            </Button>
+
             <Button variant="outline-success" onClick={handleCreate}>
               Добавить новое фото
             </Button>

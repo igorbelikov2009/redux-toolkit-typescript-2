@@ -4,7 +4,11 @@ import { IComment } from "../../models/types";
 import { commentAPI } from "../../services/CommentService";
 import CommentItem from "../items/CommentItem";
 
-const CommentApiContainer: FC = () => {
+interface CommentApiContainerProps {
+  topOfPage: () => void;
+}
+
+const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [limit, setLimit] = useState(100);
 
@@ -54,9 +58,17 @@ const CommentApiContainer: FC = () => {
     deleteComment(comment);
   };
 
+  const handleTransition = () => {
+    topOfPage();
+  };
+
   return (
     <Container className="card">
       <div className="containerButton mb-4">
+        <Button variant="outline-info mr-4" onClick={handleTransition}>
+          В начало страницы services createApi()
+        </Button>
+
         <Button onClick={() => refetch()} variant="outline-success">
           REFETCH
         </Button>

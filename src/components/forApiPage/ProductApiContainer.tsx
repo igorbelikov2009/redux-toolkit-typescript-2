@@ -4,8 +4,12 @@ import { IProduct } from "../../models/types";
 import { productAPI } from "../../services/ProductsService";
 import ProductItem from "../items/ProductItem";
 
-const ProductApiContainer: FC = () => {
-  const { data: products, error, isLoading } = productAPI.useFetchAllProductsQuery(10);
+interface ProductApiContainerProps {
+  topOfPage: () => void;
+}
+
+const ProductApiContainer: FC<ProductApiContainerProps> = ({ topOfPage }) => {
+  const { data: products, error, isLoading } = productAPI.useFetchAllProductsQuery(30);
   const [createProduct, { error: createError }] = productAPI.useCreateProductMutation();
   const [updateProduct, { error: updateError }] = productAPI.useUpdateProductMutation();
   const [deleteProduct, { error: deleteError }] = productAPI.useDeleteProductMutation();
@@ -29,13 +33,22 @@ const ProductApiContainer: FC = () => {
     deleteProduct(product);
   };
 
+  const handleTransition = () => {
+    topOfPage();
+  };
+
   return (
     <Container>
       <Row>
         <div>
           <div>
             <h3 className="textCenter"> Список продуктов из productAPI.</h3>
+
             <div className="containerButton">
+              <Button variant="outline-info mr-4 mb-4" onClick={handleTransition}>
+                В начало страницы services createApi()
+              </Button>
+
               <Button variant="outline-success mb-4" onClick={handleCreate}>
                 Добавить новый продукт
               </Button>

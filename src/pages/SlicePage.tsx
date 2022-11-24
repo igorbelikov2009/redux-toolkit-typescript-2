@@ -1,7 +1,5 @@
 import React, { FC, useState } from "react";
 import UserSliceContainer from "../components/forSlice/UserSliceContainer";
-//
-
 import { Container, Row } from "react-bootstrap";
 import PostSliceContainer from "../components/forSlice/PostSliceContainer";
 import CommentSliceContainer from "../components/forSlice/CommentSliceContainer";
@@ -9,8 +7,10 @@ import AlbumSliceContainer from "../components/forSlice/AlbumSliceContainer";
 import TodoSliceContainer from "../components/forSlice/TodoSliceContainer";
 import PhotoSliceContainer from "../components/forSlice/PhotoSliceContainer";
 import ButtonsBlock from "../components/ButtonsBlock";
+import { IButton } from "../models/types";
 
 const SlicePage: FC = () => {
+  const [startPage, setStartPage] = useState<boolean>(true); // true
   const [posts, setPosts] = useState<boolean>(false);
   const [users, setUsers] = useState<boolean>(false);
   const [comments, setComments] = useState<boolean>(false);
@@ -19,6 +19,7 @@ const SlicePage: FC = () => {
   const [photos, setPhotos] = useState<boolean>(false);
 
   const handlersAllFalse: () => void = () => {
+    setStartPage(false);
     setPosts(false);
     setComments(false);
     setUsers(false);
@@ -29,45 +30,45 @@ const SlicePage: FC = () => {
 
   const handlePosts: () => void = () => {
     handlersAllFalse();
-    setPosts(true);
+    setPosts((prev) => !prev);
   };
   const handleComments: () => void = () => {
     handlersAllFalse();
-    setComments(true);
+    setComments((prev) => !prev);
   };
   const handleAlbums: () => void = () => {
     handlersAllFalse();
-    setAlbums(true);
+    setAlbums((prev) => !prev);
   };
 
   const handleTodos: () => void = () => {
     handlersAllFalse();
-    setTodos(true);
+    setTodos((prev) => !prev);
   };
 
   const handleUsers: () => void = () => {
     handlersAllFalse();
-    setUsers(true);
+    setUsers((prev) => !prev);
   };
 
   const handlePhotos: () => void = () => {
     handlersAllFalse();
-    setPhotos(true);
+    setPhotos((prev) => !prev);
   };
 
-  interface IButton {
-    id: number;
-    handle: () => void;
-    title: string;
-  }
+  const handleTransition: () => void = () => {
+    handlersAllFalse();
+    setStartPage(true);
+  };
 
   const buttons: IButton[] = [
-    { id: 0, handle: handlePosts, title: "posts" },
-    { id: 1, handle: handleComments, title: "comments" },
-    { id: 2, handle: handleAlbums, title: "albums" },
-    { id: 3, handle: handlePhotos, title: "photos" },
-    { id: 4, handle: handleTodos, title: "todos" },
-    { id: 5, handle: handleUsers, title: "users" },
+    { id: 0, handle: handlePosts, title: "posts", active: posts, variant: "outline-primary" },
+    { id: 1, handle: handleComments, title: "comments", active: comments, variant: "outline-primary" },
+    { id: 2, handle: handleAlbums, title: "albums", active: albums, variant: "outline-primary" },
+    { id: 3, handle: handlePhotos, title: "photos", active: photos, variant: "outline-primary" },
+    { id: 4, handle: handleTodos, title: "todos", active: todos, variant: "outline-primary" },
+    { id: 5, handle: handleUsers, title: "users", active: users, variant: "outline-primary" },
+    { id: 6, handle: handleTransition, title: "На верх страницы", active: startPage, variant: "outline-dark" },
   ];
 
   return (
@@ -76,14 +77,6 @@ const SlicePage: FC = () => {
         <Row>
           <h2 className="textCenter mb-4"> Используем createSlice() </h2>
         </Row>
-
-        {/* <ButtonGroup aria-label="Basic example">
-          {buttons.map((button) => (
-            <Button key={button.id} onClick={button.handle} variant="outline-primary">
-              {button.title}
-            </Button>
-          ))}
-        </ButtonGroup> */}
 
         <ButtonsBlock buttons={buttons} />
       </Container>

@@ -30,8 +30,9 @@ const ProductItem: FC<ProductItemProps> = ({ product, update, remove }) => {
     remove(product);
   };
 
+  //  onClick={handleUpdate}
   return (
-    <Card className="card" onClick={handleUpdate}>
+    <Card className="card">
       <Card.Title>
         <b> Название: </b> {product.title}
       </Card.Title>
@@ -52,9 +53,9 @@ const ProductItem: FC<ProductItemProps> = ({ product, update, remove }) => {
 
       <div className="containerImageProduct card">
         <img className="sizeImgProduct mb-3" src={product.image} alt="product" />
-        <i className="displayBlock">
+        {/* <i className="displayBlock">
           <b> url: </b> {product.image};
-        </i>
+        </i> */}
       </div>
 
       <div className="containerButton">
@@ -76,6 +77,10 @@ const ProductItem: FC<ProductItemProps> = ({ product, update, remove }) => {
       <div className="cardButton">
         <Button onClick={handleRemove} variant="outline-primary">
           Удалить
+        </Button>
+
+        <Button onClick={handleUpdate} variant="outline-warning ml-2">
+          Обновить
         </Button>
       </div>
     </Card>
