@@ -25,16 +25,12 @@ const TodoAsyncSliceContainer: FC = () => {
 
             <div>
               {todos?.map((todo) => (
-                <Card className="post">
+                <Card className="post" key={todo.id}>
                   <div className="cardBlock">
                     <div className="cardDescription">
                       <Card.Title>
-                        <i> У пользователя под номером: </i> <b> {todo.userId} </b>
+                        <i> дело № </i> <b> {todo.id} </b>
                       </Card.Title>
-
-                      <i className="displayBlock">
-                        <i> дело № </i> <b> {todo.id}</b>
-                      </i>
 
                       <i className="displayBlock">
                         <i> описание дела: </i> <b> {todo.title} </b>

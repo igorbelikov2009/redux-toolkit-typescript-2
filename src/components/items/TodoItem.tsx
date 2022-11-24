@@ -5,11 +5,19 @@ import { Button } from "react-bootstrap";
 
 interface TodoItemProps {
   todo: ITodo;
+  remove: (todo: ITodo) => void;
+  update: (todo: ITodo) => void;
 }
 
-const TodoItem: FC<TodoItemProps> = ({ todo }) => {
-  const deleteTodo = () => {
-    console.log("deleteTodo ");
+const TodoItem: FC<TodoItemProps> = ({ todo, remove, update }) => {
+  const handleRemove = (event: React.MouseEvent) => {
+    event.stopPropagation();
+    remove(todo);
+  };
+
+  const handleCheckbox = (event: React.ChangeEvent) => {
+    let completed = !todo.completed;
+    update({ ...todo, completed });
   };
 
   return (
@@ -17,24 +25,24 @@ const TodoItem: FC<TodoItemProps> = ({ todo }) => {
       <div className="cardBlock">
         <div className="cardDescription">
           <Card.Title>
-            <i> У пользователя под номером: </i> <b> {todo.userId} </b>
+            <i> дело № </i> <b> {todo.id} </b>
           </Card.Title>
-
-          <i className="displayBlock">
-            <i> дело № </i> <b> {todo.id}</b>
-          </i>
 
           <i className="displayBlock">
             <i> описание дела: </i> <b> {todo.title} </b>
           </i>
 
+          <input type="checkbox" checked={todo.completed} onChange={handleCheckbox} />
+
           <i className="displayBlock">
-            <b className={todo.completed ? "colorBlue" : "colorRed"}>{todo.completed ? "Выполнено" : "Не выполнено"}</b>
+            <span className={todo.completed ? "colorBlue textLine" : "colorRed"}>
+              {todo.completed ? "Выполнено" : "Не выполнено"}
+            </span>
           </i>
         </div>
 
         <div className="cardButton">
-          <Button variant="outline-danger" className="mt-2 " onClick={() => deleteTodo()}>
+          <Button variant="outline-danger" className="mt-2 " onClick={handleRemove}>
             Удалить
           </Button>
         </div>

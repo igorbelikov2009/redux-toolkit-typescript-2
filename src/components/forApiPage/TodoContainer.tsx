@@ -3,6 +3,7 @@ import { Container, Row } from "react-bootstrap";
 import { todoAPI } from "../../services/TodoService";
 import TodoItem from "../items/TodoItem";
 import { Button } from "react-bootstrap";
+import { ITodo } from "../../models/types";
 
 interface TodoContainerProps {
   topOfPage: () => void;
@@ -29,7 +30,23 @@ const TodoContainer: FC<TodoContainerProps> = ({ topOfPage }) => {
   // ежесекундно получаем обновлённые данные. Это можно использовать в чатах, уведомлениях,
   // своего рода - аналог вэбсокетов.
   const { data: todos, error, isLoading } = todoAPI.useFetchAllTodosQuery(limit, { pollingInterval: 1000 });
+  const [createTodo, { error: createError }] = todoAPI.useCreateTodoMutation();
+  const [updateTodo, { error: updateError }] = todoAPI.useUpdateTodoMutation();
+  const [deleteTodo, { error: deleteError }] = todoAPI.useDeleteTodoMutation();
 
+  const handleCreate = async () => {
+    const title = prompt("Введите название дела") || "";
+    const completed = false;
+
+    await createTodo({ title, completed } as ITodo);
+  };
+
+  const handleUpdate = (todo: ITodo) => {
+    updateTodo(todo);
+  };
+  const handleRemove = (todo: ITodo) => {
+    deleteTodo(todo);
+  };
   const handleTransition = () => {
     topOfPage();
   };
@@ -40,11 +57,16 @@ const TodoContainer: FC<TodoContainerProps> = ({ topOfPage }) => {
         <Button variant="outline-info mr-4 mb-4" onClick={handleTransition}>
           В начало страницы services createApi()
         </Button>
+
+        <Button variant="outline-success mb-4" onClick={handleCreate}>
+          Добавить новое дело
+        </Button>
       </div>
       <Row>
         <div>
           <h1 className="textCenter">Список дел пользователей</h1>
           {isLoading && <h1> Идёт загрузка</h1>}
+
           <div>
             <>
               {error && (
@@ -52,12 +74,27 @@ const TodoContainer: FC<TodoContainerProps> = ({ topOfPage }) => {
                   <> Произошла ошибка при загрузке. </>
                 </h1>
               )}
+              {createError && (
+                <h1>
+                  <> Произошла ошибка при создании. </>
+                </h1>
+              )}
+              {deleteError && (
+                <h1>
+                  <> Произошла ошибка при удалении. </>
+                </h1>
+              )}
+              {updateError && (
+                <h1>
+                  <> Произошла ошибка при обновлении. </>
+                </h1>
+              )}
             </>
           </div>
 
           <div className="post">
             {todos?.map((todo) => (
-              <TodoItem key={todo.id} todo={todo} />
+              <TodoItem key={todo.id} todo={todo} remove={handleRemove} update={handleUpdate} />
             ))}
           </div>
         </div>
