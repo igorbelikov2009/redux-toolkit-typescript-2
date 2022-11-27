@@ -1,22 +1,34 @@
-import React, { FC, useEffect } from "react";
+import React, { FC, useEffect, useState } from "react";
 import { Container, Row } from "react-bootstrap";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
-import { fetchTodosSepar } from "../../store/todoSeparSlice";
+import { addNewTodo, fetchTodosSepar } from "../../store/todoSeparSlice";
 import TodoSeparItem from "../items/TodoSeparItem";
+import NewTodoForm from "./NewTodoForm";
 
 const TodoSeparAsyncSliceContainer: FC = () => {
+  const [text, setText] = useState("");
+
   const dispatch = useAppDispanch();
   const { todos, status, error } = useAppSelector((state) => state.todoSeparReducer);
   // console.log(todos, status, error);
+
+  const handleAction = () => {
+    if (text.trim().length) {
+      dispatch(addNewTodo(text));
+      setText("");
+    }
+  };
 
   useEffect(() => {
     dispatch(fetchTodosSepar());
   }, [dispatch]);
 
-  // const handleRemove = () => {};
-  // const handleUpdate = () => {};
   return (
     <Container>
+      <div className="containerButton ">
+        <NewTodoForm value={text} updateText={setText} handleAction={handleAction} />
+      </div>
+
       <Row>
         <div>
           <h2 className="textCenter mb-4">Список дел пользователя из todoSeparReducer</h2>

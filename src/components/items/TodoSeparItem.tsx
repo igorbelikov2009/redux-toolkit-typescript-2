@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import Card from "react-bootstrap/Card";
 import { Button } from "react-bootstrap";
 import { useAppDispanch } from "../../hooks/redux";
-import { deleteTodo } from "../../store/todoSeparSlice";
+import { deleteTodo, toggledStatus } from "../../store/todoSeparSlice";
 
 interface TodoItemProps {
   userId?: number | string | null;
@@ -20,8 +20,7 @@ const TodoSeparItem: FC<TodoItemProps> = ({ id, title, completed, userId }) => {
   };
 
   const handleCheckbox = (event: React.ChangeEvent) => {
-    // let completed = !completed;
-    // update({ ...todo, completed });
+    dispatch(toggledStatus(id));
   };
 
   return (

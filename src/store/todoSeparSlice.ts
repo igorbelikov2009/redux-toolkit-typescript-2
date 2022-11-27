@@ -46,9 +46,80 @@ export const deleteTodo = createAsyncThunk(
   }
 );
 
+// <any, number, { state: ??????? }>
+export const toggledStatus = createAsyncThunk<any, number, { state: any }>(
+  "todo/toggledStatus",
+  async function (id: number, { rejectWithValue, dispatch, getState }) {
+    // Получаем общий state из getState()
+    // Для каждого todo, найди тот todo, у которого его id равен тому id, который мы получили
+    // в качестве параметров функции.
+    // ApiState = typeof todoSeparReducer
+    const todo = getState().todoSeparReducer.todos.find((todo: ITodo) => todo.id === id);
+    // console.log(todo);
+
+    try {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          // Возьми у этого todo поле completed и сделай ему инверсию.
+          completed: !todo.completed,
+        }),
+      });
+
+      if (!response.ok) {
+        throw new Error("Не могу переключить статус checkbox. Ошибка на сервере.");
+      }
+      dispatch(toogleTodoCompleted({ id }));
+      // Мы ожидаем от сервера ответ в виде изменённых данных для проверки:
+      // const data = await response.json();
+      // console.log(data);
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addNewTodo = createAsyncThunk(
+  "todo/addNewTodo",
+  async function (text: string, { rejectWithValue, dispatch }) {
+    try {
+      // Сначала, создаём здесь объект, который будем отправлять на сервер.
+      // По типу ITodo: id - создаётся автоматически, userId - захаркодим.
+      // Так, как задача новая, то всегда completed: false.
+      // Создаём только title, равный, в нашем случае, text.
+
+      const todo = {
+        title: text,
+        userId: 1,
+        completed: false,
+      };
+      const response = await fetch("https://jsonplaceholder.typicode.com/todos", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(todo),
+      });
+
+      if (!response.ok) {
+        throw new Error("Не могу добавить новое дело, ошибка на сервере.");
+      }
+
+      const data = await response.json();
+      // console.log(data);
+      dispatch(addTodo(data));
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 //^^^action^^^===============================================================================
 
 interface ITodoSeparState {
+  todo?: ITodo;
   todos: ITodo[];
   status: string | null; // as isLoading
   error: string | null;
@@ -77,6 +148,15 @@ const todoSeparSlice = createSlice({
       console.log(state, action);
       state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     },
+    toogleTodoCompleted(state, action) {
+      // Нам нужно найти конкретный один элемент по id, который изменился.
+      // Назовём его toggledTodo.
+      const toggledTodo = state.todos.find((todo) => todo.id === action.payload.id);
+      // Найденный объект, точечно, можем изменить.
+      if (toggledTodo) {
+        toggledTodo.completed = !toggledTodo.completed;
+      }
+    },
   },
 
   extraReducers: {
@@ -92,10 +172,15 @@ const todoSeparSlice = createSlice({
 
     [deleteTodo.pending.type]: (state) => {
       state.error = null; // Обнуляем, на всякий случай. Вдруг, прежде, была ошибка.
-    },
+    }, // Обнуляем, на всякий случай. Вдруг, прежде, была ошибка.
     [deleteTodo.rejected.type]: setError,
+    [toggledStatus.pending.type]: (state) => {
+      state.error = null;
+    },
+    [toggledStatus.rejected.type]: setError,
   },
 });
 
-const { addTodo, removeTodo } = todoSeparSlice.actions;
+// action - это событие и с чем нужно работать
+const { addTodo, removeTodo, toogleTodoCompleted } = todoSeparSlice.actions;
 export default todoSeparSlice.reducer;
