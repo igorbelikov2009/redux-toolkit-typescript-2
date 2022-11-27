@@ -15,6 +15,7 @@ import userAsyncThunkReducer from "./reducers/UserAsyncThunkSlice";
 import postAsuncThunkReducer from "./reducers/PostAsuncThunkSlice";
 import commentAsyncThunkReducer from "./reducers/CommentAsyncThunkSlice";
 import todoAsyncThunkReducer from "./reducers/TodoAsyncThunkSlice";
+import todoSeparReducer from "./todoSeparSlice";
 import counterReducer from "./reducers/CounterSlice";
 import { commentAPI } from "../services/CommentService";
 import { albumAPI } from "../services/AlbumService";
@@ -32,6 +33,7 @@ const rootReducer = combineReducers({
   albumAsuncThunkReducer,
   todoReducer,
   todoAsyncThunkReducer,
+  todoSeparReducer,
   photoReducer,
   photoAsuncThunkReducer,
   counterReducer,
@@ -54,7 +56,7 @@ const rootReducer = combineReducers({
 });
 
 // Создаём функцию setupStore, с помощью её мы будем конфигурировать
-// Наше редакс-хранилище. Без использования toolkit мы использовали
+// наше редакс-хранилище. Без использования toolkit мы использовали
 // createReducer. Сейчас используем configureStore().
 export const setupStore = () => {
   return configureStore({

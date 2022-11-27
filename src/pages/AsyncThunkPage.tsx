@@ -8,6 +8,7 @@ import TodoAsyncSliceContainer from "../components/forAsuncThunc/TodoAsyncSliceC
 import PhotoAsyncSliceContainer from "../components/forAsuncThunc/PhotoAsyncSliceContainer";
 import { IButton } from "../models/types";
 import ButtonsBlock from "../components/ButtonsBlock";
+import TodoSeparAsyncSliceContainer from "../components/forAsuncThunc/TodoSeparAsyncSliceContainer";
 
 const AsyncThunkPage: FC = () => {
   const [startPage, setStartPage] = useState<boolean>(true); // true
@@ -16,6 +17,7 @@ const AsyncThunkPage: FC = () => {
   const [comments, setComments] = useState<boolean>(false);
   const [almums, setAlbums] = useState<boolean>(false);
   const [todos, setTodos] = useState<boolean>(false);
+  const [todosSepar, setTodosSepar] = useState<boolean>(false);
   const [photos, setPhotos] = useState<boolean>(false);
 
   const handlersAllFalse: () => void = () => {
@@ -25,6 +27,7 @@ const AsyncThunkPage: FC = () => {
     setUsers(false);
     setAlbums(false);
     setTodos(false);
+    setTodosSepar(false);
     setPhotos(false);
   };
 
@@ -44,6 +47,10 @@ const AsyncThunkPage: FC = () => {
   const handleTodos: () => void = () => {
     handlersAllFalse();
     setTodos((prev) => !prev);
+  };
+  const handleTodosSepar: () => void = () => {
+    handlersAllFalse();
+    setTodosSepar((prev) => !prev);
   };
 
   const handleUsers: () => void = () => {
@@ -67,14 +74,24 @@ const AsyncThunkPage: FC = () => {
     { id: 2, handle: handleAlbums, title: "albums", active: almums, variant: "outline-primary" },
     { id: 3, handle: handlePhotos, title: "photos", active: photos, variant: "outline-primary" },
     { id: 4, handle: handleTodos, title: "todos", active: todos, variant: "outline-primary" },
-    { id: 5, handle: handleUsers, title: "users", active: users, variant: "outline-primary" },
-    { id: 6, handle: handleTransition, title: "На верх страницы", active: startPage, variant: "outline-dark" },
+    { id: 5, handle: handleTodosSepar, title: "todosSepar", active: todosSepar, variant: "outline-primary" },
+    { id: 6, handle: handleUsers, title: "users", active: users, variant: "outline-primary" },
+    { id: 7, handle: handleTransition, title: "На верх", active: startPage, variant: "outline-dark" },
   ];
   return (
     <div className="mt-6">
       <Container className="card">
         <Row>
           <h2 className="textCenter mb-4"> Используем createSlice() и createAsyncThunk() </h2>
+        </Row>
+
+        <Row>
+          <h4 className="textCenter mb-4">
+            Используем сайт
+            <a className="link ml-1" href="https://jsonplaceholder.typicode.com/" target={"_blank"} rel="noreferrer">
+              JSON Placeholder
+            </a>
+          </h4>
         </Row>
 
         <ButtonsBlock buttons={buttons} />
@@ -85,6 +102,7 @@ const AsyncThunkPage: FC = () => {
       {almums && <AlbumAsyncSliceContainer />}
       {users && <UserAsyncSliceContainer />}
       {todos && <TodoAsyncSliceContainer />}
+      {todosSepar && <TodoSeparAsyncSliceContainer />}
       {photos && <PhotoAsyncSliceContainer />}
     </div>
   );

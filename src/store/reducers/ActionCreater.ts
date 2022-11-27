@@ -85,6 +85,7 @@ export const fetchAlbums = async (dispatch: AppDispacth) => {
   }
 };
 
+// todo  todo  todo  todo  todo  todo  todo  todo  todo  todo  todo  todo  todo
 export const fetchTodos = async (dispatch: AppDispacth) => {
   try {
     dispatch(todoSlice.actions.todosFetching());
@@ -94,7 +95,7 @@ export const fetchTodos = async (dispatch: AppDispacth) => {
     dispatch(todoSlice.actions.todosFetchingError(e.message));
   }
 };
-
+//===========================================================================
 export const fetchPhotos = async (dispatch: AppDispacth) => {
   try {
     dispatch(photoSlice.actions.photosFetching);
@@ -113,6 +114,7 @@ export const fetchPhotos = async (dispatch: AppDispacth) => {
 //========================================================
 // Теперь мы можем воспользоваться
 // уже специальной надстройкой - фунцией createAsyncThunk(), которая это делает за нас.
+// Thunk - это функция, которая возвращается из другой функциию.
 // Первым аргументом мы указываем название этого асинхронного танка-thunk
 // (name: "userAsyncThunk", из UserAsyncThunkSlice.ts), а вторым аргументом передаём колбэк,
 // внутри которого мы будем реализовывать какие-то действия, в нашем случае
@@ -127,7 +129,7 @@ export const fetchAsyncThunkUsers = createAsyncThunk("userAsyncThunk/fetchAll", 
     // return thunkAPI.rejectWithValue(e.message);
   }
 });
-
+//  (_, thunkAPI) <-- здесь нижнее подчёркивание, как пропуск
 export const fetchAsyncThunkPosts = createAsyncThunk("postAsyncThunk/fetchAll", async (_, thunkAPI) => {
   try {
     const response = await axios.get<IPost[]>("https://jsonplaceholder.typicode.com/posts");

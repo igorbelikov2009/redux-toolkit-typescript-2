@@ -78,6 +78,15 @@ const SlicePage: FC = () => {
           <h2 className="textCenter mb-4"> Используем createSlice() </h2>
         </Row>
 
+        <Row>
+          <h4 className="textCenter mb-4">
+            Используем сайт
+            <a className="link ml-1" href="https://jsonplaceholder.typicode.com/" target={"_blank"} rel="noreferrer">
+              JSON Placeholder
+            </a>
+          </h4>
+        </Row>
+
         <ButtonsBlock buttons={buttons} />
       </Container>
 
