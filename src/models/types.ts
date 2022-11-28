@@ -36,6 +36,13 @@ export interface ITodo {
   completed: boolean;
 }
 
+export interface ITodom {
+  userId?: number | string | null;
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
 export interface IUser {
   id: number | string | null;
   name: string;

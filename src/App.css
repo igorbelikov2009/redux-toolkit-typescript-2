@@ -87,7 +87,14 @@
 .link {
   text-decoration: none;
 }
-
+.mySelect {
+  width: 166px;
+  height: 38px;
+}
+.myInput {
+  width: 166px;
+  height: 38px;
+}
 .containerImageProduct {
   width: 100%;
   display: flex;

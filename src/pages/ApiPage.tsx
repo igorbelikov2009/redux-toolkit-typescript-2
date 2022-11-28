@@ -8,18 +8,20 @@ import PostCombinedContainer from "../components/forApiPage/PostCombinedContaine
 import ProductApiContainer from "../components/forApiPage/ProductApiContainer";
 
 import TodoContainer from "../components/forApiPage/TodoContainer";
+import TodomApiContainer from "../components/forApiPage/TodomApiContainer";
 import UserApiContainer from "../components/forApiPage/UserApiContainer";
 import { IButton } from "../models/types";
 
 const ApiPage: FC = () => {
   const [startPage, setStartPage] = useState<boolean>(true); // true
-  const [postCombined, setPostCombined] = useState<boolean>(false);
+  const [postComb, setPostComb] = useState<boolean>(false);
   const [users, setUsers] = useState<boolean>(false);
   const [comments, setComments] = useState<boolean>(false);
   const [albums, setAlbums] = useState<boolean>(false);
   const [todos, setTodos] = useState<boolean>(false);
   const [photos, setPhotos] = useState<boolean>(false);
   const [products, setProducts] = useState<boolean>(false);
+  const [todoms, setTodoms] = useState<boolean>(false);
 
   const handlersAllFalse: () => void = () => {
     setStartPage(false);
@@ -28,13 +30,14 @@ const ApiPage: FC = () => {
     setAlbums(false);
     setTodos(false);
     setPhotos(false);
-    setPostCombined(false);
+    setPostComb(false);
     setProducts(false);
+    setTodoms(false);
   };
 
-  const handlePostsCombined: () => void = () => {
+  const handlePostComb: () => void = () => {
     handlersAllFalse();
-    setPostCombined((prev) => !prev);
+    setPostComb((prev) => !prev);
   };
   const handleComments: () => void = () => {
     handlersAllFalse();
@@ -60,19 +63,24 @@ const ApiPage: FC = () => {
     handlersAllFalse();
     setProducts((prev) => !prev);
   };
+  const handleTodoms: () => void = () => {
+    handlersAllFalse();
+    setTodoms(true);
+  };
   const handleTransition: () => void = () => {
     handlersAllFalse();
     setStartPage(true);
   };
 
   const buttons: IButton[] = [
-    { id: 1, handle: handlePostsCombined, title: "postsCombined", active: postCombined, variant: "outline-primary" },
+    { id: 1, handle: handlePostComb, title: "postsComb", active: postComb, variant: "outline-primary" },
     { id: 2, handle: handleComments, title: "comments", active: comments, variant: "outline-primary" },
     { id: 3, handle: handleAlbums, title: "albums", active: albums, variant: "outline-primary" },
     { id: 4, handle: handlePhotos, title: "photos", active: photos, variant: "outline-primary" },
     { id: 5, handle: handleTodos, title: "todos", active: todos, variant: "outline-primary" },
     { id: 6, handle: handleUsers, title: "users", active: users, variant: "outline-primary" },
     { id: 7, handle: handleProducts, title: "products", active: products, variant: "outline-primary" },
+    { id: 8, handle: handleTodoms, title: "todoms", active: todoms, variant: "outline-primary" },
   ];
 
   return (
@@ -118,8 +126,7 @@ const ApiPage: FC = () => {
                 </pre>
 
                 <p>
-                  Работу функции <b> refetch()</b> можем наблюдать в списке постов <b>postsCombined</b> и в списке
-                  комментов
+                  Работу функции <b> refetch()</b> можем наблюдать в списке постов <b>postsComb</b> и в списке комментов
                   <b> comments</b>
                 </p>
 
@@ -156,12 +163,13 @@ const ApiPage: FC = () => {
       </Container>
 
       {comments && <CommentApiContainer topOfPage={handleTransition} />}
-      {postCombined && <PostCombinedContainer topOfPage={handleTransition} />}
+      {postComb && <PostCombinedContainer topOfPage={handleTransition} />}
       {todos && <TodoContainer topOfPage={handleTransition} />}
       {albums && <AlbumApiContainer topOfPage={handleTransition} />}
       {photos && <PhotoApiContainer topOfPage={handleTransition} />}
       {users && <UserApiContainer topOfPage={handleTransition} />}
       {products && <ProductApiContainer topOfPage={handleTransition} />}
+      {todoms && <TodomApiContainer topOfPage={handleTransition} />}
     </div>
   );
 };

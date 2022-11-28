@@ -20,6 +20,7 @@ import counterReducer from "./reducers/CounterSlice";
 import { commentAPI } from "../services/CommentService";
 import { albumAPI } from "../services/AlbumService";
 import { photoAPI } from "../services/PhotoService";
+import { todomAPI } from "../services/TodomService";
 
 // Создаём корневой редюсер, состоящий из комбинации всех редюсеров
 const rootReducer = combineReducers({
@@ -53,6 +54,7 @@ const rootReducer = combineReducers({
   [userAPI.reducerPath]: userAPI.reducer,
   [productAPI.reducerPath]: productAPI.reducer,
   [todoAPI.reducerPath]: todoAPI.reducer,
+  [todomAPI.reducerPath]: todomAPI.reducer,
 });
 
 // Создаём функцию setupStore, с помощью её мы будем конфигурировать
@@ -73,7 +75,8 @@ export const setupStore = () => {
         .concat(photoAPI.middleware)
         .concat(userAPI.middleware)
         .concat(productAPI.middleware)
-        .concat(todoAPI.middleware),
+        .concat(todoAPI.middleware)
+        .concat(todomAPI.middleware),
   });
 };
 
