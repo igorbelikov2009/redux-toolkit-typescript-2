@@ -13,10 +13,11 @@ export const photoAPI = createApi({
   endpoints: (build) => ({
     // Эндпоинт получения фото:___
     fetchAllPhotos: build.query<IPhoto[], number>({
-      query: (limit: number = 10) => ({
+      query: (limit: number = 10, page: number = 1) => ({
         url: "/photos",
         params: {
           _limit: limit,
+          _page: page,
         },
       }),
       providesTags: (result) => ["Photo"],

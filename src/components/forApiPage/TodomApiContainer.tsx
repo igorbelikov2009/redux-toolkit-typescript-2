@@ -10,7 +10,7 @@ interface TodomApiContainerProps {
 }
 
 const TodomApiContainer: FC<TodomApiContainerProps> = ({ topOfPage }) => {
-  const [limit, setLimit] = useState<number | string>(25);
+  const [limit, setLimit] = useState<number | string>(10);
   const [newTitle, setNewTitle] = useState<string>("");
 
   // const { data: todoms, isLoading, error } = todomAPI.useGetAllTodomsQuery(limit);

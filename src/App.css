@@ -83,6 +83,15 @@
   width: 100%;
   padding: 20px;
 }
+.pages {
+  display: flex;
+  margin-top: 36px;
+}
+.page {
+  border: 2px solid green;
+  padding: 2px 8px;
+  cursor: pointer;
+}
 
 .link {
   text-decoration: none;

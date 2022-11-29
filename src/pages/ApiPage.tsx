@@ -5,6 +5,7 @@ import AlbumApiContainer from "../components/forApiPage/AlbumApiContainer";
 import CommentApiContainer from "../components/forApiPage/CommentApiContainer";
 import PhotoApiContainer from "../components/forApiPage/PhotoApiContainer";
 import PostCombinedContainer from "../components/forApiPage/PostCombinedContainer";
+import PostList from "../components/forApiPage/PostPagination";
 import ProductApiContainer from "../components/forApiPage/ProductApiContainer";
 
 import TodoContainer from "../components/forApiPage/TodoContainer";
@@ -170,6 +171,7 @@ const ApiPage: FC = () => {
       {users && <UserApiContainer topOfPage={handleTransition} />}
       {products && <ProductApiContainer topOfPage={handleTransition} />}
       {todoms && <TodomApiContainer topOfPage={handleTransition} />}
+      <PostList />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+import { postPaginationAPI } from "./../services/PostApiService";
 import { productAPI } from "./../services/ProductsService";
 import { userAPI } from "./../services/UserService";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
@@ -55,6 +56,7 @@ const rootReducer = combineReducers({
   [productAPI.reducerPath]: productAPI.reducer,
   [todoAPI.reducerPath]: todoAPI.reducer,
   [todomAPI.reducerPath]: todomAPI.reducer,
+  [postPaginationAPI.reducerPath]: postPaginationAPI.reducer,
 });
 
 // Создаём функцию setupStore, с помощью её мы будем конфигурировать
@@ -76,7 +78,8 @@ export const setupStore = () => {
         .concat(userAPI.middleware)
         .concat(productAPI.middleware)
         .concat(todoAPI.middleware)
-        .concat(todomAPI.middleware),
+        .concat(todomAPI.middleware)
+        .concat(postPaginationAPI.middleware),
   });
 };
 
