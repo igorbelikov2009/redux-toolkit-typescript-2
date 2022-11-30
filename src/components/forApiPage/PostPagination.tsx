@@ -2,32 +2,34 @@ import React, { useState, FC } from "react";
 import { Container, Row, Card, Button } from "react-bootstrap";
 import { postPaginationAPI } from "../../services/PostApiService";
 
-const PostList: FC = () => {
+interface PostListProps {
+  topOfPage: () => void;
+}
+
+const PostList: FC<PostListProps> = ({ topOfPage }) => {
   const [page, setPage] = useState(1);
   // const [limit, setLimit] = useState(10);
-  const { data: posts } = postPaginationAPI.useListPostsQuery(page);
+  const { data: posts, isFetching } = postPaginationAPI.useListPostsQuery(page);
 
-  let totalCountPosts;
-  let countPage;
+  // let totalCountPosts;
+  // let countPage;
 
-  if (posts) {
-    totalCountPosts = posts.length;
-    // countPage = totalCountPosts / limit;
-  }
-  console.log(totalCountPosts, countPage, page);
+  // if (posts) {
+  //   totalCountPosts = posts.length;
+  // countPage = totalCountPosts / limit;
+  // }
+  // console.log(totalCountPosts, countPage, page);
 
   const handleIncrement: () => void = () => {
     if (page < 10) {
       setPage(page + 1);
     }
-    console.log(page);
   };
 
   const handleDecrement: () => void = () => {
     if (page > 1) {
       setPage(page - 1);
     }
-    console.log(page);
   };
 
   return (

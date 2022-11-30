@@ -16,6 +16,7 @@ import { IButton } from "../models/types";
 const ApiPage: FC = () => {
   const [startPage, setStartPage] = useState<boolean>(true); // true
   const [postComb, setPostComb] = useState<boolean>(false);
+  const [pagination, setPagination] = useState<boolean>(false);
   const [users, setUsers] = useState<boolean>(false);
   const [comments, setComments] = useState<boolean>(false);
   const [albums, setAlbums] = useState<boolean>(false);
@@ -68,6 +69,10 @@ const ApiPage: FC = () => {
     handlersAllFalse();
     setTodoms(true);
   };
+  const handlePagination: () => void = () => {
+    handlersAllFalse();
+    setPagination(true);
+  };
   const handleTransition: () => void = () => {
     handlersAllFalse();
     setStartPage(true);
@@ -75,13 +80,14 @@ const ApiPage: FC = () => {
 
   const buttons: IButton[] = [
     { id: 1, handle: handlePostComb, title: "postsComb", active: postComb, variant: "outline-primary" },
-    { id: 2, handle: handleComments, title: "comments", active: comments, variant: "outline-primary" },
-    { id: 3, handle: handleAlbums, title: "albums", active: albums, variant: "outline-primary" },
-    { id: 4, handle: handlePhotos, title: "photos", active: photos, variant: "outline-primary" },
-    { id: 5, handle: handleTodos, title: "todos", active: todos, variant: "outline-primary" },
-    { id: 6, handle: handleUsers, title: "users", active: users, variant: "outline-primary" },
-    { id: 7, handle: handleProducts, title: "products", active: products, variant: "outline-primary" },
-    { id: 8, handle: handleTodoms, title: "todoms", active: todoms, variant: "outline-primary" },
+    { id: 2, handle: handlePagination, title: "pagination", active: pagination, variant: "outline-primary" },
+    { id: 3, handle: handleComments, title: "comments", active: comments, variant: "outline-primary" },
+    { id: 4, handle: handleAlbums, title: "albums", active: albums, variant: "outline-primary" },
+    { id: 5, handle: handlePhotos, title: "photos", active: photos, variant: "outline-primary" },
+    { id: 6, handle: handleTodos, title: "todos", active: todos, variant: "outline-primary" },
+    { id: 7, handle: handleUsers, title: "users", active: users, variant: "outline-primary" },
+    { id: 8, handle: handleProducts, title: "products", active: products, variant: "outline-primary" },
+    { id: 9, handle: handleTodoms, title: "todoms", active: todoms, variant: "outline-primary" },
   ];
 
   return (
@@ -171,7 +177,7 @@ const ApiPage: FC = () => {
       {users && <UserApiContainer topOfPage={handleTransition} />}
       {products && <ProductApiContainer topOfPage={handleTransition} />}
       {todoms && <TodomApiContainer topOfPage={handleTransition} />}
-      <PostList />
+      {pagination && <PostList topOfPage={handlePagination} />}
     </div>
   );
 };
