@@ -78,6 +78,9 @@
 .displayBlock {
   display: block;
 }
+.displayFlex {
+  display: flex;
+}
 
 .post__list {
   width: 100%;

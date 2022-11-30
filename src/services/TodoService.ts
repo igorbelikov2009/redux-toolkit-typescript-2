@@ -8,11 +8,11 @@ export const todoAPI = createApi({
   endpoints: (builder) => ({
     // Получение todo: ___
     fetchAllTodos: builder.query<ITodo[], number>({
-      query: (limit: number = 10, page: number = 1) => ({
+      query: (page: number = 1, limit: number = 10) => ({
         url: "/todos",
         params: {
-          _limit: limit,
           _page: page,
+          _limit: limit,
         },
       }),
       providesTags: ["Todo"],

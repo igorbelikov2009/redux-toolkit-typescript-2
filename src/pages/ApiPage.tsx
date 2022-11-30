@@ -35,6 +35,7 @@ const ApiPage: FC = () => {
     setPostComb(false);
     setProducts(false);
     setTodoms(false);
+    setPagination(false);
   };
 
   const handlePostComb: () => void = () => {

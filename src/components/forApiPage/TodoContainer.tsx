@@ -12,6 +12,8 @@ interface TodoContainerProps {
 const TodoContainer: FC<TodoContainerProps> = ({ topOfPage }) => {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [limit, setLimit] = useState(100);
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const [page, setPage] = useState(1);
   // параметр 100 - это мы задаём значение для limit
 
   // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ FetchAllTodos
@@ -29,7 +31,7 @@ const TodoContainer: FC<TodoContainerProps> = ({ topOfPage }) => {
   // определённый промежуток времени у нас отправляется новый запрос, и мы, в данном случае,
   // ежесекундно получаем обновлённые данные. Это можно использовать в чатах, уведомлениях,
   // своего рода - аналог вэбсокетов.
-  const { data: todos, error, isLoading } = todoAPI.useFetchAllTodosQuery(limit, { pollingInterval: 1000 });
+  const { data: todos, error, isLoading } = todoAPI.useFetchAllTodosQuery(page, { pollingInterval: 1000 });
   const [createTodo, { error: createError }] = todoAPI.useCreateTodoMutation();
   const [updateTodo, { error: updateError }] = todoAPI.useUpdateTodoMutation();
   const [deleteTodo, { error: deleteError }] = todoAPI.useDeleteTodoMutation();

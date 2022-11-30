@@ -1,18 +1,19 @@
 import { IPost } from "./../models/types";
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/dist/query/react";
 
-// interface IListResponse {
-//   page: number;
-//   per_page;
-// }
-
 export const postPaginationAPI = createApi({
   reducerPath: "postPaginationAPI",
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),
   tagTypes: ["Post"],
   endpoints: (builder) => ({
-    listPosts: builder.query<IPost[], number | void>({
-      // query: (page: number = 1) => `posts?page=${page}&perPage=25`,
+    // Получаем все посты разом
+    getAllPosts: builder.query<IPost[], number | void>({
+      query: () => ({
+        url: "/posts",
+      }),
+    }),
+    // Получаем все посты постранично - делаем пагинацию
+    getPostsPagination: builder.query<IPost[], number | void>({
       query: (page: number = 1, limit: number = 10) => ({
         url: "/posts",
         params: {
@@ -20,11 +21,10 @@ export const postPaginationAPI = createApi({
           _limit: limit,
         },
       }),
+      providesTags: ["Post"],
     }),
   }),
 });
-
-export const { useListPostsQuery } = postPaginationAPI;
 
 //  "http://localhost:5000/"
 /* 
