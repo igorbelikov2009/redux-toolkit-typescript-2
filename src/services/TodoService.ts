@@ -6,8 +6,14 @@ export const todoAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),
   tagTypes: ["Todo"],
   endpoints: (builder) => ({
-    // Получение todo: ___
-    fetchAllTodos: builder.query<ITodo[], number>({
+    // Получение всех todo для вычисления значения totalCount для пагинации
+    getAllTodos: builder.query<ITodo[], number | void>({
+      query: () => ({
+        url: "/todos",
+      }),
+    }),
+    // Получение todo постранично: ___ делаем пагинацию
+    getTodoPageByPage: builder.query<ITodo[], number | void>({
       query: (page: number = 1, limit: number = 10) => ({
         url: "/todos",
         params: {

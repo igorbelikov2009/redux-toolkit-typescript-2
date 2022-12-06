@@ -2,6 +2,7 @@ import React, { FC, useState } from "react";
 import { Container, Row, Button, Card } from "react-bootstrap";
 import { IComment } from "../../models/types";
 import { commentAPI } from "../../services/CommentService";
+import MySelect, { IOption } from "../gui/select/MySelect";
 import CommentItem from "../items/CommentItem";
 
 interface CommentApiContainerProps {
@@ -13,7 +14,55 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
   const [limit, setLimit] = useState(100);
 
   // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ FetchAllComment
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  // const { data: commentsServer, error, isLoading, refetch } = commentAPI.useFetchAllCommentsQuery(limit);
   const { data: comments, error, isLoading, refetch } = commentAPI.useFetchAllCommentsQuery(limit);
+  //=========================================================================
+  // const comments: any = [
+  //   {
+  //     postId: 1,
+  //     id: 3,
+  //     name: "odio adipisci rerum aut animi",
+  //     email: "Nikita@garfield.biz",
+  //     body: "quia molestiae reprehenderit quasi aspernatur\naut expedita occaecati aliquam eveniet laudantium\nomnis quibusdam delectus saepe quia accusamus maiores nam est\ncum et ducimus et vero voluptates excepturi deleniti ratione",
+  //   },
+  //   {
+  //     postId: 2,
+  //     id: 4,
+  //     name: "alias odio sit",
+  //     email: "Lew@alysha.tv",
+  //     body: "non et atque\noccaecati deserunt quas accusantium unde odit nobis qui voluptatem\nquia voluptas consequuntur itaque dolor\net qui rerum deleniti ut occaecati",
+  //   },
+  //   {
+  //     postId: 3,
+  //     id: 5,
+  //     name: "vero eaque aliquid doloribus et culpa",
+  //     email: "Hayden@althea.biz",
+  //     body: "harum non quasi et ratione\ntempore iure ex voluptates in ratione\nharum architecto fugit inventore cupiditate\nvoluptates magni quo et",
+  //   },
+  //   {
+  //     postId: 4,
+  //     id: 8,
+  //     name: "et omnis dolorem",
+  //     email: "Mallory_Kunze@marie.org",
+  //     body: "ut voluptatem corrupti velit\nad voluptatem maiores\net nisi velit vero accusamus maiores\nvoluptates quia aliquid ullam eaque",
+  //   },
+  //   {
+  //     postId: 5,
+  //     id: 11,
+  //     name: "fugit labore quia mollitia quas deserunt nostrum sunt",
+  //     email: "Veronica_Goodwin@timmothy.net",
+  //     body: "ut dolorum nostrum id quia aut est\nfuga est inventore vel eligendi explicabo quis consectetur\naut occaecati repellat id natus quo est\nut blanditiis quia ut vel ut maiores ea",
+  //   },
+  //   {
+  //     postId: 6,
+  //     id: 12,
+  //     name: "modi ut eos dolores illum nam dolor",
+  //     email: "Oswald.Vandervort@leanne.org",
+  //     body: "expedita maiores dignissimos facilis\nipsum est rem est fugit velit sequi\neum odio dolores dolor totam\noccaecati ratione eius rem velit",
+  //   },
+  // ];
+  //=========================================================================
   // Функцию refetch достаём из списка при деструктуризации. Она нам нужна только в том
   // случае, когда нам необходимо, по какой-то причине, перезаписать данные, обновить.
   // И в таком, случае, данные будут подгружены заново. Если refetch  нам не нужна, мы
@@ -62,6 +111,34 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
     topOfPage();
   };
 
+  //==============================
+  // Сортировка
+  const opions: IOption[] = [
+    { value: "postId", name: "По номеру комментируего поста" },
+    { value: "email", name: "По email пользователя" },
+    { value: "name", name: "По названию комментария" },
+    { value: "body", name: "По тексту комментария" },
+  ];
+
+  const [selectedSort, setSelectedSort] = useState<string>("");
+
+  function getSortedComments() {
+    // console.log("Отработала функция getSortedComments");
+    if (selectedSort && comments) {
+      // console.log(selectedSort, typeof selectedSort);
+      return [...comments].sort((a, b) => String(a[selectedSort]).localeCompare(String(b[selectedSort])));
+    }
+    return comments;
+  }
+
+  const sortedComments = getSortedComments();
+
+  const sortComments = (sort: any) => {
+    setSelectedSort(sort);
+    // console.log(sort);
+  };
+  //==============================
+
   return (
     <Container className="card">
       <div className="containerButton mb-4">
@@ -88,9 +165,17 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
           <h3 className="textCenter">Список комментов от пользователей из commentAPI</h3>
 
           <div className="containerButton">
-            <Button variant="outline-success" onClick={handleCreate}>
+            <Button className="mr-2" variant="outline-success" onClick={handleCreate}>
               Добавить новый комментарий
             </Button>
+
+            <MySelect
+              defaultValue="Сортировка"
+              disabled={true}
+              options={opions}
+              value={selectedSort}
+              onChangeValue={sortComments}
+            />
           </div>
 
           <div>
@@ -127,8 +212,8 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
 
           {/* Добавляем проверку: если у нас есть комментарии, и они не undefined  */}
           <div className="post">
-            {comments &&
-              comments.map((comment) => (
+            {sortedComments &&
+              sortedComments.map((comment: IComment) => (
                 <CommentItem key={comment.id} comment={comment} update={handleUpdate} remove={handleRemove} />
               ))}
           </div>

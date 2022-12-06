@@ -13,6 +13,8 @@ export interface IComment {
   name: string | null;
   email: string;
   body: string;
+  // это надо в CommentApiContainer на строке 129 (a[selectedSort])
+  [key: string]: any;
 }
 
 export interface IAlbum {

@@ -10,15 +10,14 @@ interface PostListProps {
 const PostList: FC<PostListProps> = ({ topOfPage }) => {
   // Для пагинации нам необходимо получить общее количество постов. По этому мы
   // получаем все посты, но не выводим их, просто вычисляем totalCount.
-  const { data: totalCountPosts } = postPaginationAPI.useGetAllPostsQuery();
+  const { data: totalCountElem } = postPaginationAPI.useGetAllPostsQuery();
   let totalCount: number = 0;
 
-  if (totalCountPosts) {
-    totalCount = totalCountPosts.length;
+  if (totalCountElem) {
+    totalCount = totalCountElem.length;
   }
-  // console.log(totalCountPosts);
 
-  // Получаем данные по параметрам, установленным в postPaginationAPI в эндпоинте:
+  // Получаем limit, page по параметрам, установленным в postPaginationAPI в эндпоинте:
   //  getPostsPagination: query: (page: number = 1, limit: number = 10)
   const [page, setPage] = useState<number>(1);
   // Здесь, limit у нас взят так же из параметров, для расчётов. Здесь мы его не можем

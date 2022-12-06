@@ -14,7 +14,7 @@ interface NewTodoFormProps {
 const NewTodoForm: FC<NewTodoFormProps> = ({ value, updateText, handleAction }) => {
   return (
     <label>
-      <input value={value} onChange={(e) => updateText(e.target.value)} />
+      <input value={value} onChange={(e) => updateText(e.target.value)} placeholder="Введите новое дело" />
       <Button onClick={handleAction} variant="outline-success" className="ml-2">
         Add todo
       </Button>
