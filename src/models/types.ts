@@ -5,6 +5,7 @@ export interface IPost {
   id: number;
   title: string;
   body: string;
+  [key: string]: any;
 }
 
 export interface IComment {
@@ -13,7 +14,7 @@ export interface IComment {
   name: string | null;
   email: string;
   body: string;
-  // это надо в CommentApiContainer на строке 129 (a[selectedSort])
+  // это надо для сортировки в CommentApiContainer на строке 129 (a[selectedSort])
   [key: string]: any;
 }
 
@@ -29,6 +30,8 @@ export interface IPhoto {
   title: string;
   url: string;
   thumbnailUrl: string;
+  // это надо для сортировки в
+  [key: string]: any;
 }
 
 export interface ITodo {

@@ -14,9 +14,11 @@ export const postPaginationAPI = createApi({
     }),
     // Получаем все посты постранично - делаем пагинацию
     getPostsPagination: builder.query<IPost[], number | void>({
+      // Для пагинации соблюдаем последовательность page и limit
       query: (page: number = 1, limit: number = 10) => ({
         url: "/posts",
         params: {
+          // Для пагинации соблюдаем последовательность page и limit
           _page: page,
           _limit: limit,
         },

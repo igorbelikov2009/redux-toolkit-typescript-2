@@ -11,13 +11,21 @@ export const photoAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),
   tagTypes: ["Photo"],
   endpoints: (build) => ({
-    // Эндпоинт получения фото:___
-    fetchAllPhotos: build.query<IPhoto[], number>({
-      query: (limit: number = 10, page: number = 1) => ({
+    // Эндпоинт получения всех фото, для получения их количества:___
+    fetchAllPhotos: build.query<IPhoto[], number | void>({
+      query: () => ({
+        url: "/photos",
+      }),
+    }),
+    // Эндпоинт получения фото постранично - делаем пагинацию:___
+    getPhotosPagination: build.query<IPhoto[], number | void>({
+      // Для пагинации соблюдаем последовательность page и limit
+      query: (page: number = 1, limit: number = 10) => ({
         url: "/photos",
         params: {
-          _limit: limit,
+          // Для пагинации соблюдаем последовательность page и limit
           _page: page,
+          _limit: limit,
         },
       }),
       providesTags: (result) => ["Photo"],
