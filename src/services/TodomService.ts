@@ -9,7 +9,7 @@ export const todomAPI = createApi({
     // Эндпоинт на получение - это главный эндпоинт.
     getAllTodoms: build.query<ITodom[], number | string>({
       // Проверяем: существует limit или нет. Если существует, то передаём ему значение из параметров.
-      // Параметры на странице TodomApiContainer в хуке todomAPI.useGetAllTodomsQuery(25)
+      // Параметры на странице TodomApiContainer в хуке todomAPI.useGetAllTodomsQuery(limit)
       query: (limit: number | string = "") => `todoms?${limit && `_limit=${limit}`}`,
       // Эндпоинт на получение - это главный эндпоинт. В него мы добавляем провайдТегс.
       providesTags: ["Todoms"],

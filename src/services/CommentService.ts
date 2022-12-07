@@ -22,13 +22,19 @@ export const commentAPI = createApi({
     // который будет ожидать этот хук - number. В данном случае будем делать пагинацию и
     // нам необходимо указать limit. Фигурные скобки оборачиваем в круглые({}).
     // Эндпоинт получения комментов:_____
-    fetchAllComments: build.query<IComment[], number>({
-      query: (limit: number = 10) => ({
-        url: "/comments",
-        params: {
-          _limit: limit,
-        },
-      }),
+    fetchAllComments: build.query<IComment[], number | string>({
+      // Проверяем: существует limit или нет. Если существует, то передаём ему значение из параметров.
+      // Параметры на странице CommentApiContainer в хуке commentAPI.useFetchAllCommentsQuery(limit);
+      query: (limit: number | string = "") => `comments?${limit && `_limit=${limit}`}`,
+      // //==========================================================================
+      // так тоже работает
+      // query: (limit: number | string = "10") => ({
+      //   url: "/comments",
+      //   params: {
+      //     _limit: limit,
+      //   },
+      // }),
+      // //==========================================================================
       // Теперь мы должны указать, что эндпоинт fetchAllComments работает с тэгом
       // ["Comment"]. То есть у нас могут быть несколько эндпоинтов, которые работают
       // с разными данными, и нам необходимо правильно эти эндпоинты сопоставить.

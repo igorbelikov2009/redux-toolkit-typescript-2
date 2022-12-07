@@ -65,6 +65,7 @@ const TodomApiContainer: FC<TodomApiContainerProps> = ({ topOfPage }) => {
               onChange={(e) => setNewTitle(e.target.value)}
               placeholder="Введите название нового todom"
             />
+
             <Button variant="outline-success" onClick={handleAddTodom}>
               Добавить новый todom
             </Button>

@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Container, Row, Button, Card } from "react-bootstrap";
+import { Container, Row, Button, Card, Form } from "react-bootstrap";
 import { IComment } from "../../models/types";
 import { commentAPI } from "../../services/CommentService";
 import MySelect, { IOption } from "../gui/select/MySelect";
@@ -10,8 +10,7 @@ interface CommentApiContainerProps {
 }
 
 const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  const [limit, setLimit] = useState(100);
+  const [limit, setLimit] = useState<number | string>(100);
 
   // Воспользуемся хуком, автоматически сгенерированным по имени эндпоинта:___ FetchAllComment
   const { data: comments, error, isLoading, refetch } = commentAPI.useFetchAllCommentsQuery(limit);
@@ -94,16 +93,42 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
   };
   //==============================
 
+  const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    setLimit(e.target.value);
+  };
+
   return (
     <Container className="card">
       <div className="containerButton mb-4">
-        <Button variant="outline-info mr-4" onClick={handleTransition}>
-          В начало страницы services createApi()
-        </Button>
+        <div className="card">
+          <Button variant="outline-info mb-4" onClick={handleTransition}>
+            В начало страницы services createApi()
+          </Button>
 
-        <Button onClick={() => refetch()} variant="outline-success">
-          REFETCH
-        </Button>
+          <Button onClick={() => refetch()} variant="outline-success">
+            REFETCH
+          </Button>
+        </div>
+
+        <Form className="card ml-2">
+          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+            <Card.Title>Сколько комментов показать на странице?</Card.Title>
+            <div>
+              <Form.Select
+                value={limit}
+                onChange={handleSelect}
+                className="mySelect mr-4"
+                aria-label="Default select example"
+              >
+                <option value="">Все</option>
+                <option value="10">10</option>
+                <option value="20">20</option>
+                <option value="25">25</option>
+                <option value="50">50</option>
+              </Form.Select>
+            </div>
+          </Form.Group>
+        </Form>
       </div>
 
       <Row>
