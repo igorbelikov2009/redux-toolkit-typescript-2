@@ -46,6 +46,7 @@ const PhotoApiContainer: FC<PhotoApiContainerProps> = ({ topOfPage }) => {
   const [deletePhoto, { error: deleteError }] = photoAPI.useDeletePhotoMutation();
 
   const handleCreate = async () => {
+    // const albumId = Number(prompt("Введите номер альбома") || "");
     const title = prompt("Введите название фото") || "";
     const url = prompt("Введите url фото") || "";
     const thumbnailUrl = prompt("Введите thumbnailUrl фото") || "";
@@ -69,6 +70,7 @@ const PhotoApiContainer: FC<PhotoApiContainerProps> = ({ topOfPage }) => {
   // options for MySelect: options={options}
   const options: IOption[] = [
     { value: "id", name: "По номеру фото" },
+    // { value: "albumId", name: "По номеру альбома" },
     { value: "title", name: "По названию фото" },
     { value: "url", name: "По URL фото" },
     { value: "thumbnailUrl", name: "По URL эскиза" },
@@ -78,19 +80,24 @@ const PhotoApiContainer: FC<PhotoApiContainerProps> = ({ topOfPage }) => {
   function getSortedPhotos() {
     // console.log("Отработала функция getSortedPhotos");
     if (selectedSort && photos) {
-      return [...photos].sort((a, b) => String(a[selectedSort]).localeCompare(String(b[selectedSort])));
+      // return [...photos].sort((a, b) => String(a[selectedSort]).localeCompare(String(b[selectedSort])));
+      return [...photos].sort((a, b) => (a[selectedSort] > b[selectedSort] ? 1 : -1));
     }
     return photos;
   }
-  // Получаем отсортированный массив фоток: sortedPhotos. В HTML, для разворачивания массива фоток,
-  // используем уже не массив photos, полученный с сервера, а отсортированный массив: sortedPhotos.
+  // Получаем отсортированный массив фоток: sortedPhotos. В HTML, для разворачивания массива
+  // фоток, используем уже не массив photos, полученный с сервера, а отсортированный массив:
+  // sortedPhotos.
   const sortedPhotos = getSortedPhotos();
 
+  // Определяем выбранный в selecte метод сортировки фоток (sortPhotos) через в обработчик
+  // onChangeValue={sortPhotos} и записываем его в состояние setSelectedSort(sort);
   const sortPhotos = (sort: any) => {
     setSelectedSort(sort);
     // console.log(sort);
     // for MySelect: onChangeValue={sortPhotos}
   };
+  // Сортировка
   //==============================
 
   return (
@@ -99,7 +106,7 @@ const PhotoApiContainer: FC<PhotoApiContainerProps> = ({ topOfPage }) => {
         <div>
           <h3 className="textCenter">Список фоток из photoAPI</h3>
 
-          <div className="containerButton mt-1 mb-4 ">
+          <div className="containerButton mt-1 mb-4">
             <Button variant="outline-info" onClick={handleTransition}>
               В начало страницы services createApi()
             </Button>

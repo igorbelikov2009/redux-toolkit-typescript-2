@@ -9,6 +9,8 @@ interface PaginationButtonsProps {
 }
 
 const PaginationButtons: FC<PaginationButtonsProps> = ({ page, pages, countPage, setPage }) => {
+  // console.log(countPage);
+
   const handleIncrement: () => void = () => {
     if (page < countPage) {
       setPage(page + 1);
@@ -23,23 +25,29 @@ const PaginationButtons: FC<PaginationButtonsProps> = ({ page, pages, countPage,
 
   return (
     <>
-      <div className="containerButton  mb-2">
-        <Button variant="outline-primary" onClick={handleDecrement}>
-          Prev page
-        </Button>
+      {countPage > 1 && (
+        <div className="containerButton  mb-2">
+          <Button variant="outline-primary" onClick={handleDecrement}>
+            Prev page
+          </Button>
 
-        <div className="displayFlex">
-          {pages.map((p) => (
-            <Button variant="outline-primary" onClick={() => setPage(p)} active={p === page} key={p}>
-              {p}
-            </Button>
-          ))}
+          <div>
+            {countPage > 2 && (
+              <div className="displayFlex">
+                {pages.map((p) => (
+                  <Button variant="outline-primary" onClick={() => setPage(p)} active={p === page} key={p}>
+                    {p}
+                  </Button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          <Button variant="outline-primary" onClick={handleIncrement}>
+            Next page
+          </Button>
         </div>
-
-        <Button variant="outline-primary" onClick={handleIncrement}>
-          Next page
-        </Button>
-      </div>
+      )}
     </>
   );
 };

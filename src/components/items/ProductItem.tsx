@@ -16,12 +16,12 @@ const ProductItem: FC<ProductItemProps> = ({ product, update, remove }) => {
   };
   const handleUpdate = (event: React.MouseEvent) => {
     const title = prompt("Введите название продукта") || "";
-    const price = prompt("Введите стоимость продукта") || "";
+    const price = Number(prompt("Введите стоимость продукта") || "");
     const description = prompt("Введите описание продукта") || "";
     const category = prompt("Введите категорию продукта") || "";
     const image = prompt("Введите url продукта") || "";
-    const rate = prompt("Введите рейтинг продукта") || "";
-    const count = prompt("Введите количество оценок продукта") || "";
+    const rate = Number(prompt("Введите рейтинг продукта") || "");
+    const count = Number(prompt("Введите количество оценок продукта") || "");
     update({ ...product, title, price, description, category, image, rating: { rate, count } });
   };
 

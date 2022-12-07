@@ -13,7 +13,7 @@ const UserItem: FC<UserItemProps> = ({ user, update, remove }) => {
     const name = prompt("Введите имя пользователя") || "";
     const username = prompt("Введите ник пользователя") || "";
     const email = prompt("Введите  email") || "";
-    const phone = prompt("Введите телефон пользователя") || "";
+    const phone = Number(prompt("Введите телефон пользователя") || "");
     const website = prompt("Введите ВЭБ сайт") || "";
     const street = prompt("Введите улицу проживания") || "";
     const suite = prompt("Введите suitу проживания") || "";
@@ -64,9 +64,9 @@ const UserItem: FC<UserItemProps> = ({ user, update, remove }) => {
         <b>ВЭБ сайт:</b> {user.website};
       </i>
 
-      <i className="displayBlock">
+      {/* <i className="displayBlock">
         <b> company name: </b> {user.company.name};
-      </i>
+      </i> */}
 
       <i className="card">
         <b> адрес: </b>

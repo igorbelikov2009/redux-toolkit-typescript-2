@@ -11,6 +11,7 @@ interface PhotoItemApiProps {
 
 const PhotoItemApi: FC<PhotoItemApiProps> = ({ photo, update, remove }) => {
   const handleUpdate = (event: React.MouseEvent) => {
+    // const albumId = Number(prompt("Введите номер альбома") || "");
     const title = prompt("Введите название фото") || "";
     const url = prompt("Введите url фото") || "";
     const thumbnailUrl = prompt("Введите thumbnailUrl фото") || "";

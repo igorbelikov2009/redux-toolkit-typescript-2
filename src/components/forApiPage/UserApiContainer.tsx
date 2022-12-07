@@ -1,7 +1,9 @@
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import { Container, Row, Button } from "react-bootstrap";
 import { IUser } from "../../models/types";
 import { userAPI } from "../../services/UserService";
+import PaginationButtons from "../gui/PaginationButtons";
+import MySelect, { IOption } from "../gui/select/MySelect";
 import UserItem from "../items/UserItem";
 
 interface UserApiContainerProps {
@@ -9,7 +11,30 @@ interface UserApiContainerProps {
 }
 
 const UserApiContainer: FC<UserApiContainerProps> = ({ topOfPage }) => {
-  const { data: users, error, isLoading } = userAPI.useFetchAllUsersQuery(20);
+  //================================================================================
+  // PAGINATION
+  const { data: totalCountElem } = userAPI.useFetchAllUsersQuery();
+  let totalCount: number = 0;
+
+  if (totalCountElem) {
+    totalCount = totalCountElem.length;
+  }
+  const [limit] = useState<number>(5);
+  // Вычисляем количество страниц
+  let countPage: number = Math.ceil(totalCount / limit);
+  // console.log(countPage);
+  // Создаём массив pages[], состоящий из нумерации страниц, типа const pages = [1, 2, 3, 4, 5];
+  // Этот массив нужен нам для пагинации
+  const pages: number[] = [];
+  for (let i = 0; i < countPage; i++) {
+    pages.push(i + 1);
+  }
+  // console.log(pages);
+  const [page, setPage] = useState<number>(1);
+  const { data: users, error, isLoading } = userAPI.useGetUsersPaginationQuery(page);
+  // PAGINATION
+  //================================================================================
+
   const [createUser, { isError }] = userAPI.useCreateUserMutation();
   const [updateUser, { isError: updateIsError }] = userAPI.useUpdateUserMutation();
   const [deleteUser, { isError: deleteIsError }] = userAPI.useDeleteUserMutation();
@@ -20,7 +45,7 @@ const UserApiContainer: FC<UserApiContainerProps> = ({ topOfPage }) => {
     const name = prompt("Введите имя пользователя") || "";
     const username = prompt("Введите ник пользователя") || "";
     const email = prompt("Введите  email") || "";
-    const phone = prompt("Введите телефон пользователя") || "";
+    const phone = Number(prompt("Введите телефон пользователя") || "");
     const website = prompt("Введите ВЭБ сайт") || "";
     const street = prompt("Введите улицу проживания") || "";
     const suite = prompt("Введите suitу проживания") || "";
@@ -54,6 +79,34 @@ const UserApiContainer: FC<UserApiContainerProps> = ({ topOfPage }) => {
     topOfPage();
   };
 
+  //==============================
+  // Сортировка
+  const options: IOption[] = [
+    { value: "id", name: "По номеру пользователя" },
+    { value: "name", name: "По имени пользователя" },
+    { value: "username", name: "По нику пользователя" },
+    { value: "email", name: "По email пользователя" },
+    { value: "phone", name: "По телефону пользователя" },
+    { value: "website", name: "По website пользователя" },
+  ];
+  const [selectedSort, setSelectedSort] = useState<string>("");
+
+  function getSortedUsers() {
+    if (selectedSort && users) {
+      return [...users].sort((a, b) => (a[selectedSort] > b[selectedSort] ? 1 : -1));
+    }
+    return users;
+  }
+
+  const sortedUsers = getSortedUsers();
+
+  const sortUsers = (sort: string) => {
+    setSelectedSort(sort);
+    // console.log("sort: " + sort);
+  };
+  // Сортировка
+  //==============================
+
   return (
     <Container className="card">
       <Row>
@@ -61,15 +114,25 @@ const UserApiContainer: FC<UserApiContainerProps> = ({ topOfPage }) => {
           <div>
             <h1 className="textCenter">Список пользователей из userAPI</h1>
 
-            <div className="containerButton">
-              <Button variant="outline-info mr-4 mb-4" onClick={handleTransition}>
+            <div className="containerButton mt-1 mb-4">
+              <Button variant="outline-info" onClick={handleTransition}>
                 В начало страницы services createApi()
               </Button>
 
-              <Button variant="outline-success mb-4" onClick={handleCreate}>
+              <Button variant="outline-success mr-2 ml-2" onClick={handleCreate}>
                 Добавить нового пользователя
               </Button>
+
+              <MySelect
+                defaultValue="Сортировка"
+                disabled={true}
+                options={options}
+                value={selectedSort}
+                onChangeValue={sortUsers}
+              />
             </div>
+
+            <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
 
             <div>{isLoading && <h1> Идёт загрузка </h1>}</div>
 
@@ -96,8 +159,10 @@ const UserApiContainer: FC<UserApiContainerProps> = ({ topOfPage }) => {
               )}
             </div>
 
-            {users &&
-              users.map((user) => <UserItem key={user.id} user={user} update={handleUpdate} remove={handleRemove} />)}
+            {sortedUsers &&
+              sortedUsers.map((user) => (
+                <UserItem key={user.id} user={user} update={handleUpdate} remove={handleRemove} />
+              ))}
           </div>
         </div>
       </Row>

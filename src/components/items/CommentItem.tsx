@@ -11,7 +11,7 @@ interface CommentItemProps {
 
 const CommentItem: FC<CommentItemProps> = ({ comment, update, remove }) => {
   const handleUpdate = (event: React.MouseEvent) => {
-    const postId = prompt("Введите номер комментируемого вами поста") || "";
+    const postId = Number(prompt("Введите номер комментируемого вами поста") || "");
     const email = prompt("Введите свой email") || "";
     const name = prompt("Введите название комментария" || "");
     const body = prompt("Введите текст комментария") || "";

@@ -9,13 +9,13 @@ export interface IPost {
 }
 
 export interface IComment {
-  postId: number | string | null;
+  postId: number;
   id: number;
   name: string | null;
   email: string;
   body: string;
   // это надо для сортировки в CommentApiContainer на строке 129 (a[selectedSort])
-  [key: string]: any;
+  [key: string | number]: any;
 }
 
 export interface IAlbum {
@@ -25,13 +25,13 @@ export interface IAlbum {
 }
 
 export interface IPhoto {
-  albumId?: number | string | null;
+  albumId?: number | null;
   id: number;
   title: string;
   url: string;
   thumbnailUrl: string;
   // это надо для сортировки в
-  [key: string]: any;
+  [key: string | number]: any;
 }
 
 export interface ITodo {
@@ -49,12 +49,15 @@ export interface ITodom {
 }
 
 export interface IUser {
-  id: number | string | null;
+  // id: number | string | null;
+  id: number;
   name: string;
   username: string;
   email: string;
-  phone: string;
+  // phone: string;
+  phone: number;
   website: string;
+
   address: {
     street: string;
     suite: string;
@@ -71,6 +74,8 @@ export interface IUser {
     catchPhrase?: string | null;
     bs?: string | null;
   };
+  // это надо для сортировки в
+  [key: number | string]: any;
 }
 
 export interface IRoute {
@@ -95,12 +100,14 @@ export interface INavbarButton {
 export interface IProduct {
   id: number;
   title: string;
-  price: number | string;
+  price: number;
   description: string;
   category: string;
   image: string;
   rating: {
-    rate: number | string;
-    count: number | string;
+    rate: number;
+    count: number;
   };
+  // это надо для сортировки в
+  [key: string | number]: any;
 }

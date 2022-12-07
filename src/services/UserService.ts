@@ -6,11 +6,19 @@ export const userAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),
   tagTypes: ["User"],
   endpoints: (build) => ({
-    // Получение пользователей: ___
-    fetchAllUsers: build.query<IUser[], number>({
-      query: (limit: number = 5) => ({
+    fetchAllUsers: build.query<IUser[], number | void>({
+      query: () => ({
+        url: "/users",
+      }),
+    }),
+    // Эндпоинт получения пользователей постранично - делаем пагинацию:___
+    getUsersPagination: build.query<IUser[], number | void>({
+      // Для пагинации соблюдаем последовательность page и limit
+      query: (page: number = 1, limit: number = 5) => ({
         url: "/users",
         params: {
+          // Для пагинации соблюдаем последовательность page и limit
+          _page: page,
           _limit: limit,
         },
       }),

@@ -44,7 +44,7 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
   // Аргументом в асинхронную функцию createComment() нам надо передать объект типа IComment
   // и поскольку ID у нас будет генерировать сервер, явно укажем, что объект as IComment
   const handleCreate = async () => {
-    const postId = prompt("Введите номер комментируемого вами поста");
+    const postId = Number(prompt("Введите номер комментируемого вами поста"));
     const email = prompt("Введите свой email");
     const name = prompt("Введите название комментария");
     const body = prompt("Введите текст комментария");
@@ -66,6 +66,7 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
   //==============================
   // Сортировка
   const opions: IOption[] = [
+    { value: "id", name: "По номеру комментария" },
     { value: "postId", name: "По номеру комментируего поста" },
     { value: "email", name: "По email пользователя" },
     { value: "name", name: "По названию комментария" },
@@ -77,8 +78,8 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
   function getSortedComments() {
     // console.log("Отработала функция getSortedComments");
     if (selectedSort && comments) {
-      // console.log(selectedSort, typeof selectedSort);
-      return [...comments].sort((a, b) => String(a[selectedSort]).localeCompare(String(b[selectedSort])));
+      // return [...comments].sort((a, b) => String(a[selectedSort]).localeCompare(String(b[selectedSort])));
+      return [...comments].sort((a, b) => (a[selectedSort] > b[selectedSort] ? 1 : -1));
     }
     return comments;
   }

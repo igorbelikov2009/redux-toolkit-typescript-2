@@ -6,10 +6,20 @@ export const productAPI = createApi({
   baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:5000/" }),
   tagTypes: ["Product"],
   endpoints: (build) => ({
-    fetchAllProducts: build.query<IProduct[], number>({
-      query: (limit: number = 10) => ({
+    // Получаем все products разом, для получения общего количества
+    fetchAllPdoructs: build.query<IProduct[], number | void>({
+      query: () => ({
+        url: "/products",
+      }),
+    }),
+    // Получаем все products постранично - делаем пагинацию
+    getProductsPagination: build.query<IProduct[], number | void>({
+      // Для пагинации соблюдаем последовательность page и limit
+      query: (page: number = 1, limit: number = 10) => ({
         url: "/products",
         params: {
+          // Для пагинации соблюдаем последовательность page и limit
+          _page: page,
           _limit: limit,
         },
       }),
