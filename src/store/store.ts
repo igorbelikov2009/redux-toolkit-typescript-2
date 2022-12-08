@@ -1,4 +1,3 @@
-import { postPaginationAPI } from "./../services/PostApiService";
 import { productAPI } from "./../services/ProductsService";
 import { userAPI } from "./../services/UserService";
 import { combineReducers, configureStore } from "@reduxjs/toolkit";
@@ -22,6 +21,7 @@ import { commentAPI } from "../services/CommentService";
 import { albumAPI } from "../services/AlbumService";
 import { photoAPI } from "../services/PhotoService";
 import { todomAPI } from "../services/TodomService";
+import { postPaginationAPI } from "../services/PostPaginationService";
 
 // Создаём корневой редюсер, состоящий из комбинации всех редюсеров
 const rootReducer = combineReducers({
@@ -56,6 +56,7 @@ const rootReducer = combineReducers({
   [productAPI.reducerPath]: productAPI.reducer,
   [todoAPI.reducerPath]: todoAPI.reducer,
   [todomAPI.reducerPath]: todomAPI.reducer,
+  // [postPaginationAPI.reducerPath]: postPaginationAPI.reducer,
   [postPaginationAPI.reducerPath]: postPaginationAPI.reducer,
 });
 

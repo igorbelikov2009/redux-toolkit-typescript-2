@@ -5,7 +5,7 @@ export interface IPost {
   id: number;
   title: string;
   body: string;
-  [key: string]: any;
+  [key: string | number]: any;
 }
 
 export interface IComment {
@@ -39,6 +39,8 @@ export interface ITodo {
   id: number;
   title: string;
   completed: boolean;
+  // это надо для сортировки
+  [key: number | string]: any;
 }
 
 export interface ITodom {
@@ -74,7 +76,7 @@ export interface IUser {
     catchPhrase?: string | null;
     bs?: string | null;
   };
-  // это надо для сортировки в
+  // это надо для сортировки
   [key: number | string]: any;
 }
 
@@ -110,4 +112,9 @@ export interface IProduct {
   };
   // это надо для сортировки в
   [key: string | number]: any;
+}
+
+export interface IFilter {
+  sort: string;
+  query: string;
 }

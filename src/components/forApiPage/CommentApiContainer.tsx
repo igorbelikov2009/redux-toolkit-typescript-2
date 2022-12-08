@@ -1,7 +1,10 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useMemo } from "react";
 import { Container, Row, Button, Card, Form } from "react-bootstrap";
 import { IComment } from "../../models/types";
 import { commentAPI } from "../../services/CommentService";
+import InputSearch from "../gui/input/InputSearch";
+
+// import MyInput from "../gui/input/MyInput";
 import MySelect, { IOption } from "../gui/select/MySelect";
 import CommentItem from "../items/CommentItem";
 
@@ -63,7 +66,7 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
   };
 
   //==============================
-  // Сортировка
+  // Сортировка, поиск
   const opions: IOption[] = [
     { value: "id", name: "По номеру комментария" },
     { value: "postId", name: "По номеру комментируего поста" },
@@ -73,24 +76,29 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
   ];
 
   const [selectedSort, setSelectedSort] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState<string>("");
 
-  function getSortedComments() {
-    // console.log("Отработала функция getSortedComments");
+  // получаем отсортированный массив комментов
+  const sortedComments = useMemo(() => {
     if (selectedSort && comments) {
-      // return [...comments].sort((a, b) => String(a[selectedSort]).localeCompare(String(b[selectedSort])));
       return [...comments].sort((a, b) => (a[selectedSort] > b[selectedSort] ? 1 : -1));
     }
     return comments;
-  }
+  }, [selectedSort, comments]);
 
-  // получаем отсортированный массив комментов
-  const sortedComments = getSortedComments();
+  // Отсортированный и отфильтрованный массив:
+  const sortedAndSearchedComments = useMemo(() => {
+    if (sortedComments) {
+      return sortedComments.filter((comment) => comment.name?.toLocaleLowerCase().includes(searchQuery));
+    }
+  }, [searchQuery, sortedComments]);
 
   const sortComments = (sort: any) => {
     setSelectedSort(sort);
     // console.log(sort);
     // для MySelect, onChangeValue={sortComments}
   };
+  // Сортировка, поиск
   //==============================
 
   const handleSelect = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -99,44 +107,18 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
 
   return (
     <Container className="card">
-      <div className="containerButton mb-4">
-        <div className="card">
+      <Row>
+        <Card className="mb-4">
           <Button variant="outline-info mb-4" onClick={handleTransition}>
             В начало страницы services createApi()
           </Button>
-
-          <Button onClick={() => refetch()} variant="outline-success">
-            REFETCH
-          </Button>
-        </div>
-
-        <Form className="card ml-2">
-          <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
-            <Card.Title>Сколько комментов показать на странице?</Card.Title>
-            <div>
-              <Form.Select
-                value={limit}
-                onChange={handleSelect}
-                className="mySelect mr-4"
-                aria-label="Default select example"
-              >
-                <option value="">Все</option>
-                <option value="10">10</option>
-                <option value="20">20</option>
-                <option value="25">25</option>
-                <option value="50">50</option>
-              </Form.Select>
-            </div>
-          </Form.Group>
-        </Form>
-      </div>
-
-      <Row>
-        <Card className="mb-4">
           <h6>
             Работу функции refetch() наблюдаем в рабочей консоле, в вкладке "Сеть". Счётчик запросов (Запросы: 37)
             увеличивается с каждым кликом по кнопке.
           </h6>
+          <Button onClick={() => refetch()} variant="outline-success">
+            REFETCH
+          </Button>
         </Card>
       </Row>
 
@@ -145,17 +127,42 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
           <h3 className="textCenter">Список комментов от пользователей из commentAPI</h3>
 
           <div className="containerButton">
-            <Button className="mr-2" variant="outline-success" onClick={handleCreate}>
-              Добавить новый комментарий
-            </Button>
+            <Form className="card ml-2">
+              <Form.Group className="mb-3" controlId="exampleForm.ControlInput1">
+                <h6 className="mb-4">Сколько комментов показать на странице?</h6>
 
-            <MySelect
-              defaultValue="Сортировка"
-              disabled={true}
-              options={opions}
-              value={selectedSort}
-              onChangeValue={sortComments}
-            />
+                <Form.Select value={limit} onChange={handleSelect} aria-label="Default select example">
+                  <option value="">Все</option>
+                  <option value="10">10</option>
+                  <option value="20">20</option>
+                  <option value="25">25</option>
+                  <option value="50">50</option>
+                </Form.Select>
+              </Form.Group>
+
+              <Button variant="outline-success" onClick={handleCreate}>
+                Добавить новый комментарий
+              </Button>
+            </Form>
+
+            <div className="card ml-2">
+              <h6> Компоненты поиска и выбора алгоритма сортировки раздельны друг от друга...</h6>
+              <div className="mb-3">
+                <InputSearch
+                  placeholder="Поиск по названию комментария"
+                  searchQuery={searchQuery}
+                  setSearchQuery={setSearchQuery}
+                />
+              </div>
+
+              <MySelect
+                defaultValue="Сортировка"
+                disabled={true}
+                options={opions}
+                value={selectedSort}
+                onChangeValue={sortComments}
+              />
+            </div>
           </div>
 
           <div>
@@ -192,8 +199,8 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
 
           {/* Добавляем проверку: если у нас есть комментарии, и они не undefined  */}
           <div className="post">
-            {sortedComments &&
-              sortedComments.map((comment: IComment) => (
+            {sortedAndSearchedComments &&
+              sortedAndSearchedComments.map((comment: IComment) => (
                 <CommentItem key={comment.id} comment={comment} update={handleUpdate} remove={handleRemove} />
               ))}
           </div>

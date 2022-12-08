@@ -115,13 +115,15 @@ const PhotoApiContainer: FC<PhotoApiContainerProps> = ({ topOfPage }) => {
               Добавить новое фото
             </Button>
 
-            <MySelect
-              defaultValue="Сортировка"
-              disabled={true}
-              options={options}
-              value={selectedSort}
-              onChangeValue={sortPhotos}
-            />
+            <div>
+              <MySelect
+                defaultValue="Сортировка"
+                disabled={true}
+                options={options}
+                value={selectedSort}
+                onChangeValue={sortPhotos}
+              />
+            </div>
           </div>
 
           <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />

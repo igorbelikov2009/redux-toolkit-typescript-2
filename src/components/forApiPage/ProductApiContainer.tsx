@@ -109,7 +109,7 @@ const ProductApiContainer: FC<ProductApiContainerProps> = ({ topOfPage }) => {
           <div>
             <h3 className="textCenter"> Список продуктов из productAPI.</h3>
 
-            <div className="containerButton mt-1 mb-4">
+            <div className="containerButton mt-3 mb-4">
               <Button variant="outline-info " onClick={handleTransition}>
                 В начало страницы services createApi()
               </Button>
@@ -118,13 +118,15 @@ const ProductApiContainer: FC<ProductApiContainerProps> = ({ topOfPage }) => {
                 Добавить новый продукт
               </Button>
 
-              <MySelect
-                defaultValue="Сортировка"
-                disabled={true}
-                options={options}
-                value={selectedSort}
-                onChangeValue={sortProducts}
-              />
+              <div>
+                <MySelect
+                  defaultValue="Сортировка"
+                  disabled={true}
+                  options={options}
+                  value={selectedSort}
+                  onChangeValue={sortProducts}
+                />
+              </div>
             </div>
 
             <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />

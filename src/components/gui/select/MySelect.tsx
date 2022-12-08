@@ -1,4 +1,5 @@
 import React, { FC } from "react";
+import Form from "react-bootstrap/Form";
 
 export interface IOption {
   value: string;
@@ -20,7 +21,7 @@ const MySelect: FC<MySelectProps> = ({ options, defaultValue, value, onChangeVal
   };
 
   return (
-    <select value={value} onChange={selectChange}>
+    <Form.Select aria-label="Default select example" value={value} onChange={selectChange}>
       <option disabled={disabled} value="">
         {defaultValue}
       </option>
@@ -30,7 +31,7 @@ const MySelect: FC<MySelectProps> = ({ options, defaultValue, value, onChangeVal
           {option.name}
         </option>
       ))}
-    </select>
+    </Form.Select>
   );
 };
 

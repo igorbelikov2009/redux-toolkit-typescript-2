@@ -81,7 +81,7 @@ const ApiPage: FC = () => {
 
   const buttons: IButton[] = [
     { id: 1, handle: handlePostComb, title: "postsComb", active: postComb, variant: "outline-primary" },
-    { id: 2, handle: handlePagination, title: "pagination", active: pagination, variant: "outline-primary" },
+    { id: 2, handle: handlePagination, title: "dynamic-pagination", active: pagination, variant: "outline-primary" },
     { id: 3, handle: handleComments, title: "comments", active: comments, variant: "outline-primary" },
     { id: 4, handle: handleAlbums, title: "albums", active: albums, variant: "outline-primary" },
     { id: 5, handle: handlePhotos, title: "photos", active: photos, variant: "outline-primary" },

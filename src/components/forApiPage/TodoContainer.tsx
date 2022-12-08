@@ -1,10 +1,12 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useMemo } from "react";
 import { Container, Row } from "react-bootstrap";
 import { todoAPI } from "../../services/TodoService";
 import TodoItem from "../items/TodoItem";
 import { Button } from "react-bootstrap";
-import { ITodo } from "../../models/types";
+import { IFilter, ITodo } from "../../models/types";
 import PaginationButtons from "../gui/PaginationButtons";
+import SortFilter from "../SortFilter";
+import { IOption } from "../gui/select/MySelect";
 
 interface TodoContainerProps {
   topOfPage: () => void;
@@ -76,6 +78,31 @@ const TodoContainer: FC<TodoContainerProps> = ({ topOfPage }) => {
     topOfPage();
   };
 
+  // Сортировка и поиск
+  //===============================================================================================
+  const [filter, setFilter] = useState<IFilter>({ sort: "", query: "" });
+  const options: IOption[] = [
+    { value: "id", name: "По номеру дела" },
+    { value: "title", name: "По названию дела" },
+    { value: "completed", name: "По статусу выполнения" },
+  ];
+  // Отсортированный массив:
+  const sortedTodos = useMemo(() => {
+    if (filter.sort && todos) {
+      return [...todos].sort((a, b) => (a[filter.sort] > b[filter.sort] ? 1 : -1));
+    }
+    return todos;
+  }, [filter.sort, todos]);
+
+  // Отсортированный и отфильтрованный массив:
+  const sortedAndSearchedTodos = useMemo(() => {
+    if (sortedTodos) {
+      return sortedTodos.filter((todo) => todo.title.toLocaleLowerCase().includes(filter.query));
+    }
+  }, [filter.query, sortedTodos]);
+
+  // Сортировка и поиск
+  //===============================================================================================
   return (
     <Container className="card">
       <div className="containerButton">
@@ -94,6 +121,7 @@ const TodoContainer: FC<TodoContainerProps> = ({ topOfPage }) => {
           {isLoading && <h1> Идёт загрузка</h1>}
 
           <PaginationButtons page={page} pages={pages} countPage={countPage} setPage={setPage} />
+          <SortFilter filter={filter} setFilter={setFilter} options={options} placeholder="Поиск по названию дела..." />
           <div>
             <>
               {error && (
@@ -120,9 +148,10 @@ const TodoContainer: FC<TodoContainerProps> = ({ topOfPage }) => {
           </div>
 
           <div className="post">
-            {todos?.map((todo) => (
-              <TodoItem key={todo.id} todo={todo} remove={handleRemove} update={handleUpdate} />
-            ))}
+            {sortedAndSearchedTodos &&
+              sortedAndSearchedTodos.map((todo) => (
+                <TodoItem key={todo.id} todo={todo} remove={handleRemove} update={handleUpdate} />
+              ))}
           </div>
         </div>
       </Row>

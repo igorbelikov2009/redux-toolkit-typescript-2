@@ -123,13 +123,15 @@ const UserApiContainer: FC<UserApiContainerProps> = ({ topOfPage }) => {
                 Добавить нового пользователя
               </Button>
 
-              <MySelect
-                defaultValue="Сортировка"
-                disabled={true}
-                options={options}
-                value={selectedSort}
-                onChangeValue={sortUsers}
-              />
+              <div>
+                <MySelect
+                  defaultValue="Сортировка"
+                  disabled={true}
+                  options={options}
+                  value={selectedSort}
+                  onChangeValue={sortUsers}
+                />
+              </div>
             </div>
 
             <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />

@@ -29,7 +29,7 @@ const TodoItem: FC<TodoItemProps> = ({ todo, remove, update }) => {
           </Card.Title>
 
           <i className="displayBlock">
-            <i> описание дела: </i> <b> {todo.title} </b>
+            <i> название дела: </i> <b> {todo.title} </b>
           </i>
 
           <input type="checkbox" checked={todo.completed} onChange={handleCheckbox} />

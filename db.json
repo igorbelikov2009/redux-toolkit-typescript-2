@@ -854,13 +854,6 @@
     },
     {
       "postId": 11,
-      "id": 52,
-      "name": "esse autem dolorum",
-      "email": "Abigail.OConnell@june.org",
-      "body": "et enim voluptatem totam laudantium\nimpedit nam labore repellendus enim earum aut\nconsectetur mollitia fugit qui repellat expedita sunt\naut fugiat vel illo quos aspernatur ducimus"
-    },
-    {
-      "postId": 11,
       "id": 53,
       "name": "maiores alias necessitatibus aut non",
       "email": "Laverne_Price@scotty.info",
@@ -3825,11 +3818,6 @@
     {
       "id": 197,
       "title": "dignissimos quo nobis earum saepe",
-      "completed": true
-    },
-    {
-      "id": 198,
-      "title": "quis eius est sint explicabo",
       "completed": true
     },
     {
