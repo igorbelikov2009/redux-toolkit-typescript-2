@@ -11,6 +11,24 @@ export const postPaginationAPI = createApi({
       query: () => ({
         url: "/posts",
       }),
+      providesTags: (result) => ["Post"],
+    }),
+    // Создаём пост
+    addPost: builder.mutation<IPost, IPost>({
+      query: (post) => ({
+        url: "/posts",
+        method: "POST",
+        body: post,
+      }),
+      invalidatesTags: ["Post"],
+    }),
+    // Удаляем пост
+    deletePost: builder.mutation<IPost, IPost>({
+      query: (post) => ({
+        url: `posts/${post.id}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["Post"],
     }),
   }),
 });

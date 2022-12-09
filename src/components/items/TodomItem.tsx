@@ -42,7 +42,7 @@ const TodomItem: FC<TodomItemProps> = ({ todom, remove, update }) => {
         </div>
 
         <div className="cardButton">
-          <Button variant="outline-danger" className="mt-2 " onClick={handleRemove}>
+          <Button variant="outline-danger" className="mt-2" onClick={handleRemove}>
             Удалить
           </Button>
         </div>

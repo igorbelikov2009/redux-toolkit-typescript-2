@@ -1,10 +1,11 @@
-import React, { FC, useState } from "react";
+import React, { FC, useState, useMemo } from "react";
 import { Container, Row, Button } from "react-bootstrap";
-import { IProduct } from "../../models/types";
+import { IFilter, IProduct } from "../../models/types";
 import { productAPI } from "../../services/ProductsService";
 import PaginationButtons from "../gui/PaginationButtons";
-import MySelect, { IOption } from "../gui/select/MySelect";
+import { IOption } from "../gui/select/MySelect";
 import ProductItem from "../items/ProductItem";
+import SortFilter from "../SortFilter";
 
 interface ProductApiContainerProps {
   topOfPage: () => void;
@@ -74,91 +75,81 @@ const ProductApiContainer: FC<ProductApiContainerProps> = ({ topOfPage }) => {
     { value: "title", name: "По названию продукта" },
     { value: "price", name: "По стоимости продукта" },
     { value: "category", name: "По категории продукта" },
-    // { value: "rating.rate", name: "По рейтингу продукта" },
-    // { value: "rating.count", name: "По количеству оценок продукта" },
   ];
-  const [selectedSort, setSelectedSort] = useState<string>("");
+  const [filter, setFilter] = useState<IFilter>({ sort: "", query: "" });
 
-  function getSortedProducts() {
-    // console.log("Отработала функция getSortedPhotos");
-    if (selectedSort && products) {
-      // return [...products].sort((a, b) => String(a[selectedSort]).localeCompare(String(b[selectedSort])));
-      return [...products].sort((a, b) => (a[selectedSort] > b[selectedSort] ? 1 : -1));
+  // Получаем отсортированный массив.
+  const sortedProducts = useMemo(() => {
+    if (filter.sort && products) {
+      return [...products].sort((a, b) => (a[filter.sort] > b[filter.sort] ? 1 : -1));
     }
     return products;
-  }
+  }, [products, filter.sort]);
 
-  // Получаем отсортированный массив.  В HTML, для разворачивания массива продуктов
-  //  используем уже не массив products, полученный с сервера, а отсортированный массив
-  // sortedProducts
-  const sortedProducts = getSortedProducts();
+  // Отсортированный и отфильтрованный массив:
+  const sortedAndSearchedProducts = useMemo(() => {
+    if (sortedProducts) {
+      return sortedProducts.filter((product) => product.title.toLocaleLowerCase().includes(filter.query));
+    }
+  }, [sortedProducts, filter.query]);
 
-  // Определяем выбранный в selecte метод сортировки фоток (sortPhotos) через в обработчик
-  // onChangeValue={sortPhotos} и записываем его в состояние setSelectedSort(sort);
-  const sortProducts = (sort: any) => {
-    setSelectedSort(sort);
-    // console.log(sort);
-  };
   // Сортировка
   //==============================
 
   return (
-    <Container>
+    <Container className="card">
       <Row>
         <div>
-          <div>
-            <h3 className="textCenter"> Список продуктов из productAPI.</h3>
+          <h3 className="textCenter"> Список продуктов из productAPI.</h3>
 
-            <div className="containerButton mt-3 mb-4">
-              <Button variant="outline-info " onClick={handleTransition}>
+          <div className="containerButton">
+            <div className="card mr-2">
+              <Button variant="outline-info mb-2" onClick={handleTransition}>
                 В начало страницы services createApi()
               </Button>
 
-              <Button variant="outline-success mr-2 ml-2" onClick={handleCreate}>
+              <Button variant="outline-success" onClick={handleCreate}>
                 Добавить новый продукт
               </Button>
-
-              <div>
-                <MySelect
-                  defaultValue="Сортировка"
-                  disabled={true}
-                  options={options}
-                  value={selectedSort}
-                  onChangeValue={sortProducts}
-                />
-              </div>
             </div>
 
-            <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
+            <SortFilter
+              filter={filter}
+              options={options}
+              setFilter={setFilter}
+              placeholder="Поиск по названию продукта..."
+            />
+          </div>
 
-            <div> {isLoading && <h1 className="textCenter"> Идёт загрузка </h1>} </div>
-            <div>
-              {error && (
-                <>
-                  <h1 className="textCenter">Ошибка при загрузке</h1>
-                </>
-              )}
-              {createError && (
-                <>
-                  <h1 className="textCenter">Ошибка при создании</h1>
-                </>
-              )}
-              {updateError && (
-                <>
-                  <h1 className="textCenter">Ошибка при обновлении</h1>
-                </>
-              )}
-              {deleteError && (
-                <>
-                  <h1 className="textCenter">Ошибка при удалении</h1>
-                </>
-              )}
-            </div>
+          <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
+
+          <div> {isLoading && <h1 className="textCenter"> Идёт загрузка </h1>} </div>
+          <div>
+            {error && (
+              <>
+                <h1 className="textCenter">Ошибка при загрузке</h1>
+              </>
+            )}
+            {createError && (
+              <>
+                <h1 className="textCenter">Ошибка при создании</h1>
+              </>
+            )}
+            {updateError && (
+              <>
+                <h1 className="textCenter">Ошибка при обновлении</h1>
+              </>
+            )}
+            {deleteError && (
+              <>
+                <h1 className="textCenter">Ошибка при удалении</h1>
+              </>
+            )}
           </div>
 
           <div className="card">
-            {sortedProducts &&
-              sortedProducts.map((product) => (
+            {sortedAndSearchedProducts &&
+              sortedAndSearchedProducts.map((product) => (
                 <ProductItem key={product.id} product={product} update={handleUpdate} remove={handleRemove} />
               ))}
           </div>
