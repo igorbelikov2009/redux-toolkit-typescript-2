@@ -38,6 +38,27 @@
   /* align-items: center; */
 }
 
+/* анимация */
+.remove-btn {
+  margin-right: 0.5rem;
+}
+
+.post-enter {
+  transform: translateX(-350px);
+}
+.post-enter-active {
+  transform: translateX(0px);
+  transition: all 500ms ease-in;
+}
+.post-exit {
+  opacity: 1;
+}
+.post-exit-active {
+  transform: translateX(-350px);
+  transition: all 500ms ease-in;
+}
+/* анимация */
+
 .postItem {
   width: 100%;
   display: flex;
@@ -201,3 +222,5 @@
 .fullWidth {
   width: 100%;
 }
+
+/* post */

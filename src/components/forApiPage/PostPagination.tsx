@@ -5,14 +5,15 @@ import { postPaginationAPI } from "../../services/PostPaginationService";
 import MyInput from "../gui/input/MyInput";
 import MyModal from "../gui/myModal/MyModal";
 import MySelect, { IOption } from "../gui/select/MySelect";
-import PostPaginationItem from "../items/PostPaginationItem";
+// import PostPaginationItem from "../items/PostPaginationItem";
+import PostListPaginationApi from "../listApi/PostListPaginationApi";
 import PostForm from "../modal/PostForm";
 
-interface PostListProps {
+interface PostPaginationProps {
   topOfPage: () => void;
 }
 
-const PostList: FC<PostListProps> = ({ topOfPage }) => {
+const PostPagination: FC<PostPaginationProps> = ({ topOfPage }) => {
   const { data: posts, error } = postPaginationAPI.useGetAllPostsQuery();
   //==============================
   // Сортировка и поиск
@@ -66,7 +67,7 @@ const PostList: FC<PostListProps> = ({ topOfPage }) => {
   //==============================
   //==============================
   // Модалка
-  const [modal, setModal] = useState<boolean>(true);
+  const [modal, setModal] = useState<boolean>(false);
   // Модалка
   //==============================
 
@@ -100,15 +101,15 @@ const PostList: FC<PostListProps> = ({ topOfPage }) => {
           {deleteError && <h1 className="textCenter">Произошла ошибка при удалении поста</h1>}
         </>
 
-        {sortedAndSearchedPosts &&
-          sortedAndSearchedPosts.map((post) => <PostPaginationItem key={post.id} post={post} remove={handleRemove} />)}
-        {!sortedAndSearchedPosts?.length && <h1 className="textCenter">Посты не найдены</h1>}
+        {sortedAndSearchedPosts && (
+          <PostListPaginationApi posts={sortedAndSearchedPosts} remove={handleRemove} title="Список постов" />
+        )}
       </Row>
       <MyModal visible={modal} setVisible={setModal}>
-        <PostForm addPost={addPost} />
+        <PostForm addPost={addPost} setModal={setModal} />
       </MyModal>
     </Container>
   );
 };
 
-export default PostList;
+export default PostPagination;

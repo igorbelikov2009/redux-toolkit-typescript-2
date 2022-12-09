@@ -22,9 +22,10 @@ interface PostFormProps {
       "postPaginationAPI"
     >
   >;
+  setModal: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const PostForm: FC<PostFormProps> = ({ addPost }) => {
+const PostForm: FC<PostFormProps> = ({ addPost, setModal }) => {
   const [newTitle, setNewTitle] = useState<string>("");
   const [newBody, setNewBody] = useState<string>("");
 
@@ -37,6 +38,7 @@ const PostForm: FC<PostFormProps> = ({ addPost }) => {
       }).unwrap();
       setNewTitle("");
       setNewBody("");
+      setModal(false);
     }
   };
   return (
