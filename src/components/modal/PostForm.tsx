@@ -10,6 +10,7 @@ import React, { FC, useState } from "react";
 
 import { Form, Button } from "react-bootstrap";
 import { IPost } from "../../models/types";
+import MyInput from "../../components/gui/input/MyInput";
 
 interface PostFormProps {
   addPost: MutationTrigger<
@@ -39,16 +40,16 @@ const PostForm: FC<PostFormProps> = ({ addPost }) => {
     }
   };
   return (
-    <div className="card mr-2">
-      <Form.Control
-        className="mb-2"
+    <Form>
+      <MyInput
+        className="mb-2 fullWidth"
         type="text"
         value={newTitle}
         onChange={(e) => setNewTitle(e.target.value)}
         placeholder="Введите название нового поста"
       />
-      <Form.Control
-        className="mb-2"
+      <MyInput
+        className="mb-2 fullWidth"
         type="text"
         value={newBody}
         onChange={(e) => setNewBody(e.target.value)}
@@ -57,7 +58,7 @@ const PostForm: FC<PostFormProps> = ({ addPost }) => {
       <Button variant="outline-success" onClick={handleAddPost}>
         Добавить новый пост
       </Button>
-    </div>
+    </Form>
   );
 };
 

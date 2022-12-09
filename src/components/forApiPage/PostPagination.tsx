@@ -1,8 +1,9 @@
 import React, { FC, useState, useMemo } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
 import { IPost } from "../../models/types";
 import { postPaginationAPI } from "../../services/PostPaginationService";
 import MyInput from "../gui/input/MyInput";
+import MyModal from "../gui/myModal/MyModal";
 import MySelect, { IOption } from "../gui/select/MySelect";
 import PostPaginationItem from "../items/PostPaginationItem";
 import PostForm from "../modal/PostForm";
@@ -63,12 +64,20 @@ const PostList: FC<PostListProps> = ({ topOfPage }) => {
   };
   // Создание и удаление
   //==============================
+  //==============================
+  // Модалка
+  const [modal, setModal] = useState<boolean>(true);
+  // Модалка
+  //==============================
 
   return (
     <Container>
       <Row className="card">
-        <div className="containerButton"></div>
-        <PostForm addPost={addPost} />
+        <div className="containerButton mt-2">
+          <Button variant="outline-success" onClick={() => setModal(true)}>
+            Создать пользователя
+          </Button>
+        </div>
         <div className="card">
           <h6> Компоненты поиска и выбора алгоритма сортировки раздельны друг от друга...</h6>
 
@@ -95,6 +104,9 @@ const PostList: FC<PostListProps> = ({ topOfPage }) => {
           sortedAndSearchedPosts.map((post) => <PostPaginationItem key={post.id} post={post} remove={handleRemove} />)}
         {!sortedAndSearchedPosts?.length && <h1 className="textCenter">Посты не найдены</h1>}
       </Row>
+      <MyModal visible={modal} setVisible={setModal}>
+        <PostForm addPost={addPost} />
+      </MyModal>
     </Container>
   );
 };
