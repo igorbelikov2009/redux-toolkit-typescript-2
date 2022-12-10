@@ -5,9 +5,8 @@ import { postPaginationAPI } from "../../services/PostPaginationService";
 import MyInput from "../gui/input/MyInput";
 import MyModal from "../gui/myModal/MyModal";
 import MySelect, { IOption } from "../gui/select/MySelect";
-// import PostPaginationItem from "../items/PostPaginationItem";
-import PostListPaginationApi from "../listApi/PostListPaginationApi";
 import PostForm from "../modal/PostForm";
+import PostListPaginationApi from "./listApi/PostListPaginationApi";
 
 interface PostPaginationProps {
   topOfPage: () => void;
@@ -42,7 +41,7 @@ const PostPagination: FC<PostPaginationProps> = ({ topOfPage }) => {
     // из массива. Таким образом остаются те посты, у которых в названии (post.title)
     // имеются символы, набранные в инпуте поисковой строки.
     if (sortedPosts) {
-      return sortedPosts.filter((post) => post.title.toLocaleLowerCase().includes(searchQuery));
+      return sortedPosts.filter((post) => post.title.toLowerCase().includes(searchQuery));
     }
   }, [searchQuery, sortedPosts]);
 

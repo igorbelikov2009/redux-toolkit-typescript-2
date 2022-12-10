@@ -89,7 +89,7 @@ const CommentApiContainer: FC<CommentApiContainerProps> = ({ topOfPage }) => {
   // Отсортированный и отфильтрованный массив:
   const sortedAndSearchedComments = useMemo(() => {
     if (sortedComments) {
-      return sortedComments.filter((comment) => comment.name?.toLocaleLowerCase().includes(searchQuery));
+      return sortedComments.filter((comment) => comment.name?.toLowerCase().includes(searchQuery));
     }
   }, [searchQuery, sortedComments]);
 

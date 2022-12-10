@@ -97,7 +97,7 @@ const TodoContainer: FC<TodoContainerProps> = ({ topOfPage }) => {
   // Отсортированный и отфильтрованный массив:
   const sortedAndSearchedTodos = useMemo(() => {
     if (sortedTodos) {
-      return sortedTodos.filter((todo) => todo.title.toLocaleLowerCase().includes(filter.query));
+      return sortedTodos.filter((todo) => todo.title.toLowerCase().includes(filter.query));
     }
   }, [filter.query, sortedTodos]);
 

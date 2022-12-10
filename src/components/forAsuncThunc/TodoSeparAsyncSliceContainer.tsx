@@ -6,7 +6,7 @@ import TodoSeparItem from "../items/TodoSeparItem";
 import NewTodoForm from "./NewTodoForm";
 
 const TodoSeparAsyncSliceContainer: FC = () => {
-  const [text, setText] = useState("");
+  const [text, setText] = useState<string>("");
 
   const dispatch = useAppDispanch();
   const { todos, status, error } = useAppSelector((state) => state.todoSeparReducer);
@@ -39,16 +39,17 @@ const TodoSeparAsyncSliceContainer: FC = () => {
             <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
 
             <div>
-              {todos?.map((todo) => (
-                // <TodoSeparItem key={todo.id} todo={todo} remove={handleRemove} update={handleUpdate} />
-                <TodoSeparItem
-                  key={todo.id}
-                  completed={todo.completed}
-                  id={todo.id}
-                  title={todo.title}
-                  userId={todo.userId}
-                />
-              ))}
+              {todos &&
+                todos.map((todo) => (
+                  // <TodoSeparItem key={todo.id} todo={todo} remove={handleRemove} update={handleUpdate} />
+                  <TodoSeparItem
+                    key={todo.id}
+                    completed={todo.completed}
+                    id={todo.id}
+                    title={todo.title}
+                    userId={todo.userId}
+                  />
+                ))}
             </div>
           </div>
         </div>

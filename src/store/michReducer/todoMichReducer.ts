@@ -1,7 +1,8 @@
-import { ITodo } from "./../models/types";
+import { ITodo } from "./../../models/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-export const fetchTodosSepar = createAsyncThunk("todos/fetchTodosSepar", async function (_, { rejectWithValue }) {
+// экшены
+export const fetchTodosMich = createAsyncThunk("todos/fetchTodosMich", async function (_, { rejectWithValue }) {
   try {
     const response = await fetch("https://jsonplaceholder.typicode.com/todos?_limit=20");
     // console.log(response);
@@ -15,31 +16,32 @@ export const fetchTodosSepar = createAsyncThunk("todos/fetchTodosSepar", async f
     const date = await response.json();
     return date;
   } catch (error: any) {
-    // и передам ошибку определённым образом в extraReducers, в метод [fetchTodosSepar.rejected.type],
+    // и передам ошибку определённым образом в extraReducers, в метод [fetchTodosMich.rejected.type],
     // где её можно будет корректно обработать.
     return rejectWithValue(error.message);
   }
 });
 
-//   dispatch достаём прямо отсюда
-export const deleteTodo = createAsyncThunk(
-  "todo/deleteTodo",
+// dispatch достаём прямо отсюда
+export const deleteTodoMich = createAsyncThunk(
+  "todo/deleteTodoMich",
   async function (id: number, { rejectWithValue, dispatch }) {
     try {
       const response = await fetch(`https://jsonplaceholder.typicode.com/todos/${id}`, {
         method: "DELETE",
       });
-      // console.log(response);
+      //   console.log(response);
       if (!response.ok) {
         throw new Error("Не могу удалить задачу. Ошибка на сервере.");
       }
-      // Если ошибки нет, пришёл response.ok, то... на сервере нужный объект мы уже удалили, нам нужно удалить
-      // его локально, вызвать removeTodo() из todoSlice. Для того, чтобы его вызвать, у нас уже есть диспетчер.
+      // Если ошибки нет, пришёл response.ok, то... на сервере нужный объект мы уже удалили,
+      // нам нужно удалить его локально, вызвать removeTodo() из todoSlice. Для того,
+      // чтобы его вызвать, у нас уже есть диспетчер.
       // Мы его получили через объект вторым параметром.
       dispatch(removeTodo({ id }));
-      // const data = response.json();
-      // console.log(data);
-      // return data;
+      //   const data = response.json();
+      //   console.log(data);
+      //   return data;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -47,14 +49,14 @@ export const deleteTodo = createAsyncThunk(
 );
 
 // <any, number, { state: ??????? }>
-export const toggledStatus = createAsyncThunk<any, number, { state: any }>(
-  "todo/toggledStatus",
+export const toggledStatusMich = createAsyncThunk<any, number, { state: any }>(
+  "todo/toggledStatusMich",
   async function (id: number, { rejectWithValue, dispatch, getState }) {
     // Получаем общий state из getState()
     // Для каждого todo, найди тот todo, у которого его id равен тому id, который мы получили
     // в качестве параметров функции.
 
-    const todo: ITodo = getState().todoSeparReducer.todos.find((todo: ITodo) => todo.id === id);
+    const todo: ITodo = getState().todoMichReducer.todos.find((todo: ITodo) => todo.id === id);
     // console.log(todo);
 
     try {
@@ -72,6 +74,7 @@ export const toggledStatus = createAsyncThunk<any, number, { state: any }>(
       if (!response.ok) {
         throw new Error("Не могу переключить статус checkbox. Ошибка на сервере.");
       }
+
       dispatch(toogleTodoCompleted({ id }));
       // Мы ожидаем от сервера ответ в виде изменённых данных для проверки:
       // const data = await response.json();
@@ -82,8 +85,8 @@ export const toggledStatus = createAsyncThunk<any, number, { state: any }>(
   }
 );
 
-export const addNewTodo = createAsyncThunk(
-  "todo/addNewTodo",
+export const addTodoMich = createAsyncThunk(
+  "todo/addTodoMich",
   async function (text: string, { rejectWithValue, dispatch }) {
     try {
       // Сначала, создаём здесь объект, который будем отправлять на сервер.
@@ -97,6 +100,7 @@ export const addNewTodo = createAsyncThunk(
         completed: false,
         id: 0,
       };
+
       const response = await fetch("https://jsonplaceholder.typicode.com/todos", {
         method: "POST",
         headers: {
@@ -110,43 +114,41 @@ export const addNewTodo = createAsyncThunk(
       }
 
       const data = await response.json();
-      // console.log(data);
+      //   console.log(data);
       dispatch(addTodo(data));
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
   }
 );
-//^^^action^^^===============================================================================
 
-interface ITodoSeparState {
+interface ITodoMichState {
   todo?: ITodo;
   todos: ITodo[];
-  status: string | null; // as isLoading
+  status: string | null;
   error: string | null;
 }
 
-const initialState: ITodoSeparState = {
+const initialState: ITodoMichState = {
   todos: [],
   status: null,
   error: null,
 };
 
 // Сделаем хэлпер для обработки ошибок в extraReducers
-const setError = (state: ITodoSeparState, action: PayloadAction<string>) => {
+const setError = (state: ITodoMichState, action: PayloadAction<string>) => {
   state.status = "rejected";
   state.error = action.payload;
 };
 
-const todoSeparSlice = createSlice({
-  name: "todoSepar",
+const todoMichSlice = createSlice({
+  name: "todoMich",
   initialState: initialState,
   reducers: {
     addTodo(state, action) {
       state.todos.push(action.payload);
     },
     removeTodo(state, action) {
-      // console.log(state, action);
       state.todos = state.todos.filter((todo) => todo.id !== action.payload.id);
     },
     toogleTodoCompleted(state, action) {
@@ -159,30 +161,29 @@ const todoSeparSlice = createSlice({
       }
     },
   },
-
   extraReducers: {
-    [fetchTodosSepar.pending.type]: (state) => {
+    [fetchTodosMich.pending.type]: (state) => {
       state.status = "loading";
       state.error = null; // Обнуляем, на всякий случай. Вдруг, прежде, была ошибка.
     },
-    [fetchTodosSepar.fulfilled.type]: (state, action: PayloadAction<ITodo[]>) => {
+    [fetchTodosMich.fulfilled.type]: (state, action: PayloadAction<ITodo[]>) => {
       state.status = "resolved";
       state.todos = action.payload;
     },
-    [fetchTodosSepar.rejected.type]: setError,
+    [fetchTodosMich.rejected.type]: setError,
 
-    [deleteTodo.pending.type]: (state) => {
+    [deleteTodoMich.pending.type]: (state) => {
       state.error = null; // Обнуляем, на всякий случай. Вдруг, прежде, была ошибка.
     },
-    [deleteTodo.rejected.type]: setError,
-    [toggledStatus.pending.type]: (state) => {
+    [deleteTodoMich.rejected.type]: setError,
+
+    [toggledStatusMich.pending.type]: (state) => {
       state.error = null;
     },
-    [toggledStatus.rejected.type]: setError,
+    [toggledStatusMich.rejected.type]: setError,
   },
 });
 
-// action - это событие и с чем нужно работать
-const { addTodo, removeTodo, toogleTodoCompleted } = todoSeparSlice.actions;
-export default todoSeparSlice.reducer;
+const { addTodo, removeTodo, toogleTodoCompleted } = todoMichSlice.actions;
+export default todoMichSlice.reducer;
 // регистрируем в store.ts

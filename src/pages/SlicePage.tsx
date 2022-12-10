@@ -84,6 +84,10 @@ const SlicePage: FC = () => {
             <a className="link ml-1" href="https://jsonplaceholder.typicode.com/" target={"_blank"} rel="noreferrer">
               JSON Placeholder
             </a>
+            ,
+            <br />
+            а так же свои, кастомные хуки: <br /> - для сортировки useSort; <br /> - для сортировки и поиска
+            useSortSearch.
           </h4>
         </Row>
 

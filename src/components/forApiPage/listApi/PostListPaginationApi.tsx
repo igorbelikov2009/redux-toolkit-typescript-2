@@ -1,6 +1,6 @@
 import React, { FC } from "react";
-import { IPost } from "../../models/types";
-import PostPaginationItem from "../items/PostPaginationItem";
+import { IPost } from "../../../models/types";
+import PostPaginationItem from "../../items/PostPaginationItem";
 import { CSSTransition, TransitionGroup } from "react-transition-group";
 
 interface PostListPaginationApiProps {

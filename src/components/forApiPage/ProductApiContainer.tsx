@@ -89,7 +89,7 @@ const ProductApiContainer: FC<ProductApiContainerProps> = ({ topOfPage }) => {
   // Отсортированный и отфильтрованный массив:
   const sortedAndSearchedProducts = useMemo(() => {
     if (sortedProducts) {
-      return sortedProducts.filter((product) => product.title.toLocaleLowerCase().includes(filter.query));
+      return sortedProducts.filter((product) => product.title.toLowerCase().includes(filter.query));
     }
   }, [sortedProducts, filter.query]);
 
