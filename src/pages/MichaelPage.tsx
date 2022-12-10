@@ -1,5 +1,5 @@
 import React, { FC, useState } from "react";
-import { Container, Row, Card } from "react-bootstrap";
+import { Container } from "react-bootstrap";
 import ButtonsBlock from "../components/ButtonsBlock";
 import AlbumsMichContainer from "../components/forMichaelPage/AlbumsMichContainer";
 import CommentsMichContainer from "../components/forMichaelPage/CommentsMichContainer";

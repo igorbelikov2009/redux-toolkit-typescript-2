@@ -23,6 +23,7 @@ import { photoAPI } from "../services/PhotoService";
 import { todomAPI } from "../services/TodomService";
 import { postPaginationAPI } from "../services/PostPaginationService";
 import todoMichReducer from "./michReducer/todoMichReducer";
+import postMichReducer from "./michReducer/postMichReducer";
 
 // Создаём корневой редюсер, состоящий из комбинации всех редюсеров
 const rootReducer = combineReducers({
@@ -41,6 +42,7 @@ const rootReducer = combineReducers({
   photoAsuncThunkReducer,
   counterReducer,
   todoMichReducer,
+  postMichReducer,
 
   // Регистрируем редюсер с PostService.ts как ключ-значение
   //               ключ: значение

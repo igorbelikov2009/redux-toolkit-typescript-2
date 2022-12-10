@@ -38,18 +38,7 @@ const TodosMichContainer: FC = () => {
             <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
           </div>
 
-          <div>
-            {todos &&
-              todos.map((todo) => (
-                <TodoMichItem
-                  key={todo.id}
-                  completed={todo.completed}
-                  id={todo.id}
-                  title={todo.title}
-                  userId={todo.userId}
-                />
-              ))}
-          </div>
+          <div>{todos && todos.map((todo) => <TodoMichItem key={todo.id} todo={todo} />)}</div>
         </div>
       </Row>
     </Container>

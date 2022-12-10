@@ -53,7 +53,6 @@ const PostPagination: FC<PostPaginationProps> = ({ topOfPage }) => {
   //==============================
   //==============================
   // Создание и удаление
-
   const [addPost, { error: addTodomError }] = postPaginationAPI.useAddPostMutation();
   const [deletePost, { error: deleteError }] = postPaginationAPI.useDeletePostMutation();
   // .unwrap() обеспечивает нам корректную работу всех дополнительных пропов, которые
@@ -104,6 +103,7 @@ const PostPagination: FC<PostPaginationProps> = ({ topOfPage }) => {
           <PostListPaginationApi posts={sortedAndSearchedPosts} remove={handleRemove} title="Список постов" />
         )}
       </Row>
+
       <MyModal visible={modal} setVisible={setModal}>
         <PostForm addPost={addPost} setModal={setModal} />
       </MyModal>
