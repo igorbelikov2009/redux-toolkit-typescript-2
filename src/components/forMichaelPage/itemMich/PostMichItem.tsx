@@ -3,14 +3,24 @@ import Card from "react-bootstrap/Card";
 import { Button } from "react-bootstrap";
 import { IPost } from "../../../models/types";
 import { useAppDispanch } from "../../../hooks/redux";
-import { deletePostMich } from "../../../store/michReducer/postMichReducer";
+import { deletePostMich, editPostMich } from "../../../store/michReducer/postMichReducer";
 
 interface PostMichItemProps {
   post: IPost;
+  // update: (post: IPost) => void;
 }
 
 const PostMichItem: FC<PostMichItemProps> = ({ post }) => {
   const dispatch = useAppDispanch();
+
+  const handleUpdate = (e: React.MouseEvent) => {
+    const userId = Number(prompt("Введите новый № пользователя") || "");
+    const title = prompt("Введите новое название поста") || "";
+    const body = prompt("Введите новый текст поста") || "";
+
+    dispatch(editPostMich({ ...post, userId, title, body }));
+    // update({ ...post, userId, title, body, id });
+  };
 
   const handleRemove = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -18,7 +28,7 @@ const PostMichItem: FC<PostMichItemProps> = ({ post }) => {
   };
 
   return (
-    <Card className="post">
+    <Card className="post" onClick={handleUpdate}>
       <div className="cardBlock">
         <div className="cardDescription">
           <Card.Title>

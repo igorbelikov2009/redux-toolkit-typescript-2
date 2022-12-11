@@ -48,42 +48,40 @@ export const deletePostMich = createAsyncThunk(
   }
 );
 
-// // <any, number, { state: ??????? }>
-// export const toggledStatusMich = createAsyncThunk<any, number, { state: any }>(
-//   "post/toggledStatusMich",
-//   async function (id: number, { rejectWithValue, dispatch, getState }) {
-//     // Получаем общий state из getState()
-//     // Для каждого post, найди тот post, у которого его id равен тому id, который мы получили
-//     // в качестве параметров функции.
+// <any, number, { state: ??????? }>
+export const editPostMich = createAsyncThunk<any, IPost, { state: any }>(
+  "post/editPostMich",
+  async function (post: IPost, { rejectWithValue, dispatch, getState }) {
+    // Получаем общий state из getState()
+    // Для каждого post, найди тот post, у которого его id равен тому id, который мы получили
+    // в качестве параметров функции.
 
-//     const post: IPost = getState().postMichReducer.posts.find((post: IPost) => post.id === id);
-//     // console.log(post);
+    // const post: IPost = getState().postMichReducer.posts.find((post: IPost) => post.id === id);
+    // console.log(post);
 
-//     try {
-//       const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
-//         method: "PATCH",
-//         headers: {
-//           "Content-Type": "application/json",
-//         },
-//         body: JSON.stringify({
-//           // Возьми у этого post поле completed и сделай ему инверсию.
-//           completed: !post.completed,
-//         }),
-//       });
+    try {
+      const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${post.id}`, {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(post),
+      });
 
-//       if (!response.ok) {
-//         throw new Error("Не могу переключить статус checkbox. Ошибка на сервере.");
-//       }
+      if (!response.ok) {
+        throw new Error("Не могу обновить пост. Ошибка на сервере.");
+      }
 
-//       dispatch(tooglePostCompleted({ id }));
-//       // Мы ожидаем от сервера ответ в виде изменённых данных для проверки:
-//       // const data = await response.json();
-//       // console.log(data);
-//     } catch (error: any) {
-//       return rejectWithValue(error.message);
-//     }
-//   }
-// );
+      // dispatch(editPost(data));
+      // Мы ожидаем от сервера ответ в виде изменённых данных для проверки:
+      const data = await response.json();
+      console.log(data);
+      dispatch(editPost(post));
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 export const addPostMich = createAsyncThunk(
   "post/addPostMich",
@@ -139,13 +137,18 @@ const postMichSlice = createSlice({
     removePost(state, action) {
       state.posts = state.posts.filter((post) => post.id !== action.payload.id);
     },
-    tooglePostCompleted(state, action) {
+    editPost(state, action) {
       // Нам нужно найти конкретный один элемент по id, который изменился.
       // Назовём его modifiedPost.
-      const modifiedPost = state.posts.find((post) => post.id === action.payload.id);
+      let modifiedPost = state.posts.find((post) => post.id === action.payload.id);
       // Найденный объект, точечно, можем изменить.
       if (modifiedPost) {
-        modifiedPost.completed = !modifiedPost.completed;
+        modifiedPost = action.payload;
+        // state.posts = state.posts;
+        state.posts = [...state.posts, (modifiedPost = action.payload)];
+        console.log(action.payload);
+        console.log(modifiedPost);
+        console.log(state.posts);
       }
     },
   },
@@ -165,13 +168,13 @@ const postMichSlice = createSlice({
     },
     [deletePostMich.rejected.type]: setError,
 
-    // [toggledStatusMich.pending.type]: (state) => {
-    //   state.error = null;
-    // },
-    // [toggledStatusMich.rejected.type]: setError,
+    [editPostMich.pending.type]: (state) => {
+      state.error = null;
+    },
+    [editPostMich.rejected.type]: setError,
   },
 });
 
-const { addPost, removePost, tooglePostCompleted } = postMichSlice.actions;
+const { addPost, removePost, editPost } = postMichSlice.actions;
 export default postMichSlice.reducer;
 // регистрируем в store.ts

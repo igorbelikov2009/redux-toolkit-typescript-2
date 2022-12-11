@@ -48,7 +48,8 @@ const PostMichContainer: FC = () => {
   //  для addPostMich в PostMichReducer. Строка 90
   const post: IPost = {
     userId: Number(userId), // берём из созданного нами состояния
-    id: 0,
+    id: 0, // назначаем 0, потом ему автоматически присвоится значение
+    // на один больше последнего id
     title: title, // берём из созданного нами состояния
     body: body, // берём из созданного нами состояния
   };
