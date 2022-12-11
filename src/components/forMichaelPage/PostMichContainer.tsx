@@ -1,32 +1,33 @@
 import React, { FC, useEffect, useState } from "react";
-import { Container, Row } from "react-bootstrap";
+import { Button, Container, Row } from "react-bootstrap";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { IPost } from "../../models/types";
 import { addPostMich, fetchPostsMich } from "../../store/michReducer/postMichReducer";
-import FormCreation from "../modal/FormCreation";
+import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
+import MyModal from "../modal/MyModal";
 import PostMichItem from "./itemMich/PostMichItem";
 
-export interface IFormsOfCreation {
-  type: string;
-  value: string;
-  setValue: React.Dispatch<React.SetStateAction<string>>;
-  placeholder: string;
-}
-
 const PostMichContainer: FC = () => {
+  // title, body, userId для создания нового объекта (post)
+  // и формы создания нового объекта (post) formsOfCreation
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
+
+  // Модалка
+  const [modal, setModal] = useState<boolean>(false);
+
   const dispatch = useAppDispanch();
   const { posts, status, error } = useAppSelector((state) => state.postMichReducer);
   // console.log(posts, status, error);
 
+  // форма создания нового объекта
   const formsOfCreation: IFormsOfCreation[] = [
     {
       type: "text",
       value: userId,
       setValue: setUserId,
-      placeholder: "Введите номер № пользователя",
+      placeholder: "Введите № пользователя",
     },
     {
       type: "text",
@@ -42,11 +43,14 @@ const PostMichContainer: FC = () => {
     },
   ];
 
+  // создаём новый объект (post), как аргумент:
+  //  для dispatch(addPostMich(post)) на этой странице. Строка 53.
+  //  для addPostMich в PostMichReducer. Строка 90
   const post: IPost = {
-    userId: Number(userId),
+    userId: Number(userId), // берём из созданного нами состояния
     id: 0,
-    title: title,
-    body: body,
+    title: title, // берём из созданного нами состояния
+    body: body, // берём из созданного нами состояния
   };
 
   const handleAddPost = () => {
@@ -55,6 +59,7 @@ const PostMichContainer: FC = () => {
       setUserId("");
       setTitle("");
       setBody("");
+      setModal(false);
     }
   };
 
@@ -64,12 +69,14 @@ const PostMichContainer: FC = () => {
 
   return (
     <Container className="card">
-      <>
-        <FormCreation formsOfCreation={formsOfCreation} addObject={handleAddPost} ButtonName="Добавить новый пост" />
-      </>
+      <div className="containerButton mt-2 mb-4">
+        <Button variant="outline-success" onClick={() => setModal(true)}>
+          Создать новый пост
+        </Button>
+      </div>
 
       <Row>
-        <h2 className="textCenter mb-4">Список дел пользователя из postMichReducer</h2>
+        <h2 className="textCenter mb-4">Список постов пользователей из postMichReducer</h2>
 
         <div>
           {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
@@ -79,6 +86,10 @@ const PostMichContainer: FC = () => {
 
         {posts && posts.map((post) => <PostMichItem post={post} key={post.id} />)}
       </Row>
+
+      <MyModal visible={modal} setVisible={setModal}>
+        <FormCreation formsOfCreation={formsOfCreation} addObject={handleAddPost} ButtonName="Добавить новый пост" />
+      </MyModal>
     </Container>
   );
 };

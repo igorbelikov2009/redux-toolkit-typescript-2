@@ -3,7 +3,7 @@ import { Button, Container, Row } from "react-bootstrap";
 import { IPost } from "../../models/types";
 import { postPaginationAPI } from "../../services/PostPaginationService";
 import MyInput from "../gui/input/MyInput";
-import MyModal from "../gui/myModal/MyModal";
+import MyModal from "../modal/MyModal";
 import MySelect, { IOption } from "../gui/select/MySelect";
 import PostForm from "../modal/PostForm";
 import PostListPaginationApi from "./listApi/PostListPaginationApi";

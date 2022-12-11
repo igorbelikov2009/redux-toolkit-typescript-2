@@ -1,7 +1,13 @@
 import React, { FC } from "react";
 import { Form, Button } from "react-bootstrap";
-import { IFormsOfCreation } from "../forMichaelPage/PostMichContainer";
 import FormControl from "../gui/input/FormControl";
+
+export interface IFormsOfCreation {
+  type: string;
+  value: string;
+  setValue: React.Dispatch<React.SetStateAction<string>>;
+  placeholder: string;
+}
 
 interface FormCreationProps {
   formsOfCreation: IFormsOfCreation[];
