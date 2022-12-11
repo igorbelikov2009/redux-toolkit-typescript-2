@@ -21,6 +21,9 @@ const PostMichItem: FC<PostMichItemProps> = ({ post }) => {
     <Card className="post">
       <div className="cardBlock">
         <div className="cardDescription">
+          <Card.Title>
+            <i> пользователь № </i> <b> {post.userId} </b>
+          </Card.Title>
           <i className="displayBlock">
             Пост № <b> {post.id} </b>
           </i>
