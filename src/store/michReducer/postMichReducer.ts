@@ -76,7 +76,7 @@ export const editPostMich = createAsyncThunk<any, IPost, { state: any }>(
       // Мы ожидаем от сервера ответ в виде изменённых данных для проверки:
       const data = await response.json();
       console.log(data);
-      dispatch(editPost(post));
+      dispatch(editPost(data));
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -109,7 +109,7 @@ export const addPostMich = createAsyncThunk(
 );
 
 interface IPostMichState {
-  post?: IPost;
+  // post: IPost;
   posts: IPost[];
   status: string | null;
   error: string | null;
@@ -141,14 +141,23 @@ const postMichSlice = createSlice({
       // Нам нужно найти конкретный один элемент по id, который изменился.
       // Назовём его modifiedPost.
       let modifiedPost = state.posts.find((post) => post.id === action.payload.id);
-      // Найденный объект, точечно, можем изменить.
+
       if (modifiedPost) {
+        // Найденный объект можем изменить.
         modifiedPost = action.payload;
-        // state.posts = state.posts;
-        state.posts = [...state.posts, (modifiedPost = action.payload)];
-        console.log(action.payload);
-        console.log(modifiedPost);
-        console.log(state.posts);
+        if (modifiedPost) {
+          // осталось изменить массив: вырезать из него изменяемый post, а вместо
+          // него, вставить изменённый( по сути, вновь созданный пост)
+          state.posts = state.posts
+            .splice(0, Number(modifiedPost.id - 1))
+            .concat(modifiedPost)
+            .concat(state.posts.splice(1));
+          //========================================
+          // console.log(action.payload);
+          // console.log(modifiedPost);
+          // console.log(modifiedPost.id);
+          // console.log(state.posts);
+        }
       }
     },
   },
