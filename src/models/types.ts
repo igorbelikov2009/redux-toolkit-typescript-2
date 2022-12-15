@@ -22,6 +22,7 @@ export interface IAlbum {
   userId?: number | string | null;
   id: number;
   title: string | null;
+  [key: string | number]: any;
 }
 
 export interface IPhoto {

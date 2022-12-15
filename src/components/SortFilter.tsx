@@ -22,7 +22,7 @@ const SortFilter: FC<SortFilterProps> = ({ filter, setFilter, options, placehold
 
   return (
     <div className="card">
-      <h6>Это компонент SortFilter, объединяющий поиск и сортировку.</h6>
+      <h6>Это компонент SortFilter.tsx, объединяющий поиск и сортировку.</h6>
       <Form.Control
         className="mb-2"
         value={filter.query}

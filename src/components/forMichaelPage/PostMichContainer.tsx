@@ -1,10 +1,12 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useMemo } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
-import { IPost } from "../../models/types";
+import { IFilter, IPost } from "../../models/types";
 import { addPostMich, fetchPostsMich } from "../../store/michReducer/postMichReducer";
+import { IOption } from "../gui/select/MySelect";
 import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
 import MyModal from "../modal/MyModal";
+import SortFilter from "../SortFilter";
 import PostMichItem from "./itemMich/PostMichItem";
 
 const PostMichContainer: FC = () => {
@@ -13,8 +15,6 @@ const PostMichContainer: FC = () => {
   const [title, setTitle] = useState<string>("");
   const [body, setBody] = useState<string>("");
   const [userId, setUserId] = useState<string>("");
-
-  // Модалка
   const [modal, setModal] = useState<boolean>(false);
 
   const dispatch = useAppDispanch();
@@ -64,6 +64,31 @@ const PostMichContainer: FC = () => {
     }
   };
 
+  // Сортировка и поиск
+  const [filter, setFilter] = useState<IFilter>({ query: "", sort: "" });
+  const options: IOption[] = [
+    { value: "userId", name: "по номеру пользователя" },
+    { value: "id", name: "по номеру поста" },
+    { value: "title", name: "по названию поста" },
+    { value: "body", name: "по содержимому поста" },
+  ];
+
+  // Получаем отсортированный массив.
+  const sortedPosts = useMemo(() => {
+    if (filter.sort && posts) {
+      return [...posts].sort((a, b) => (a[filter.sort] > b[filter.sort] ? 1 : -1));
+    }
+    return posts;
+  }, [posts, filter.sort]);
+
+  // Отсортированный и отфильтрованный массив:
+  const sortedAndSearchedPosts = useMemo(() => {
+    if (sortedPosts) {
+      return sortedPosts.filter((post) => post.title.toLowerCase().includes(filter.query));
+    }
+  }, [sortedPosts, filter.query]);
+  // Сортировка и поиск
+
   useEffect(() => {
     dispatch(fetchPostsMich());
   }, [dispatch]);
@@ -78,6 +103,8 @@ const PostMichContainer: FC = () => {
 
       <Row>
         <h2 className="textCenter mb-4">Список постов пользователей из postMichReducer</h2>
+        <h6>Логика сортировки и поиска находится в компоненте, не вынесена в отдельный хук.</h6>
+        <SortFilter filter={filter} setFilter={setFilter} placeholder="Поиск по заглавию поста" options={options} />
 
         <div>
           {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
@@ -85,7 +112,7 @@ const PostMichContainer: FC = () => {
           <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
         </div>
 
-        {posts && posts.map((post) => <PostMichItem post={post} key={post.id} />)}
+        {sortedAndSearchedPosts && sortedAndSearchedPosts.map((post) => <PostMichItem post={post} key={post.id} />)}
       </Row>
 
       <MyModal visible={modal} setVisible={setModal}>
