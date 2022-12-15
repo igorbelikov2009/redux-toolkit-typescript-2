@@ -1,11 +1,6 @@
 {
   "posts": [
     {
-      "id": 1,
-      "title": "sunt aut facere repellat provident occaecati excepturi optio reprehenderit",
-      "body": "quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
-    },
-    {
       "id": 2,
       "title": "qui est esse",
       "body": "est rerum tempore vitae\nsequi sint nihil reprehenderit dolor beatae ea dolores neque\nfugiat blanditiis voluptate porro vel nihil molestiae ut reiciendis\nqui aperiam non debitis possimus qui neque nisi nulla"
@@ -14,11 +9,6 @@
       "id": 3,
       "title": "ea molestias quasi exercitationem repellat qui ipsa sit aut",
       "body": "et iusto sed quo iure\nvoluptatem occaecati omnis eligendi aut ad\nvoluptatem doloribus vel accusantium quis pariatur\nmolestiae porro eius odio et labore et velit aut"
-    },
-    {
-      "id": 4,
-      "title": "eum et est occaecati",
-      "body": "ullam et saepe reiciendis voluptatem adipisci\nsit amet autem assumenda provident rerum culpa\nquis hic commodi nesciunt rem tenetur doloremque ipsam iure\nquis sunt voluptatem rerum illo velit"
     },
     {
       "id": 5,
@@ -503,34 +493,6 @@
   ],
   "comments": [
     {
-      "postId": 1,
-      "id": 2,
-      "name": "quo vero reiciendis velit similique earum",
-      "email": "Jayne_Kuhic@sydney.com",
-      "body": "est natus enim nihil est dolore omnis voluptatem numquam\net omnis occaecati quod ullam at\nvoluptatem error expedita pariatur\nnihil sint nostrum voluptatem reiciendis et"
-    },
-    {
-      "postId": 1,
-      "id": 3,
-      "name": "odio adipisci rerum aut animi",
-      "email": "Nikita@garfield.biz",
-      "body": "quia molestiae reprehenderit quasi aspernatur\naut expedita occaecati aliquam eveniet laudantium\nomnis quibusdam delectus saepe quia accusamus maiores nam est\ncum et ducimus et vero voluptates excepturi deleniti ratione"
-    },
-    {
-      "postId": 1,
-      "id": 4,
-      "name": "alias odio sit",
-      "email": "Lew@alysha.tv",
-      "body": "non et atque\noccaecati deserunt quas accusantium unde odit nobis qui voluptatem\nquia voluptas consequuntur itaque dolor\net qui rerum deleniti ut occaecati"
-    },
-    {
-      "postId": 1,
-      "id": 5,
-      "name": "vero eaque aliquid doloribus et culpa",
-      "email": "Hayden@althea.biz",
-      "body": "harum non quasi et ratione\ntempore iure ex voluptates in ratione\nharum architecto fugit inventore cupiditate\nvoluptates magni quo et"
-    },
-    {
       "postId": 2,
       "id": 6,
       "name": "et fugit eligendi deleniti quidem qui sint nihil autem",
@@ -599,41 +561,6 @@
       "name": "debitis magnam hic odit aut ullam nostrum tenetur",
       "email": "Maynard.Hodkiewicz@roberta.com",
       "body": "nihil ut voluptates blanditiis autem odio dicta rerum\nquisquam saepe et est\nsunt quasi nemo laudantium deserunt\nmolestias tempora quo quia"
-    },
-    {
-      "postId": 4,
-      "id": 16,
-      "name": "perferendis temporibus delectus optio ea eum ratione dolorum",
-      "email": "Christine@ayana.info",
-      "body": "iste ut laborum aliquid velit facere itaque\nquo ut soluta dicta voluptate\nerror tempore aut et\nsequi reiciendis dignissimos expedita consequuntur libero sed fugiat facilis"
-    },
-    {
-      "postId": 4,
-      "id": 17,
-      "name": "eos est animi quis",
-      "email": "Preston_Hudson@blaise.tv",
-      "body": "consequatur necessitatibus totam sed sit dolorum\nrecusandae quae odio excepturi voluptatum harum voluptas\nquisquam sit ad eveniet delectus\ndoloribus odio qui non labore"
-    },
-    {
-      "postId": 4,
-      "id": 18,
-      "name": "aut et tenetur ducimus illum aut nulla ab",
-      "email": "Vincenza_Klocko@albertha.name",
-      "body": "veritatis voluptates necessitatibus maiores corrupti\nneque et exercitationem amet sit et\nullam velit sit magnam laborum\nmagni ut molestias"
-    },
-    {
-      "postId": 4,
-      "id": 19,
-      "name": "sed impedit rerum quia et et inventore unde officiis",
-      "email": "Madelynn.Gorczany@darion.biz",
-      "body": "doloribus est illo sed minima aperiam\nut dignissimos accusantium tempore atque et aut molestiae\nmagni ut accusamus voluptatem quos ut voluptates\nquisquam porro sed architecto ut"
-    },
-    {
-      "postId": 4,
-      "id": 20,
-      "name": "molestias expedita iste aliquid voluptates",
-      "email": "Mariana_Orn@preston.org",
-      "body": "qui harum consequatur fugiat\net eligendi perferendis at molestiae commodi ducimus\ndoloremque asperiores numquam qui\nut sit dignissimos reprehenderit tempore"
     },
     {
       "postId": 5,
@@ -1327,66 +1254,12 @@
       "name": "porro et voluptate et reprehenderit",
       "email": "Domenic.Durgan@joaquin.name",
       "body": "aut voluptas dolore autem\nreprehenderit expedita et nihil pariatur ea animi quo ullam\na ea officiis corporis\neius voluptatum cum mollitia dolore quaerat accusamus"
-    },
-    {
-      "postId": 0,
-      "email": "f",
-      "name": "f",
-      "body": "f",
-      "id": 126
-    },
-    {
-      "postId": 0,
-      "email": null,
-      "name": null,
-      "body": "ss",
-      "id": 127
     }
   ],
   "albums": [
     {
-      "id": 1,
-      "title": "quidem molestiae enim"
-    },
-    {
-      "id": 2,
-      "title": "sunt qui excepturi placeat culpa"
-    },
-    {
-      "id": 4,
-      "title": "non esse culpa molestiae omnis sed optio"
-    },
-    {
-      "id": 5,
-      "title": "eaque aut omnis a"
-    },
-    {
-      "id": 6,
-      "title": "natus impedit quibusdam illo est"
-    },
-    {
-      "id": 7,
-      "title": "quibusdam autem aliquid et et quia"
-    },
-    {
-      "id": 8,
-      "title": "qui fuga est a eum"
-    },
-    {
-      "id": 9,
-      "title": "saepe unde necessitatibus rem"
-    },
-    {
-      "id": 10,
-      "title": "distinctio laborum qui"
-    },
-    {
       "id": 11,
       "title": "quam nostrum impedit mollitia quod et dolor"
-    },
-    {
-      "id": 12,
-      "title": "consequatur autem doloribus natus consectetur"
     },
     {
       "id": 13,

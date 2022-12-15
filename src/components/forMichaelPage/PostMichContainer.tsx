@@ -44,8 +44,8 @@ const PostMichContainer: FC = () => {
   ];
 
   // создаём новый объект (post), как аргумент:
-  //  для dispatch(addPostMich(post)) на этой странице. Строка 53.
-  //  для addPostMich в PostMichReducer. Строка 90
+  //  для dispatch(addPostMich(post)) на этой странице. Строка 59.
+  //  для addPostMich в PostMichReducer. Строка 88
   const post: IPost = {
     userId: Number(userId), // берём из созданного нами состояния
     id: 0, // назначаем 0, потом ему автоматически присвоится значение

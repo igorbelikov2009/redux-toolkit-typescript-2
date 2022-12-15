@@ -14,13 +14,13 @@ const PostMichItem: FC<PostMichItemProps> = ({ post }) => {
   const dispatch = useAppDispanch();
 
   const handleUpdate = (e: React.MouseEvent) => {
-    const userId = Number(prompt("Введите новый № пользователя"));
-    const title = prompt("Введите новое название поста") || "";
-    const body = prompt("Введите новый текст поста") || "";
-
-    dispatch(editPostMich({ ...post, userId, title, body }));
+    const userId = prompt("Введите номер пользователя");
+    const title = prompt("Введите название поста");
+    const body = prompt("Введите содержимое поста");
+    if (userId && title && body) {
+      dispatch(editPostMich({ ...post, userId, title, body }));
+    }
   };
-
   const handleRemove = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(deletePostMich(post.id));

@@ -19,9 +19,9 @@ export interface IComment {
 }
 
 export interface IAlbum {
+  userId?: number | string | null;
   id: number;
   title: string | null;
-  imgUri?: string;
 }
 
 export interface IPhoto {

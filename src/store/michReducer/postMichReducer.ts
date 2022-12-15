@@ -13,8 +13,8 @@ export const fetchPostsMich = createAsyncThunk("posts/fetchPostsMich", async fun
     }
 
     // Если ошибки нет,то....
-    const date = await response.json();
-    return date;
+    const data = await response.json();
+    return data;
   } catch (error: any) {
     // и передам ошибку определённым образом в extraReducers, в метод [fetchPostsMich.rejected.type],
     // где её можно будет корректно обработать.
@@ -34,9 +34,9 @@ export const deletePostMich = createAsyncThunk(
       if (!response.ok) {
         throw new Error("Не могу удалить задачу. Ошибка на сервере.");
       }
-      // Если ошибки нет, пришёл response.ok, то... на сервере нужный объект мы уже удалили,
-      // нам нужно удалить его локально, вызвать removePost() из postslice. Для того,
-      // чтобы его вызвать, у нас уже есть диспетчер.
+      // Если ошибки нет, пришёл response.ok, то... на сервере нужный объект мы уже
+      // удалили, нам нужно удалить его локально, вызвать removePost() из postMichSlice.
+      // Для того, чтобы его вызвать, у нас уже есть диспетчер.
       // Мы его получили через объект вторым параметром.
       dispatch(removePost({ id }));
       //   const data = response.json();
@@ -75,7 +75,7 @@ export const editPostMich = createAsyncThunk<any, IPost, { state: any }>(
       // dispatch(editPost(data));
       // Мы ожидаем от сервера ответ в виде изменённых данных для проверки:
       const data = await response.json();
-      console.log(data);
+      // console.log(data);
       dispatch(editPost(data));
     } catch (error: any) {
       return rejectWithValue(error.message);

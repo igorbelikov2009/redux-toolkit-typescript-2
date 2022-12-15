@@ -73,17 +73,25 @@
   width: 64px;
 }
 .cardDescription {
-  width: calc(75% - 24px);
+  width: calc(80% - 24px);
   /* width: 75%; */
 }
 .cardPhotoDescription {
-  width: calc(75% - 88px);
+  width: calc(80% - 88px);
+}
+.cardPhotoDescriptionMich {
+  width: calc(80% - 168px);
 }
 .cardButton {
-  width: 25%;
+  width: 20%;
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+.albumImageMich {
+  width: 104px;
+  height: 104px;
 }
 .albumImage {
   width: 64px;
