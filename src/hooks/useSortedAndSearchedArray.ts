@@ -12,11 +12,22 @@ export const useSortedArray = (arrayData: any[], sort: string) => {
   return sortedArray;
 };
 
+type IUseSortedAndSearchedArray = (arrayData: any[], sort: string, query: string) => any[];
+
 // Отсортированный и отфильтрованный массив:
-export const useSortedAndSearchedArray = (arrayData: any[], sort: string, query: string) => {
+export const useSortedAndSearchedArray: IUseSortedAndSearchedArray = (
+  arrayData: any[],
+  sort: string,
+  query: string
+) => {
   const sortedArray = useSortedArray(arrayData, sort);
   const sortedAndSearchedArray = useMemo(() => {
-    return sortedArray.filter((obj) => obj.title.toLowerCase().includes(query.toLowerCase()));
+    return sortedArray.filter((obj) => {
+      return obj.title.toLowerCase().includes(query.toLowerCase());
+    });
   }, [query, sortedArray]);
   return sortedAndSearchedArray;
 };
+
+// как сделать хук многосторонним obj.title либо obj.name, когда у объекта нет поля title,
+// а есть name

@@ -66,20 +66,6 @@ const AlbumsMichContainer: FC = () => {
 
   // Пусть arrayData  - это наш массив с данными.
   const arrayData = albums;
-  // // Получаем отсортированный массив.
-  // const sortedArray = useMemo(() => {
-  //   if (filter.sort && arrayData) {
-  //     return [...arrayData].sort((a, b) => (a[filter.sort] > b[filter.sort] ? 1 : -1));
-  //   }
-  //   return arrayData;
-  // }, [arrayData, filter.sort]);
-
-  // // Отсортированный и отфильтрованный массив:
-  // const sortedAndSearchedArray = useMemo(() => {
-  //   if (sortedArray) {
-  //     return sortedArray.filter((obj) => obj.title?.toLowerCase().includes(filter.query));
-  //   }
-  // }, [filter.query, sortedArray]);
 
   const sortedAndSearchedArray = useSortedAndSearchedArray(arrayData, filter.sort, filter.query);
 

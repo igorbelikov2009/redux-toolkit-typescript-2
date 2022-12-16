@@ -21,6 +21,7 @@ const PostMichItem: FC<PostMichItemProps> = ({ post }) => {
       dispatch(editPostMich({ ...post, userId, title, body }));
     }
   };
+
   const handleRemove = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(deletePostMich(post.id));

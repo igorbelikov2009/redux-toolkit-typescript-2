@@ -25,6 +25,7 @@ import { postPaginationAPI } from "../services/PostPaginationService";
 import todoMichReducer from "./michReducer/todoMichReducer";
 import postMichReducer from "./michReducer/postMichReducer";
 import albumsMichReducer from "./michReducer/albumsMichReducer";
+import commentsMichReducer from "./michReducer/commentsMichReducer";
 
 // Создаём корневой редюсер, состоящий из комбинации всех редюсеров
 const rootReducer = combineReducers({
@@ -45,6 +46,7 @@ const rootReducer = combineReducers({
   todoMichReducer,
   postMichReducer,
   albumsMichReducer,
+  commentsMichReducer,
 
   // Регистрируем редюсер с PostService.ts как ключ-значение
   //               ключ: значение
