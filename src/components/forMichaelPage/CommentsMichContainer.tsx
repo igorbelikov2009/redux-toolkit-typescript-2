@@ -3,29 +3,39 @@ import { Button, Container, Row } from "react-bootstrap";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { IComment, IFilter } from "../../models/types";
 import { addCommentMich, fetchCommentsMich } from "../../store/michReducer/commentsMichReducer";
+import PaginationButtons from "../gui/PaginationButtons";
 import { IOption } from "../gui/select/MySelect";
 import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
 import MyModal from "../modal/MyModal";
 import SortFilter from "../SortFilter";
 import CommentMichItem from "./itemMich/CommentMichItem";
 
-interface IParams {
-  limit: number;
-  page: number;
-}
 const CommentsMichContainer: FC = () => {
   const [postId, setPostId] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [body, setBody] = useState<string>("");
+  const [limit, setLimit] = useState<number>(30);
+  const [page, setPage] = useState<number>(1);
 
   const [modal, setModal] = useState<boolean>(false);
-
   const dispatch = useAppDispanch();
   const { res, status, error } = useAppSelector((state) => state.commentsMichReducer);
   const comments = res.comments;
-  const totalCount = Number(res.totalCount);
-  console.log(totalCount);
+  const totalCount = Number(res.totalCount); // общее количество элементов полученных с сервера
+  // console.log(totalCount);
+
+  // Вычисляем количество страниц
+  const countPage: number = Math.ceil(totalCount / limit);
+
+  // Создаём массив pages[], состоящий из нумерации страниц, типа const pages = [1, 2, 3, 4, 5];
+  // Этот массив нужен нам для пагинации
+  const pages: number[] = [];
+  for (let i = 0; i < countPage; i++) {
+    pages.push(i + 1);
+  }
+  // console.log(countPage, pages);
+
   // форма создания нового объекта
   const formsOfCreation: IFormsOfCreation[] = [
     {
@@ -97,10 +107,10 @@ const CommentsMichContainer: FC = () => {
   }, [sortedComments, filter.query]);
   // Сортировка и поиск
 
-  const [params, setParams] = useState<IParams>({ limit: 30, page: 1 });
   useEffect(() => {
-    dispatch(fetchCommentsMich(params));
-  }, [dispatch, params]);
+    dispatch(fetchCommentsMich({ limit, page }));
+    console.log(page);
+  }, [dispatch, limit, page]);
 
   return (
     <Container className="card">
@@ -111,6 +121,8 @@ const CommentsMichContainer: FC = () => {
       </div>
 
       <Row>
+        <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
+
         <h2 className="textCenter mb-4">Список постов пользователей из commentsMichReducer</h2>
         <h6>
           Логика сортировки и поиска находится в компоненте. Я не смог воспользоваться созданным хуком

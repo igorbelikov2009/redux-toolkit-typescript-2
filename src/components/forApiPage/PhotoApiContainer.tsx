@@ -28,7 +28,7 @@ const PhotoApiContainer: FC<PhotoApiContainerProps> = ({ topOfPage }) => {
   // менять. В дальнейшем, limit надо будет получать из параметра запроса.
   const [limit] = useState<number>(10);
   // Вычисляем количество страниц
-  let countPage: number = Math.ceil(totalCount / limit);
+  const countPage: number = Math.ceil(totalCount / limit);
   // console.log(countPage);
   // Создаём массив pages[], состоящий из нумерации страниц, типа const pages = [1, 2, 3, 4, 5];
   // Этот массив нужен нам для пагинации

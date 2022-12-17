@@ -145,18 +145,22 @@ const commentMichSlice = createSlice({
     editComment(state, action) {
       // Нам нужно найти конкретный один элемент по id, который изменился.
       // Назовём его modifiedComment.
-      let modifiedComment = state.res.comments.find((coment) => coment.id === action.payload.id);
+      let modifiedComment = state.res.comments.find((comment) => comment.id === action.payload.id);
 
       if (modifiedComment) {
         // Найденный объект можем изменить.
         modifiedComment = action.payload;
         if (modifiedComment) {
-          // осталось изменить массив: вырезать из него изменяемый coment, а вместо
+          // осталось изменить массив: вырезать из него изменяемый comment, а вместо
           // него, вставить изменённый( по сути, вновь созданный пост)
           state.res.comments = state.res.comments
             .splice(0, Number(modifiedComment.id - 1))
             .concat(modifiedComment)
             .concat(state.res.comments.splice(1));
+          //========================================
+          // console.log(action.payload);
+          // console.log(modifiedComment);
+          // console.log(state.res.comments);
         }
       }
     },
