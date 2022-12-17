@@ -9,6 +9,10 @@ import MyModal from "../modal/MyModal";
 import SortFilter from "../SortFilter";
 import CommentMichItem from "./itemMich/CommentMichItem";
 
+interface IParams {
+  limit: number;
+  page: number;
+}
 const CommentsMichContainer: FC = () => {
   const [postId, setPostId] = useState<string>("");
   const [email, setEmail] = useState<string>("");
@@ -18,8 +22,10 @@ const CommentsMichContainer: FC = () => {
   const [modal, setModal] = useState<boolean>(false);
 
   const dispatch = useAppDispanch();
-  const { comments, status, error } = useAppSelector((state) => state.commentsMichReducer);
-
+  const { res, status, error } = useAppSelector((state) => state.commentsMichReducer);
+  const comments = res.comments;
+  const totalCount = Number(res.totalCount);
+  console.log(totalCount);
   // форма создания нового объекта
   const formsOfCreation: IFormsOfCreation[] = [
     {
@@ -91,9 +97,10 @@ const CommentsMichContainer: FC = () => {
   }, [sortedComments, filter.query]);
   // Сортировка и поиск
 
+  const [params, setParams] = useState<IParams>({ limit: 30, page: 1 });
   useEffect(() => {
-    dispatch(fetchCommentsMich());
-  }, [dispatch]);
+    dispatch(fetchCommentsMich(params));
+  }, [dispatch, params]);
 
   return (
     <Container className="card">

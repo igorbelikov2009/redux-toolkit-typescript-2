@@ -1,20 +1,31 @@
+import axios from "axios";
 import { IComment } from "./../../models/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 export const fetchCommentsMich = createAsyncThunk(
   "comments/fetchCommentsMich",
-  async function (_, { rejectWithValue }) {
+  async function (params: { limit: number; page: number }, { rejectWithValue }) {
     try {
-      const response = await fetch(`https://jsonplaceholder.typicode.com/comments?_limit=40`);
+      const response = await axios.get(
+        `https://jsonplaceholder.typicode.com/comments?_limit=${params.limit}&_page=${params.page}`
+      );
 
-      if (!response.ok) {
+      if (!response) {
         // Если у меня будет ошибка, то я её поймаю
         throw new Error("Ошибка на сервере.");
       }
-
+      // console.log(response);
       // Если ошибки нет,то....
-      const data = await response.json();
-      return data;
+
+      const totalCount = response.headers["x-total-count"];
+      // console.log(totalCount);
+
+      const comments = await response.data;
+      // console.log(comments);
+
+      const res = { totalCount, comments };
+      // console.log(res);
+      return res;
     } catch (error: any) {
       return rejectWithValue(error.message);
     }
@@ -88,16 +99,31 @@ export const addCommentMich = createAsyncThunk(
   }
 );
 
-interface ICommentMichState {
+interface IRes {
+  totalCount: number;
   comments: IComment[];
+}
+
+interface ICommentMichState {
+  // res: {
+  //   totalCount: number;
+  //   comments: IComment[];
+  // };
+
+  res: IRes;
   status: string | null;
   error: string | null;
+  totalPages: number;
 }
 
 const initialState: ICommentMichState = {
-  comments: [],
+  res: {
+    comments: [],
+    totalCount: 0,
+  },
   status: null,
   error: null,
+  totalPages: 0,
 };
 
 // Сделаем хэлпер для обработки ошибок в extraReducers
@@ -111,15 +137,15 @@ const commentMichSlice = createSlice({
   initialState: initialState,
   reducers: {
     addComment(state, action) {
-      state.comments.push(action.payload);
+      state.res.comments.push(action.payload);
     },
     removeComment(state, action) {
-      state.comments = state.comments.filter((comment) => comment.id !== action.payload.id);
+      state.res.comments = state.res.comments.filter((comment) => comment.id !== action.payload.id);
     },
     editComment(state, action) {
       // Нам нужно найти конкретный один элемент по id, который изменился.
       // Назовём его modifiedComment.
-      let modifiedComment = state.comments.find((coment) => coment.id === action.payload.id);
+      let modifiedComment = state.res.comments.find((coment) => coment.id === action.payload.id);
 
       if (modifiedComment) {
         // Найденный объект можем изменить.
@@ -127,10 +153,10 @@ const commentMichSlice = createSlice({
         if (modifiedComment) {
           // осталось изменить массив: вырезать из него изменяемый coment, а вместо
           // него, вставить изменённый( по сути, вновь созданный пост)
-          state.comments = state.comments
+          state.res.comments = state.res.comments
             .splice(0, Number(modifiedComment.id - 1))
             .concat(modifiedComment)
-            .concat(state.comments.splice(1));
+            .concat(state.res.comments.splice(1));
         }
       }
     },
@@ -140,8 +166,9 @@ const commentMichSlice = createSlice({
       state.status = "loading";
       state.error = null;
     },
-    [fetchCommentsMich.fulfilled.type]: (state, action: PayloadAction<IComment[]>) => {
-      state.comments = action.payload;
+    [fetchCommentsMich.fulfilled.type]: (state, action: PayloadAction<any>) => {
+      state.res = action.payload;
+      // console.log(state.res);
       state.status = "resolved";
     },
     [fetchCommentsMich.rejected.type]: setError,
