@@ -4,7 +4,7 @@ import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { IComment, IFilter } from "../../models/types";
 import { addCommentMich, fetchCommentsMich } from "../../store/michReducer/commentsMichReducer";
 import PaginationButtons from "../gui/PaginationButtons";
-import { IOption } from "../gui/select/MySelect";
+import MySelect, { IOption } from "../gui/select/MySelect";
 import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
 import MyModal from "../modal/MyModal";
 import SortFilter from "../SortFilter";
@@ -15,7 +15,7 @@ const CommentsMichContainer: FC = () => {
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
   const [body, setBody] = useState<string>("");
-  const [limit, setLimit] = useState<number>(30);
+  const [limit, setLimit] = useState<number>(25);
   const [page, setPage] = useState<number>(1);
 
   const [modal, setModal] = useState<boolean>(false);
@@ -26,7 +26,7 @@ const CommentsMichContainer: FC = () => {
   // console.log(totalCount);
 
   // Вычисляем количество страниц
-  const countPage: number = Math.ceil(totalCount / limit);
+  const countPage: number = Math.ceil(totalCount / Number(limit));
 
   // Создаём массив pages[], состоящий из нумерации страниц, типа const pages = [1, 2, 3, 4, 5];
   // Этот массив нужен нам для пагинации
@@ -35,6 +35,11 @@ const CommentsMichContainer: FC = () => {
     pages.push(i + 1);
   }
   // console.log(countPage, pages);
+  const optionsPages: IOption[] = [
+    { value: "25", name: 25 },
+    { value: "50", name: 50 },
+    { value: "100", name: 100 },
+  ];
 
   // форма создания нового объекта
   const formsOfCreation: IFormsOfCreation[] = [
@@ -85,7 +90,7 @@ const CommentsMichContainer: FC = () => {
 
   // Сортировка и поиск
   const [filter, setFilter] = useState<IFilter>({ sort: "", query: "" });
-  const options: IOption[] = [
+  const optionsComments: IOption[] = [
     { value: "postId", name: "по номеру поста" },
     { value: "id", name: "по номеру комментария" },
     { value: "email", name: "по email пользователя" },
@@ -109,18 +114,22 @@ const CommentsMichContainer: FC = () => {
 
   useEffect(() => {
     dispatch(fetchCommentsMich({ limit, page }));
-    console.log(page);
+    // console.log(page);
   }, [dispatch, limit, page]);
 
   return (
     <Container className="card">
-      <div className="containerButton mt-2 mb-4">
-        <Button variant="outline-success" onClick={() => setModal(true)}>
-          Создать новый пост
-        </Button>
-      </div>
-
       <Row>
+        <div className="mb-4">
+          <MySelect
+            defaultValue="Количество комментов на странице"
+            disabled={true}
+            value={limit}
+            onChangeValue={setLimit}
+            options={optionsPages}
+          />
+        </div>
+
         <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
 
         <h2 className="textCenter mb-4">Список постов пользователей из commentsMichReducer</h2>
@@ -130,12 +139,25 @@ const CommentsMichContainer: FC = () => {
           "title", а здесь отсутствует такое поле, здесь поле "name".
         </h6>
 
-        <SortFilter filter={filter} setFilter={setFilter} options={options} placeholder="Поиск по заглавию коммента" />
+        <SortFilter
+          filter={filter}
+          setFilter={setFilter}
+          options={optionsComments}
+          placeholder="Поиск по заглавию коммента"
+        />
+
         <div>
           {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
 
           <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
         </div>
+
+        <div className="containerButton mt-2 mb-4">
+          <Button variant="outline-success" onClick={() => setModal(true)}>
+            Создать новый пост
+          </Button>
+        </div>
+
         {sortedAndSearchedComments &&
           sortedAndSearchedComments.map((comment) => <CommentMichItem key={comment.id} comment={comment} />)}
       </Row>

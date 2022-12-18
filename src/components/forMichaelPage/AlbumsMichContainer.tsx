@@ -15,12 +15,16 @@ const AlbumsMichContainer: FC = () => {
   // и формы создания нового объекта formsOfCreation
   const [userId, setUserId] = useState<string>("");
   const [title, setTitle] = useState<string>("");
+  const [limit, setLimit] = useState<number>(25);
+  const [page, setPage] = useState<number>(1);
 
   // Модалка
   const [modal, setModal] = useState<boolean>(false);
 
   const dispatch = useAppDispanch();
-  const { albums, status, error } = useAppSelector((state) => state.albumsMichReducer);
+  const { res, status, error } = useAppSelector((state) => state.albumsMichReducer);
+  const albums = res.albums;
+  const totalCount = res.totalCount;
 
   // форма создания нового объекта
   const formsOfCreation: IFormsOfCreation[] = [
@@ -72,8 +76,8 @@ const AlbumsMichContainer: FC = () => {
   // Сортировка и поиск
 
   useEffect(() => {
-    dispatch(fetchAlbumsMich());
-  }, [dispatch]);
+    dispatch(fetchAlbumsMich({ limit, page }));
+  }, [dispatch, limit, page]);
 
   return (
     <Container className="card">

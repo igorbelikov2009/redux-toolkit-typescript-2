@@ -113,7 +113,6 @@ interface ICommentMichState {
   res: IRes;
   status: string | null;
   error: string | null;
-  totalPages: number;
 }
 
 const initialState: ICommentMichState = {
@@ -123,7 +122,6 @@ const initialState: ICommentMichState = {
   },
   status: null,
   error: null,
-  totalPages: 0,
 };
 
 // Сделаем хэлпер для обработки ошибок в extraReducers
@@ -170,7 +168,7 @@ const commentMichSlice = createSlice({
       state.status = "loading";
       state.error = null;
     },
-    [fetchCommentsMich.fulfilled.type]: (state, action: PayloadAction<any>) => {
+    [fetchCommentsMich.fulfilled.type]: (state, action: PayloadAction<IRes>) => {
       state.res = action.payload;
       // console.log(state.res);
       state.status = "resolved";

@@ -2,15 +2,15 @@ import React, { FC } from "react";
 import Form from "react-bootstrap/Form";
 
 export interface IOption {
-  value: string;
-  name: string;
+  value: any;
+  name: string | number;
 }
 
 interface MySelectProps {
   options: IOption[];
   defaultValue: string;
   value: string | number;
-  onChangeValue: (value: string) => void;
+  onChangeValue: (value: any) => void;
   disabled: boolean;
 }
 

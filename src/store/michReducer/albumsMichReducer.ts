@@ -1,27 +1,36 @@
+import axios from "axios";
 import { IAlbum } from "./../../models/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // экшены
-export const fetchAlbumsMich = createAsyncThunk("albums/fetchAlbumsMich", async function (_, { rejectWithValue }) {
-  try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/albums?_limit=30");
-    // console.log(response);
+export const fetchAlbumsMich = createAsyncThunk(
+  "albums/fetchAlbumsMich",
+  async function (params: { limit: number; page: number }, { rejectWithValue }) {
+    try {
+      const response = await axios.get(
+        `https://jsonplaceholder.typicode.com/albums?_limit=${params.limit}&_page=${params.page}`
+      );
+      // console.log(response);
 
-    if (!response.ok) {
-      // Если у меня будет ошибка, то я её поймаю
-      throw new Error("Ошибка на сервере.");
+      if (!response) {
+        // Если у меня будет ошибка, то я её поймаю
+        throw new Error("Ошибка на сервере.");
+      }
+
+      // Если ошибки нет,то....
+      const totalCount = response.headers["x-total-count"];
+      const albums = await response.data;
+      // console.log(totalCount, albums);
+      const res = { totalCount, albums };
+
+      return res;
+    } catch (error: any) {
+      // и передам ошибку определённым образом в extraReducers, в метод [fetchAlbumsMich.rejected.type],
+      // где её можно будет корректно обработать.
+      return rejectWithValue(error.message);
     }
-
-    // Если ошибки нет,то....
-    const data = await response.json();
-    // console.log(data);
-    return data;
-  } catch (error: any) {
-    // и передам ошибку определённым образом в extraReducers, в метод [fetchAlbumsMich.rejected.type],
-    // где её можно будет корректно обработать.
-    return rejectWithValue(error.message);
   }
-});
+);
 
 // dispatch достаём прямо отсюда
 export const deleteAlbumMich = createAsyncThunk(
@@ -96,18 +105,24 @@ export const addAlbumMich = createAsyncThunk(
   }
 );
 
-interface IAlbumsMichState {
+interface IRes {
+  totalCount: number;
   albums: IAlbum[];
+}
+
+interface IAlbumsMichState {
+  res: IRes;
   status: string | null;
   error: string | null;
-  // limit: string | number;
 }
 
 const initialState: IAlbumsMichState = {
-  albums: [],
+  res: {
+    albums: [],
+    totalCount: 0,
+  },
   status: null,
   error: null,
-  // limit: 30,
 };
 
 // Сделаем хэлпер для обработки ошибок в extraReducers
@@ -121,15 +136,15 @@ const albumsMichSlice = createSlice({
   initialState: initialState,
   reducers: {
     addAlbum(state, action) {
-      state.albums.push(action.payload);
+      state.res.albums.push(action.payload);
     },
     removeAlbum(state, action) {
-      state.albums = state.albums.filter((album) => album.id !== action.payload.id);
+      state.res.albums = state.res.albums.filter((album) => album.id !== action.payload.id);
     },
     editAlbum(state, action) {
       // Нам нужно найти конкретный один элемент по id, который изменился.
       // Назовём его modifiedAlbum.
-      let modifiedAlbum = state.albums.find((album) => album.id === action.payload.id);
+      let modifiedAlbum = state.res.albums.find((album) => album.id === action.payload.id);
 
       if (modifiedAlbum) {
         // Найденный объект можем изменить.
@@ -137,10 +152,10 @@ const albumsMichSlice = createSlice({
         if (modifiedAlbum) {
           // осталось изменить массив: вырезать из него изменяемый album, а вместо
           // него, вставить изменённый( по сути, вновь созданный альбом)
-          state.albums = state.albums
+          state.res.albums = state.res.albums
             .splice(0, Number(modifiedAlbum.id - 1))
             .concat(modifiedAlbum)
-            .concat(state.albums.splice(1));
+            .concat(state.res.albums.splice(1));
           //========================================
           // console.log(action.payload);
           // console.log(modifiedAlbum);
@@ -155,8 +170,8 @@ const albumsMichSlice = createSlice({
       state.status = "loading";
       state.error = null; // Обнуляем, на всякий случай. Вдруг, прежде, была ошибка.
     },
-    [fetchAlbumsMich.fulfilled.type]: (state, action: PayloadAction<IAlbum[]>) => {
-      state.albums = action.payload;
+    [fetchAlbumsMich.fulfilled.type]: (state, action: PayloadAction<IRes>) => {
+      state.res = action.payload;
       state.status = "resolved";
     },
     [fetchAlbumsMich.rejected.type]: setError,
