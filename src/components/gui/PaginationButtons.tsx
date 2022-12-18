@@ -33,7 +33,7 @@ const PaginationButtons: FC<PaginationButtonsProps> = ({ page, pages, countPage,
 
           <div>
             {countPage > 2 && (
-              <div className="displayFlex">
+              <div className="displayFlex flexWrap">
                 {pages.map((p) => (
                   <Button variant="outline-primary" onClick={() => setPage(p)} active={p === page} key={p}>
                     {p}

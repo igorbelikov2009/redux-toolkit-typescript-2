@@ -26,6 +26,7 @@ import todoMichReducer from "./michReducer/todoMichReducer";
 import postMichReducer from "./michReducer/postMichReducer";
 import albumsMichReducer from "./michReducer/albumsMichReducer";
 import commentsMichReducer from "./michReducer/commentsMichReducer";
+import photosMichReducer from "./michReducer/photosMichReducer";
 
 // Создаём корневой редюсер, состоящий из комбинации всех редюсеров
 const rootReducer = combineReducers({
@@ -47,6 +48,7 @@ const rootReducer = combineReducers({
   postMichReducer,
   albumsMichReducer,
   commentsMichReducer,
+  photosMichReducer,
 
   // Регистрируем редюсер с PostService.ts как ключ-значение
   //               ключ: значение
