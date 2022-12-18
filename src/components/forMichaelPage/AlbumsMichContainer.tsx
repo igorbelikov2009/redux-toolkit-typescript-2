@@ -4,7 +4,8 @@ import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { useSortedAndSearchedArray } from "../../hooks/useSortedAndSearchedArray";
 import { IAlbum, IFilter } from "../../models/types";
 import { addAlbumMich, fetchAlbumsMich } from "../../store/michReducer/albumsMichReducer";
-import { IOption } from "../gui/select/MySelect";
+import PaginationButtons from "../gui/PaginationButtons";
+import MySelect, { IOption } from "../gui/select/MySelect";
 import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
 import MyModal from "../modal/MyModal";
 import SortFilter from "../SortFilter";
@@ -15,16 +16,29 @@ const AlbumsMichContainer: FC = () => {
   // и формы создания нового объекта formsOfCreation
   const [userId, setUserId] = useState<string>("");
   const [title, setTitle] = useState<string>("");
-  const [limit, setLimit] = useState<number>(25);
+  const [limit, setLimit] = useState<number>(10);
   const [page, setPage] = useState<number>(1);
-
-  // Модалка
   const [modal, setModal] = useState<boolean>(false);
 
   const dispatch = useAppDispanch();
   const { res, status, error } = useAppSelector((state) => state.albumsMichReducer);
   const albums = res.albums;
-  const totalCount = res.totalCount;
+
+  // pagination
+  const totalCount = res.totalCount; // общее количество элементов полученных с сервера
+  const countPage = Math.ceil(totalCount / limit); // Вычисляем количество страниц
+  const pages: number[] = []; // Создаём массив pages[], состоящий из нумерации страниц,
+  for (let i = 0; i < countPage; i++) {
+    pages.push(i + 1);
+  }
+  // pagination
+
+  const optionsLimit: IOption[] = [
+    { value: "10", name: 10 },
+    { value: "20", name: 20 },
+    { value: "50", name: 50 },
+    { value: "100", name: 100 },
+  ];
 
   // форма создания нового объекта
   const formsOfCreation: IFormsOfCreation[] = [
@@ -43,8 +57,8 @@ const AlbumsMichContainer: FC = () => {
   ];
 
   // создаём новый объект (album), как аргумент:
-  //  для dispatch(addAlbumMich(album)) на этой странице. Строка 53.????????????????
-  //  для addAlbumMich в AlbumsMichReducer. Строка 90????????????
+  //  для dispatch(addAlbumMich(album)) на этой странице. Строка 70
+  //  для addAlbumMich в AlbumsMichReducer. Строка 93
   const album: IAlbum = {
     id: 0,
     title: title,
@@ -62,7 +76,7 @@ const AlbumsMichContainer: FC = () => {
 
   // Сортировка и поиск
   const [filter, setFilter] = useState<IFilter>({ query: "", sort: "" });
-  const options: IOption[] = [
+  const optionsAlbums: IOption[] = [
     { value: "userId", name: "по номеру пользователя" },
     { value: "id", name: "по номеру альбома" },
     { value: "title", name: "по названию альбома" },
@@ -81,22 +95,40 @@ const AlbumsMichContainer: FC = () => {
 
   return (
     <Container className="card">
-      <div className="containerButton mt-2 mb-4">
-        <Button variant="outline-success" onClick={() => setModal(true)}>
-          Создать новый альбом
-        </Button>
-      </div>
-
       <Row>
+        <div className="mb-4">
+          <MySelect
+            titleSelect="Выберите количество альбомов на странице"
+            defaultValue="Выберите количество альбомов на странице"
+            disabled={true}
+            value={limit}
+            onChangeValue={setLimit}
+            options={optionsLimit}
+          />
+        </div>
+
+        <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
+
         <h2 className="textCenter mb-4">Список альбомов пользователей из albumsMichReducer</h2>
         <h6>Логика сортировки и поиска вынесена в отдельный хук: useSortedAndSearchedArray.</h6>
 
-        <SortFilter filter={filter} setFilter={setFilter} options={options} placeholder="Поиск по названию альбома" />
+        <SortFilter
+          filter={filter}
+          setFilter={setFilter}
+          options={optionsAlbums}
+          placeholder="Поиск по названию альбома"
+        />
 
         <div>
           {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
 
           <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
+        </div>
+
+        <div className="containerButton mt-2 mb-4">
+          <Button variant="outline-success" onClick={() => setModal(true)}>
+            Создать новый альбом
+          </Button>
         </div>
 
         {sortedAndSearchedArray &&

@@ -35,7 +35,7 @@ const CommentsMichContainer: FC = () => {
     pages.push(i + 1);
   }
   // console.log(countPage, pages);
-  const optionsPages: IOption[] = [
+  const optionsLimit: IOption[] = [
     { value: "25", name: 25 },
     { value: "50", name: 50 },
     { value: "100", name: 100 },
@@ -122,11 +122,12 @@ const CommentsMichContainer: FC = () => {
       <Row>
         <div className="mb-4">
           <MySelect
+            titleSelect="Выберите количество комментов на странице"
             defaultValue="Количество комментов на странице"
             disabled={true}
             value={limit}
             onChangeValue={setLimit}
-            options={optionsPages}
+            options={optionsLimit}
           />
         </div>
 
