@@ -1,18 +1,22 @@
 import React, { FC, useEffect, useState } from "react";
 import { Button, Container, Row } from "react-bootstrap";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
-import { IPhoto } from "../../models/types";
+import { useSortedAndSearchedArray } from "../../hooks/useSortedAndSearchedArray";
+import { IFilter, IPhoto } from "../../models/types";
 import { addPhotoMich, getPhotosMich } from "../../store/michReducer/photosMichReducer";
 import PaginationButtons from "../gui/PaginationButtons";
 import MySelect, { IOption } from "../gui/select/MySelect";
 import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
 import MyModal from "../modal/MyModal";
+import SortFilter from "../SortFilter";
 import PhotoMichItem from "./itemMich/PhotoMichItem";
 
 const PhotosMichContainer: FC = () => {
+  const [modal, setModal] = useState<boolean>(false);
+
+  // for pagination
   const [limit, setLimit] = useState<number>(50);
   const [page, setPage] = useState<number>(1);
-  const [modal, setModal] = useState<boolean>(false);
 
   // для создания нового объекта photo
   const [albumId, setAlbumId] = useState<string>("");
@@ -21,7 +25,6 @@ const PhotosMichContainer: FC = () => {
   const [thumbnailUrl, setThumbnailUrl] = useState<string>("");
 
   const dispatch = useAppDispanch();
-  //
   const { res, isLoading, error } = useAppSelector((state) => state.photosMichReducer);
   const photos = res.photos;
   const totalCount = res.totalCount;
@@ -66,6 +69,19 @@ const PhotosMichContainer: FC = () => {
     }
   };
 
+  // Сортировка и поиск
+  const [filter, setFilter] = useState<IFilter>({ sort: "", query: "" });
+  const optionsSort: IOption[] = [
+    { value: "albumId", name: "по номеру альбома" },
+    { value: "id", name: "по номеру фото" },
+    { value: "title", name: "по названию фото" },
+    { value: "url", name: "по указателю ресурса URL" },
+  ];
+  // Пусть arrayData  - это наш массив с данными.
+  const arrayData = photos;
+  const sortedAndSearchedArray = useSortedAndSearchedArray(arrayData, filter.sort, filter.query);
+  // Сортировка и поиск
+
   useEffect(() => {
     dispatch(getPhotosMich({ limit, page }));
   }, [dispatch, limit, page]);
@@ -89,6 +105,8 @@ const PhotosMichContainer: FC = () => {
         <h2 className="textCenter mb-4">Список альбомов фото из photosMichReducer</h2>
         <h6>Логика сортировки и поиска вынесена в отдельный хук: useSortedAndSearchedArray.</h6>
 
+        <SortFilter filter={filter} setFilter={setFilter} options={optionsSort} placeholder="Поиск по названию фото" />
+
         <div>
           {isLoading && <h1 className="textCenter">Идёт загрузка</h1>}
           {error && <h1 className="textCenter"> {error}</h1>}
@@ -100,7 +118,8 @@ const PhotosMichContainer: FC = () => {
           </Button>
         </div>
 
-        {photos && photos.map((photo) => <PhotoMichItem key={photo.id} photo={photo} />)}
+        {sortedAndSearchedArray &&
+          sortedAndSearchedArray.map((photo) => <PhotoMichItem key={photo.id} photo={photo} />)}
       </Row>
 
       <MyModal visible={modal} setVisible={setModal}>

@@ -76,7 +76,7 @@ const AlbumsMichContainer: FC = () => {
 
   // Сортировка и поиск
   const [filter, setFilter] = useState<IFilter>({ query: "", sort: "" });
-  const optionsAlbums: IOption[] = [
+  const optionsSort: IOption[] = [
     { value: "userId", name: "по номеру пользователя" },
     { value: "id", name: "по номеру альбома" },
     { value: "title", name: "по названию альбома" },
@@ -115,7 +115,7 @@ const AlbumsMichContainer: FC = () => {
         <SortFilter
           filter={filter}
           setFilter={setFilter}
-          options={optionsAlbums}
+          options={optionsSort}
           placeholder="Поиск по названию альбома"
         />
 
