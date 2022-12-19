@@ -28,9 +28,9 @@ export interface IAlbum {
 export interface IPhoto {
   albumId?: number | null;
   id: number;
-  title: string;
-  url: string;
-  thumbnailUrl: string;
+  title: string | null;
+  url: string | null;
+  thumbnailUrl: string | null;
   // это надо для сортировки в
   [key: string | number]: any;
 }

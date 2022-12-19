@@ -2,7 +2,7 @@ import React, { FC } from "react";
 import { Button, Card } from "react-bootstrap";
 import { useAppDispanch } from "../../../hooks/redux";
 import { IPhoto } from "../../../models/types";
-import { deletePhotoMich } from "../../../store/michReducer/photosMichReducer";
+import { deletePhotoMich, editPhotoMich } from "../../../store/michReducer/photosMichReducer";
 
 interface PhotoMichItemProps {
   photo: IPhoto;
@@ -11,13 +11,22 @@ interface PhotoMichItemProps {
 const PhotoMichItem: FC<PhotoMichItemProps> = ({ photo }) => {
   const dispatch = useAppDispanch();
 
+  const handleUpdate = (e: React.MouseEvent) => {
+    const albumId = Number(prompt("Введите номер альбома"));
+    const title = prompt("Введите название фото");
+    const url = prompt("Введите url фото");
+    const thumbnailUrl = prompt("Введите thumbnailUrl фото");
+
+    dispatch(editPhotoMich({ ...photo, albumId, title, url, thumbnailUrl }));
+  };
+
   const handleRemove = (e: React.MouseEvent) => {
     e.stopPropagation();
     dispatch(deletePhotoMich(photo.id));
   };
 
   return (
-    <Card className="post">
+    <Card className="post" onClick={handleUpdate}>
       <div className="cardBlock">
         <div className="cardDescription">
           <Card.Title>

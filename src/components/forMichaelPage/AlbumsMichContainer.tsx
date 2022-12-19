@@ -65,7 +65,7 @@ const AlbumsMichContainer: FC = () => {
     userId: Number(userId),
   };
 
-  const handleAddPost = () => {
+  const handleAddAlbum = () => {
     if (album.userId && album.title) {
       dispatch(addAlbumMich(album));
       setUserId("");
@@ -136,7 +136,7 @@ const AlbumsMichContainer: FC = () => {
       </Row>
 
       <MyModal visible={modal} setVisible={setModal}>
-        <FormCreation formsOfCreation={formsOfCreation} addObject={handleAddPost} ButtonName="Добавить новый альбом" />
+        <FormCreation formsOfCreation={formsOfCreation} addObject={handleAddAlbum} ButtonName="Добавить новый альбом" />
       </MyModal>
     </Container>
   );

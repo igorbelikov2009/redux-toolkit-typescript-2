@@ -73,7 +73,7 @@ export const editAlbumMich = createAsyncThunk<any, IAlbum, { state: any }>(
         throw new Error("Не могу обновить альбом. Ошибка на сервере.");
       }
 
-      const data = await response.json();
+      const data: IAlbum = await response.json();
       dispatch(editAlbum(data));
     } catch (error: any) {
       return rejectWithValue(error.message);
@@ -92,11 +92,11 @@ export const addAlbumMich = createAsyncThunk(
         },
         body: JSON.stringify(album),
       });
-
+      // console.log(response);
       if (!response.ok) {
         throw new Error("Не могу добавить новый альбом, ошибка на сервере.");
       }
-      const data = await response.json();
+      const data: IAlbum = await response.json();
       // console.log(data);
       dispatch(addAlbum(data));
     } catch (error: any) {
