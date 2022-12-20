@@ -1,10 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
-import { Button, Container, Row } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { useSortedAndSearchedArray } from "../../hooks/useSortedAndSearchedArray";
 import { IFilter, IPhoto } from "../../models/types";
 import { addPhotoMich, getPhotosMich } from "../../store/michReducer/photosMichReducer";
 import PaginationButtons from "../gui/PaginationButtons";
+import RoutesBlock from "../gui/RoutesBlock";
 import MySelect, { IOption } from "../gui/select/MySelect";
 import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
 import MyModal from "../modal/MyModal";
@@ -12,6 +14,9 @@ import SortFilter from "../SortFilter";
 import PhotoMichItem from "./itemMich/PhotoMichItem";
 
 const PhotosMichContainer: FC = () => {
+  const history = useHistory();
+  const location = history.location.pathname;
+
   const [modal, setModal] = useState<boolean>(false);
 
   // for pagination
@@ -87,45 +92,62 @@ const PhotosMichContainer: FC = () => {
   }, [dispatch, limit, page]);
 
   return (
-    <Container className="card">
-      <Row>
-        <div className="mb-4">
-          <MySelect
-            titleSelect="Выберите количество фоток на странице"
-            defaultValue="Выберите количество фоток на странице"
-            disabled={true}
-            onChangeValue={setLimit}
-            value={limit}
-            options={optionsLimit}
-          />
+    <div>
+      <div className="routeBar">
+        <RoutesBlock location={location} />
+      </div>
+
+      <div className="rightBlock">
+        <div className="card mt-5">
+          <Row>
+            <div className="mb-4">
+              <MySelect
+                titleSelect="Выберите количество фоток на странице"
+                defaultValue="Выберите количество фоток на странице"
+                disabled={true}
+                onChangeValue={setLimit}
+                value={limit}
+                options={optionsLimit}
+              />
+            </div>
+
+            <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
+
+            <h2 className="textCenter mb-4">Список альбомов фото из photosMichReducer</h2>
+            <h6>Логика сортировки и поиска вынесена в отдельный хук: useSortedAndSearchedArray.</h6>
+
+            <SortFilter
+              filter={filter}
+              setFilter={setFilter}
+              options={optionsSort}
+              placeholder="Поиск по названию фото"
+            />
+
+            <div>
+              {isLoading && <h1 className="textCenter">Идёт загрузка</h1>}
+              {error && <h1 className="textCenter"> {error}</h1>}
+            </div>
+
+            <div className="containerButton mt-2 mb-4">
+              <Button variant="outline-success" onClick={() => setModal(true)}>
+                Создать новое фото
+              </Button>
+            </div>
+
+            {sortedAndSearchedArray &&
+              sortedAndSearchedArray.map((photo) => <PhotoMichItem key={photo.id} photo={photo} />)}
+          </Row>
+
+          <MyModal visible={modal} setVisible={setModal}>
+            <FormCreation
+              formsOfCreation={formsOfCreation}
+              addObject={handleAddPhoto}
+              ButtonName="Добавить новое фото"
+            />
+          </MyModal>
         </div>
-
-        <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
-
-        <h2 className="textCenter mb-4">Список альбомов фото из photosMichReducer</h2>
-        <h6>Логика сортировки и поиска вынесена в отдельный хук: useSortedAndSearchedArray.</h6>
-
-        <SortFilter filter={filter} setFilter={setFilter} options={optionsSort} placeholder="Поиск по названию фото" />
-
-        <div>
-          {isLoading && <h1 className="textCenter">Идёт загрузка</h1>}
-          {error && <h1 className="textCenter"> {error}</h1>}
-        </div>
-
-        <div className="containerButton mt-2 mb-4">
-          <Button variant="outline-success" onClick={() => setModal(true)}>
-            Создать новое фото
-          </Button>
-        </div>
-
-        {sortedAndSearchedArray &&
-          sortedAndSearchedArray.map((photo) => <PhotoMichItem key={photo.id} photo={photo} />)}
-      </Row>
-
-      <MyModal visible={modal} setVisible={setModal}>
-        <FormCreation formsOfCreation={formsOfCreation} addObject={handleAddPhoto} ButtonName="Добавить новое фото" />
-      </MyModal>
-    </Container>
+      </div>
+    </div>
   );
 };
 

@@ -1,9 +1,11 @@
 import React, { FC, useEffect, useState, useMemo } from "react";
-import { Button, Container, Row } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { IComment, IFilter } from "../../models/types";
 import { addCommentMich, fetchCommentsMich } from "../../store/michReducer/commentsMichReducer";
 import PaginationButtons from "../gui/PaginationButtons";
+import RoutesBlock from "../gui/RoutesBlock";
 import MySelect, { IOption } from "../gui/select/MySelect";
 import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
 import MyModal from "../modal/MyModal";
@@ -11,6 +13,8 @@ import SortFilter from "../SortFilter";
 import CommentMichItem from "./itemMich/CommentMichItem";
 
 const CommentsMichContainer: FC = () => {
+  const history = useHistory();
+  const location = history.location.pathname;
   const [postId, setPostId] = useState<string>("");
   const [email, setEmail] = useState<string>("");
   const [name, setName] = useState<string>("");
@@ -118,55 +122,67 @@ const CommentsMichContainer: FC = () => {
   }, [dispatch, limit, page]);
 
   return (
-    <Container className="card">
-      <Row>
-        <div className="mb-4">
-          <MySelect
-            titleSelect="Выберите количество комментов на странице"
-            defaultValue="Количество комментов на странице"
-            disabled={true}
-            value={limit}
-            onChangeValue={setLimit}
-            options={optionsLimit}
-          />
+    <div>
+      <div className="routeBar">
+        <RoutesBlock location={location} />
+      </div>
+
+      <div className="rightBlock">
+        <div className="card mt-5">
+          <Row>
+            <div className="mb-4">
+              <MySelect
+                titleSelect="Выберите количество комментов на странице"
+                defaultValue="Количество комментов на странице"
+                disabled={true}
+                value={limit}
+                onChangeValue={setLimit}
+                options={optionsLimit}
+              />
+            </div>
+
+            <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
+
+            <h2 className="textCenter mb-4">Список постов пользователей из commentsMichReducer</h2>
+            <h6>
+              Логика сортировки и поиска находится в компоненте. Я не смог воспользоваться созданным хуком
+              "useSortedAndSearchedArray" по причине неуниверсальности типов. В созданном хуке мы ищем по полю объекта
+              "title", а здесь отсутствует такое поле, здесь поле "name".
+            </h6>
+
+            <SortFilter
+              filter={filter}
+              setFilter={setFilter}
+              options={optionsComments}
+              placeholder="Поиск по заглавию коммента"
+            />
+
+            <div>
+              {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
+
+              <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
+            </div>
+
+            <div className="containerButton mt-2 mb-4">
+              <Button variant="outline-success" onClick={() => setModal(true)}>
+                Создать новый пост
+              </Button>
+            </div>
+
+            {sortedAndSearchedComments &&
+              sortedAndSearchedComments.map((comment) => <CommentMichItem key={comment.id} comment={comment} />)}
+          </Row>
+
+          <MyModal visible={modal} setVisible={setModal}>
+            <FormCreation
+              formsOfCreation={formsOfCreation}
+              addObject={handleAddComment}
+              ButtonName="Добавить новый пост"
+            />
+          </MyModal>
         </div>
-
-        <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
-
-        <h2 className="textCenter mb-4">Список постов пользователей из commentsMichReducer</h2>
-        <h6>
-          Логика сортировки и поиска находится в компоненте. Я не смог воспользоваться созданным хуком
-          "useSortedAndSearchedArray" по причине неуниверсальности типов. В созданном хуке мы ищем по полю объекта
-          "title", а здесь отсутствует такое поле, здесь поле "name".
-        </h6>
-
-        <SortFilter
-          filter={filter}
-          setFilter={setFilter}
-          options={optionsComments}
-          placeholder="Поиск по заглавию коммента"
-        />
-
-        <div>
-          {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
-
-          <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
-        </div>
-
-        <div className="containerButton mt-2 mb-4">
-          <Button variant="outline-success" onClick={() => setModal(true)}>
-            Создать новый пост
-          </Button>
-        </div>
-
-        {sortedAndSearchedComments &&
-          sortedAndSearchedComments.map((comment) => <CommentMichItem key={comment.id} comment={comment} />)}
-      </Row>
-
-      <MyModal visible={modal} setVisible={setModal}>
-        <FormCreation formsOfCreation={formsOfCreation} addObject={handleAddComment} ButtonName="Добавить новый пост" />
-      </MyModal>
-    </Container>
+      </div>
+    </div>
   );
 };
 

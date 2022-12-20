@@ -1,8 +1,11 @@
 import React, { FC, useEffect, useState, useMemo } from "react";
-import { Button, Container, Row } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { IFilter, IPost } from "../../models/types";
+// import { MICHAEL_POSTS_ROUTE } from "../../routes";
 import { addPostMich, fetchPostsMich } from "../../store/michReducer/postMichReducer";
+import RoutesBlock from "../gui/RoutesBlock";
 import { IOption } from "../gui/select/MySelect";
 import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
 import MyModal from "../modal/MyModal";
@@ -10,6 +13,9 @@ import SortFilter from "../SortFilter";
 import PostMichItem from "./itemMich/PostMichItem";
 
 const PostMichContainer: FC = () => {
+  const history = useHistory();
+  const location = history.location.pathname;
+
   // title, body, userId для создания нового объекта (post)
   // и формы создания нового объекта (post) formsOfCreation
   const [title, setTitle] = useState<string>("");
@@ -66,7 +72,7 @@ const PostMichContainer: FC = () => {
 
   // Сортировка и поиск
   const [filter, setFilter] = useState<IFilter>({ query: "", sort: "" });
-  const options: IOption[] = [
+  const optionsSort: IOption[] = [
     { value: "userId", name: "по номеру пользователя" },
     { value: "id", name: "по номеру поста" },
     { value: "title", name: "по названию поста" },
@@ -94,34 +100,51 @@ const PostMichContainer: FC = () => {
   }, [dispatch]);
 
   return (
-    <Container className="card">
-      <div className="containerButton mt-2 mb-4">
-        <Button variant="outline-success" onClick={() => setModal(true)}>
-          Создать новый пост
-        </Button>
+    <div>
+      <div className="routeBar">
+        <RoutesBlock location={location} />
       </div>
 
-      <Row>
-        <h2 className="textCenter mb-4">Список постов пользователей из postMichReducer</h2>
-        <h6>
-          Логика сортировки и поиска находится в компоненте, не вынесена в отдельный хук. Пагинацию не стал делать
-          здесь: пусть редюсер и получение данных из редюсера будут без пагинации.
-        </h6>
-        <SortFilter filter={filter} setFilter={setFilter} placeholder="Поиск по заглавию поста" options={options} />
+      <div className="rightBlock">
+        <div className="card mt-5">
+          <div className="containerButton mt-2 mb-4">
+            <Button variant="outline-success" onClick={() => setModal(true)}>
+              Создать новый пост
+            </Button>
+          </div>
 
-        <div>
-          {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
+          <Row>
+            <h2 className="textCenter mb-4">Список постов пользователей из postMichReducer</h2>
+            <h6>
+              Логика сортировки и поиска находится в компоненте, не вынесена в отдельный хук. Пагинацию не стал делать
+              здесь: пусть редюсер и получение данных из редюсера будут без пагинации.
+            </h6>
+            <SortFilter
+              filter={filter}
+              setFilter={setFilter}
+              placeholder="Поиск по заглавию поста"
+              options={optionsSort}
+            />
 
-          <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
+            <div>
+              {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
+
+              <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
+            </div>
+
+            {sortedAndSearchedPosts && sortedAndSearchedPosts.map((post) => <PostMichItem post={post} key={post.id} />)}
+          </Row>
+
+          <MyModal visible={modal} setVisible={setModal}>
+            <FormCreation
+              formsOfCreation={formsOfCreation}
+              addObject={handleAddPost}
+              ButtonName="Добавить новый пост"
+            />
+          </MyModal>
         </div>
-
-        {sortedAndSearchedPosts && sortedAndSearchedPosts.map((post) => <PostMichItem post={post} key={post.id} />)}
-      </Row>
-
-      <MyModal visible={modal} setVisible={setModal}>
-        <FormCreation formsOfCreation={formsOfCreation} addObject={handleAddPost} ButtonName="Добавить новый пост" />
-      </MyModal>
-    </Container>
+      </div>
+    </div>
   );
 };
 

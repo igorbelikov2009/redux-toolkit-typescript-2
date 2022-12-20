@@ -1,10 +1,12 @@
 import React, { FC, useEffect, useState } from "react";
-import { Button, Container, Row } from "react-bootstrap";
+import { Button, Row } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { useSortedAndSearchedArray } from "../../hooks/useSortedAndSearchedArray";
 import { IAlbum, IFilter } from "../../models/types";
 import { addAlbumMich, fetchAlbumsMich } from "../../store/michReducer/albumsMichReducer";
 import PaginationButtons from "../gui/PaginationButtons";
+import RoutesBlock from "../gui/RoutesBlock";
 import MySelect, { IOption } from "../gui/select/MySelect";
 import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
 import MyModal from "../modal/MyModal";
@@ -12,6 +14,8 @@ import SortFilter from "../SortFilter";
 import AlbumsMichItem from "./itemMich/AlbumsMichItem";
 
 const AlbumsMichContainer: FC = () => {
+  const history = useHistory();
+  const location = history.location.pathname;
   // title, userId для создания нового объекта
   // и формы создания нового объекта formsOfCreation
   const [userId, setUserId] = useState<string>("");
@@ -94,51 +98,63 @@ const AlbumsMichContainer: FC = () => {
   }, [dispatch, limit, page]);
 
   return (
-    <Container className="card">
-      <Row>
-        <div className="mb-4">
-          <MySelect
-            titleSelect="Выберите количество альбомов на странице"
-            defaultValue="Выберите количество альбомов на странице"
-            disabled={true}
-            value={limit}
-            onChangeValue={setLimit}
-            options={optionsLimit}
-          />
+    <div>
+      <div className="routeBar">
+        <RoutesBlock location={location} />
+      </div>
+
+      <div className="rightBlock">
+        <div className="card mt-5">
+          <Row>
+            <div className="mb-4">
+              <MySelect
+                titleSelect="Выберите количество альбомов на странице"
+                defaultValue="Выберите количество альбомов на странице"
+                disabled={true}
+                value={limit}
+                onChangeValue={setLimit}
+                options={optionsLimit}
+              />
+            </div>
+
+            <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
+
+            <h2 className="textCenter mb-4">Список альбомов пользователей из albumsMichReducer</h2>
+            <h6>Логика сортировки и поиска вынесена в отдельный хук: useSortedAndSearchedArray.</h6>
+
+            <SortFilter
+              filter={filter}
+              setFilter={setFilter}
+              options={optionsSort}
+              placeholder="Поиск по названию альбома"
+            />
+
+            <div>
+              {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
+
+              <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
+            </div>
+
+            <div className="containerButton mt-2 mb-4">
+              <Button variant="outline-success" onClick={() => setModal(true)}>
+                Создать новый альбом
+              </Button>
+            </div>
+
+            {sortedAndSearchedArray &&
+              sortedAndSearchedArray.map((album) => <AlbumsMichItem album={album} key={album.id} />)}
+          </Row>
+
+          <MyModal visible={modal} setVisible={setModal}>
+            <FormCreation
+              formsOfCreation={formsOfCreation}
+              addObject={handleAddAlbum}
+              ButtonName="Добавить новый альбом"
+            />
+          </MyModal>
         </div>
-
-        <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
-
-        <h2 className="textCenter mb-4">Список альбомов пользователей из albumsMichReducer</h2>
-        <h6>Логика сортировки и поиска вынесена в отдельный хук: useSortedAndSearchedArray.</h6>
-
-        <SortFilter
-          filter={filter}
-          setFilter={setFilter}
-          options={optionsSort}
-          placeholder="Поиск по названию альбома"
-        />
-
-        <div>
-          {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
-
-          <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
-        </div>
-
-        <div className="containerButton mt-2 mb-4">
-          <Button variant="outline-success" onClick={() => setModal(true)}>
-            Создать новый альбом
-          </Button>
-        </div>
-
-        {sortedAndSearchedArray &&
-          sortedAndSearchedArray.map((album) => <AlbumsMichItem album={album} key={album.id} />)}
-      </Row>
-
-      <MyModal visible={modal} setVisible={setModal}>
-        <FormCreation formsOfCreation={formsOfCreation} addObject={handleAddAlbum} ButtonName="Добавить новый альбом" />
-      </MyModal>
-    </Container>
+      </div>
+    </div>
   );
 };
 

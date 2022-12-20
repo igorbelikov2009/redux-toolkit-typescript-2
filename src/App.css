@@ -27,7 +27,22 @@
   top: 0;
   /* left: 0; */
 }
+.routeBar {
+  width: 210px;
+  position: fixed;
+  top: 120px;
+  left: 28px;
+  padding: 8px;
+  border: 1px solid lightgrey;
+}
+/* .routeBar {
 
+} */
+.rightBlock {
+  width: calc(100% - 258px);
+  position: absolute;
+  left: 262px;
+}
 .post {
   padding: 20px;
   border: 1px solid teal;
@@ -110,6 +125,10 @@
 .displayFlex {
   display: flex;
 }
+.flexColumn {
+  display: flex;
+  flex-direction: column;
+}
 .flexWrap {
   flex-wrap: wrap;
 }
@@ -149,7 +168,9 @@
   height: auto;
   margin: auto;
 }
-
+.mY {
+  margin: 2px 0;
+}
 .mb-1 {
   margin-bottom: 1rem;
 }
@@ -235,5 +256,13 @@
 .fullWidth {
   width: 100%;
 }
-
+.widthFull {
+  width: 100vw;
+}
+.width30 {
+  width: 30vw;
+}
+.width70 {
+  width: 70vw;
+}
 /* post */

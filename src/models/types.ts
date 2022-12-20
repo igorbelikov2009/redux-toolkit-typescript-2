@@ -1,5 +1,3 @@
-import { LocationDescriptor } from "history";
-
 export interface IPost {
   userId?: number | string | null;
   id: number;
@@ -93,11 +91,10 @@ export interface IButton {
   variant?: string | undefined;
 }
 
-export interface INavbarButton {
-  id: number;
-  route: LocationDescriptor<unknown>;
+export interface IButtonsRoute {
+  id?: number;
+  path: string;
   title: string;
-  active: boolean;
 }
 
 export interface IProduct {

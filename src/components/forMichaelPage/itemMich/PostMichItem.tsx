@@ -4,6 +4,7 @@ import { Button } from "react-bootstrap";
 import { IPost } from "../../../models/types";
 import { useAppDispanch } from "../../../hooks/redux";
 import { deletePostMich, editPostMich } from "../../../store/michReducer/postMichReducer";
+// import { useHistory } from "react-router-dom";
 
 interface PostMichItemProps {
   post: IPost;
@@ -11,6 +12,8 @@ interface PostMichItemProps {
 }
 
 const PostMichItem: FC<PostMichItemProps> = ({ post }) => {
+  // const history = useHistory();
+  // console.log(history);
   const dispatch = useAppDispanch();
 
   const handleUpdate = (e: React.MouseEvent) => {
