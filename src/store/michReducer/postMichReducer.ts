@@ -1,4 +1,5 @@
 import { IPost } from "./../../models/types";
+import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // экшены
@@ -21,6 +22,26 @@ export const fetchPostsMich = createAsyncThunk("posts/fetchPostsMich", async fun
     return rejectWithValue(error.message);
   }
 });
+
+export const fetchPostById = createAsyncThunk(
+  "post/fetchPostById",
+  async function (id: string | undefined, { rejectWithValue, dispatch }) {
+    try {
+      const response = await axios.get("https://jsonplaceholder.typicode.com/posts/" + id);
+
+      if (!response) {
+        throw new Error("Не могу открыть пост, ошибка на сервере.");
+      }
+      console.log(response);
+      // Если ошибки нет, пришёл response,
+      const post = await response.data;
+      console.log(post);
+      return post;
+    } catch (error: any) {
+      return rejectWithValue(error.message);
+    }
+  }
+);
 
 // dispatch достаём прямо отсюда
 export const deletePostMich = createAsyncThunk(
@@ -109,13 +130,14 @@ export const addPostMich = createAsyncThunk(
 );
 
 interface IPostMichState {
-  // post: IPost;
+  post: IPost;
   posts: IPost[];
   status: string | null;
   error: string | null;
 }
 
 const initialState: IPostMichState = {
+  post: { userId: "", id: 0, title: "", body: "" },
   posts: [],
   status: null,
   error: null,
@@ -181,6 +203,14 @@ const postMichSlice = createSlice({
       state.error = null;
     },
     [editPostMich.rejected.type]: setError,
+    [fetchPostById.pending.type]: (state) => {
+      state.status = "loading";
+      state.error = null; // Обнуляем, на всякий случай. Вдруг, прежде, была ошибка.
+    },
+    [fetchPostById.fulfilled.type]: (state, action: PayloadAction<IPost>) => {
+      state.status = "resolved";
+      state.post = action.payload;
+    },
   },
 });
 

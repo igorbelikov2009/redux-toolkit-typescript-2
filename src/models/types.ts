@@ -80,6 +80,7 @@ export interface IUser {
 }
 
 export interface IRoute {
+  exact?: boolean | undefined;
   path: string;
   Component: React.FC<{}>;
 }

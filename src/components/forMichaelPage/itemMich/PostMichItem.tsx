@@ -4,15 +4,14 @@ import { Button } from "react-bootstrap";
 import { IPost } from "../../../models/types";
 import { useAppDispanch } from "../../../hooks/redux";
 import { deletePostMich, editPostMich } from "../../../store/michReducer/postMichReducer";
-// import { useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 interface PostMichItemProps {
   post: IPost;
-  // update: (post: IPost) => void;
 }
 
 const PostMichItem: FC<PostMichItemProps> = ({ post }) => {
-  // const history = useHistory();
+  const history = useHistory();
   // console.log(history);
   const dispatch = useAppDispanch();
 
@@ -23,6 +22,11 @@ const PostMichItem: FC<PostMichItemProps> = ({ post }) => {
     if (userId && title && body) {
       dispatch(editPostMich({ ...post, userId, title, body }));
     }
+  };
+
+  const handleHistory = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    history.push(`/michael/posts/${post.id}`);
   };
 
   const handleRemove = (e: React.MouseEvent) => {
@@ -51,9 +55,15 @@ const PostMichItem: FC<PostMichItemProps> = ({ post }) => {
         </div>
 
         <div className="cardButton">
-          <Button variant="outline-danger" className="mt-2" onClick={handleRemove}>
-            Удалить
-          </Button>
+          <div className="flexColumn">
+            <Button variant="outline-success" className="mt-2" onClick={handleHistory}>
+              Открыть
+            </Button>
+
+            <Button variant="outline-danger" className="mt-2" onClick={handleRemove}>
+              Удалить
+            </Button>
+          </div>
         </div>
       </div>
     </Card>

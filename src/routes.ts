@@ -1,5 +1,6 @@
 import AlbumsMichContainer from "./components/forMichaelPage/AlbumsMichContainer";
 import CommentsMichContainer from "./components/forMichaelPage/CommentsMichContainer";
+import PostIdPageMich from "./components/forMichaelPage/idPageMich/PostIdPageMich";
 import PhotosMichContainer from "./components/forMichaelPage/PhotosMichContainer";
 import PostMichContainer from "./components/forMichaelPage/PostMichContainer";
 import ProductsMichContainer from "./components/forMichaelPage/ProductsMichContainer";
@@ -21,6 +22,7 @@ export const COUNTER_ROUTE = "/counter";
 export const MICHAEL_ROUTE = "/michael";
 export const MICHAEL_USERS_ROUTE = "/michael/users";
 export const MICHAEL_POSTS_ROUTE = "/michael/posts";
+export const MICHAEL_POSTS_ROUTE_ID = "/michael/posts/:id";
 export const MICHAEL_COMMENTS_ROUTE = "/michael/comments";
 export const MICHAEL_ALBUMS_ROUTE = "/michael/albums";
 export const MICHAEL_PHOTOS_ROUTE = "/michael/photos";
@@ -59,6 +61,10 @@ export const routes: IRoute[] = [
   {
     path: MICHAEL_POSTS_ROUTE,
     Component: PostMichContainer,
+  },
+  {
+    path: MICHAEL_POSTS_ROUTE_ID,
+    Component: PostIdPageMich,
   },
   {
     path: MICHAEL_COMMENTS_ROUTE,
