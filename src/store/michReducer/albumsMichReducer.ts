@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IAlbum } from "./../../models/types";
+import { IAlbum, IPhoto } from "./../../models/types";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // экшены
@@ -42,19 +42,34 @@ export const fetchAlbumByID = createAsyncThunk(
   }
 );
 
+export const fetchPhotosFromAlbums = createAsyncThunk(
+  "album/fetchPhotosFromAlbums",
+  async function (id: string | undefined, { rejectWithValue }) {
+    try {
+      const response = await axios.get(`https://jsonplaceholder.typicode.com/albums/${id}/photos`);
+      // console.log(response);
+
+      const photos = await response.data;
+      // console.log(photos);
+      return photos;
+    } catch (error: any) {
+      return rejectWithValue("Не получается получить фото из альбома, сетевая ошибка");
+    }
+  }
+);
+
 // dispatch достаём прямо отсюда
 export const deleteAlbumMich = createAsyncThunk(
   "albums/deleteAlbumMich",
   async function (id: number, { rejectWithValue, dispatch }) {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await fetch(`https://jsonplaceholder.typicode.com/albums/${id}`, {
         method: "DELETE",
       });
       //   console.log(response);
-      if (!response.ok) {
-        throw new Error("Не могу удалить задачу. Ошибка на сервере.");
-      }
-      // Если ошибки нет, пришёл response.ok, то... на сервере нужный объект мы уже
+
+      // На сервере нужный объект мы уже
       // удалили, нам нужно удалить его локально, вызвать removeAlbum() из albumsMichSlice.
       // Для того, чтобы его вызвать, у нас уже есть диспетчер.
       // Мы его получили через объект вторым параметром.
@@ -63,7 +78,7 @@ export const deleteAlbumMich = createAsyncThunk(
       //   console.log(data);
       //   return data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue("Не удаётся удалить, сетевая ошибка! " + error.message);
     }
   }
 );
@@ -79,14 +94,10 @@ export const editAlbumMich = createAsyncThunk<any, IAlbum, { state: any }>(
         body: JSON.stringify(album),
       });
 
-      if (!response.ok) {
-        throw new Error("Не могу обновить альбом. Ошибка на сервере.");
-      }
-
       const data: IAlbum = await response.json();
       dispatch(editAlbum(data));
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue("Не могу обновить альбом. Ошибка на сервере.");
     }
   }
 );
@@ -103,27 +114,25 @@ export const addAlbumMich = createAsyncThunk(
         body: JSON.stringify(album),
       });
       // console.log(response);
-      if (!response.ok) {
-        throw new Error("Не могу добавить новый альбом, ошибка на сервере.");
-      }
+
       const data: IAlbum = await response.json();
       // console.log(data);
       dispatch(addAlbum(data));
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue("Не могу добавить новый альбом, ошибка на сервере.");
     }
   }
 );
 
 interface IRes {
   totalCount: number;
-  // album: IAlbum;
   albums: IAlbum[];
 }
 
 interface IAlbumsMichState {
   res: IRes;
   album: IAlbum;
+  photos: IPhoto[];
   status: string | null;
   error: string | null;
   errorPhotos: string | null;
@@ -131,11 +140,11 @@ interface IAlbumsMichState {
 
 const initialState: IAlbumsMichState = {
   res: {
-    // album: { userId: "", id: 0, title: "" },
     albums: [],
     totalCount: 0,
   },
   album: { userId: "", id: 0, title: "" },
+  photos: [],
   status: null,
   error: null,
   errorPhotos: null,
@@ -202,6 +211,12 @@ const albumsMichSlice = createSlice({
     },
     [editAlbumMich.rejected.type]: setError,
 
+    [addAlbumMich.pending.type]: (state) => {
+      state.status = "loading";
+      state.error = null;
+    },
+    [addAlbumMich.rejected.type]: setError,
+
     [fetchAlbumByID.pending.type]: (state) => {
       state.status = "loading";
       state.error = null;
@@ -212,6 +227,19 @@ const albumsMichSlice = createSlice({
       // console.log(state.album);
     },
     [fetchAlbumByID.rejected.type]: setError,
+
+    [fetchPhotosFromAlbums.pending.type]: (state) => {
+      state.status = "loading";
+      state.errorPhotos = null;
+    },
+    [fetchPhotosFromAlbums.fulfilled.type]: (state, action: PayloadAction<IPhoto[]>) => {
+      state.status = "resolved";
+      state.photos = action.payload;
+    },
+    [fetchPhotosFromAlbums.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.status = "rejected";
+      state.errorPhotos = action.payload;
+    },
   },
 });
 

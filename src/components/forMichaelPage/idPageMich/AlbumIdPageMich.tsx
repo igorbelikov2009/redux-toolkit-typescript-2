@@ -2,7 +2,7 @@ import React, { FC, useEffect } from "react";
 import { Card, Button } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useAppDispanch, useAppSelector } from "../../../hooks/redux";
-import { fetchAlbumByID } from "../../../store/michReducer/albumsMichReducer";
+import { fetchAlbumByID, fetchPhotosFromAlbums } from "../../../store/michReducer/albumsMichReducer";
 import { MICHAEL_ALBUMS_ROUTE } from "../../../routes";
 
 interface IDParams {
@@ -14,11 +14,13 @@ const AlbumIdPageMich: FC = () => {
   const { id } = useParams<IDParams>();
   const history = useHistory();
 
-  const { album, error, errorPhotos } = useAppSelector((state) => state.albumsMichReducer);
-  console.log(album);
+  const { album, photos, error, errorPhotos } = useAppSelector((state) => state.albumsMichReducer);
+  // console.log(album, error);
+  // console.log(photos, errorPhotos);
 
   useEffect(() => {
     dispatch(fetchAlbumByID(id));
+    dispatch(fetchPhotosFromAlbums(id));
   }, [dispatch, id]);
 
   const comeBack: () => void = () => {
@@ -32,36 +34,83 @@ const AlbumIdPageMich: FC = () => {
           <h2>{error} </h2>
         ) : (
           <div>
-            <h1>Вы открыли страницу альбома ID = {id} </h1>
+            <div>
+              <h1>Вы открыли страницу альбома ID = {id} </h1>
 
-            <Card>
-              <div className="cardBlock">
-                <div className="cardPhoto">
-                  <img className="albumImageMich" src="https://i.pravatar.cc/" alt="avatar" />
-                </div>
+              <div>
+                <div className="cardBlock">
+                  <div className="cardPhoto">
+                    <img className="albumImageMich" src="https://i.pravatar.cc/" alt="avatar" />
+                  </div>
 
-                <div className="cardPhotoDescriptionMich">
-                  <Card.Title>
-                    <i> пользователь № </i> <b> {album.userId} </b>
-                  </Card.Title>
-                  <i className="displayBlock">
-                    Альбом № <b> {album.id} </b>
-                  </i>
+                  <div className="cardPhotoDescriptionMich">
+                    <Card.Title>
+                      <i> пользователь № </i> <b> {album.userId} </b>
+                    </Card.Title>
+                    <i className="displayBlock">
+                      Альбом № <b> {album.id} </b>
+                    </i>
 
-                  <i className="displayBlock">
-                    <b> Название: </b> {album.title}.
-                  </i>
-                </div>
+                    <i className="displayBlock">
+                      <b> Название: </b> {album.title}.
+                    </i>
+                  </div>
 
-                <div className="cardButton">
-                  <div className="flexColumn">
-                    <Button variant="outline-success" className="mt-2" onClick={comeBack}>
-                      Вернуться назад
-                    </Button>
+                  <div className="cardButton">
+                    <div className="flexColumn">
+                      <Button variant="outline-success" className="mt-2" onClick={comeBack}>
+                        Вернуться назад
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </div>
-            </Card>
+
+              {errorPhotos ? (
+                <h3>{errorPhotos} </h3>
+              ) : (
+                <div>
+                  <h4 className="mt-4"> Фотографии из этого альбома </h4>
+                  {photos &&
+                    photos.map((photo) => (
+                      <Card className="post" key={photo.id}>
+                        <div className="cardBlock">
+                          <div className="cardDescription">
+                            <Card.Title>
+                              <i> альбом № </i> <b> {photo.albumId}</b>
+                            </Card.Title>
+
+                            <i className="displayBlock">
+                              <i>
+                                фото № <b> {photo.id} </b>
+                              </i>
+                            </i>
+
+                            <i className="displayBlock">
+                              <i>
+                                <b>название фото: </b> {photo.title}
+                              </i>
+                            </i>
+
+                            <i className="displayBlock">
+                              <i>
+                                <b>url: </b>
+                                {photo.url}
+                              </i>
+                            </i>
+
+                            <i className="displayBlock">
+                              <i>
+                                <b>thumbnailUrl: </b> {photo.thumbnailUrl}
+                              </i>
+                            </i>
+                          </div>
+                        </div>
+                      </Card>
+                    ))}
+                </div>
+              )}
+            </div>
           </div>
         )}
       </div>
