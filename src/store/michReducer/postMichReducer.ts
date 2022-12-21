@@ -1,44 +1,50 @@
-import { IPost } from "./../../models/types";
+import { IComment, IPost } from "./../../models/types";
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // экшены
 export const fetchPostsMich = createAsyncThunk("posts/fetchPostsMich", async function (_, { rejectWithValue }) {
   try {
-    const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=20");
+    const response = await fetch("https://jsonplaceholder.typicode.com/posts?_limit=80");
     // console.log(response);
 
-    if (!response.ok) {
-      // Если у меня будет ошибка, то я её поймаю
-      throw new Error("Ошибка на сервере.");
-    }
-
-    // Если ошибки нет,то....
     const data = await response.json();
     return data;
   } catch (error: any) {
     // и передам ошибку определённым образом в extraReducers, в метод [fetchPostsMich.rejected.type],
     // где её можно будет корректно обработать.
-    return rejectWithValue(error.message);
+    return rejectWithValue("Не удалось получить посты! " + error.message);
   }
 });
 
 export const fetchPostById = createAsyncThunk(
   "post/fetchPostById",
-  async function (id: string | undefined, { rejectWithValue, dispatch }) {
+  async function (id: string | undefined, { rejectWithValue }) {
     try {
       const response = await axios.get("https://jsonplaceholder.typicode.com/posts/" + id);
+      // console.log(response);
 
-      if (!response) {
-        throw new Error("Не могу открыть пост, ошибка на сервере.");
-      }
-      console.log(response);
-      // Если ошибки нет, пришёл response,
       const post = await response.data;
-      console.log(post);
+      // console.log(post);
       return post;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      // return rejectWithValue(error.message);
+      return rejectWithValue("Сетевая ошибка! " + error.message);
+    }
+  }
+);
+
+export const fetchComments = createAsyncThunk(
+  "post/fetchComments",
+  async function (id: string | undefined, { rejectWithValue }) {
+    try {
+      const response = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}/comments`);
+      // console.log(response);
+      const comments = await response.data;
+      // console.log(comments);
+      return comments;
+    } catch (error: any) {
+      return rejectWithValue(error.message + "  Сетевая ошибка");
     }
   }
 );
@@ -48,14 +54,13 @@ export const deletePostMich = createAsyncThunk(
   "post/deletePostMich",
   async function (id: number, { rejectWithValue, dispatch }) {
     try {
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
       const response = await fetch(`https://jsonplaceholder.typicode.com/posts/${id}`, {
         method: "DELETE",
       });
       //   console.log(response);
-      if (!response.ok) {
-        throw new Error("Не могу удалить задачу. Ошибка на сервере.");
-      }
-      // Если ошибки нет, пришёл response.ok, то... на сервере нужный объект мы уже
+
+      // На сервере нужный объект мы уже
       // удалили, нам нужно удалить его локально, вызвать removePost() из postMichSlice.
       // Для того, чтобы его вызвать, у нас уже есть диспетчер.
       // Мы его получили через объект вторым параметром.
@@ -64,7 +69,7 @@ export const deletePostMich = createAsyncThunk(
       //   console.log(data);
       //   return data;
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue("Не могу удалить пост, ошибка на сервере!");
     }
   }
 );
@@ -89,17 +94,12 @@ export const editPostMich = createAsyncThunk<any, IPost, { state: any }>(
         body: JSON.stringify(post),
       });
 
-      if (!response.ok) {
-        throw new Error("Не могу обновить пост. Ошибка на сервере.");
-      }
-
-      // dispatch(editPost(data));
       // Мы ожидаем от сервера ответ в виде изменённых данных для проверки:
       const data = await response.json();
       // console.log(data);
       dispatch(editPost(data));
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue("Не могу обновить пост, ошибка на сервере!");
     }
   }
 );
@@ -116,15 +116,11 @@ export const addPostMich = createAsyncThunk(
         body: JSON.stringify(post),
       });
 
-      if (!response.ok) {
-        throw new Error("Не могу добавить новый пост, ошибка на сервере.");
-      }
-
       const data = await response.json();
       //   console.log(data);
       dispatch(addPost(data));
     } catch (error: any) {
-      return rejectWithValue(error.message);
+      return rejectWithValue("Не могу добавить новый пост, ошибка на сервере!");
     }
   }
 );
@@ -132,15 +128,19 @@ export const addPostMich = createAsyncThunk(
 interface IPostMichState {
   post: IPost;
   posts: IPost[];
+  comments: IComment[];
   status: string | null;
   error: string | null;
+  errorComments: string | null;
 }
 
 const initialState: IPostMichState = {
   post: { userId: "", id: 0, title: "", body: "" },
+  comments: [],
   posts: [],
   status: null,
   error: null,
+  errorComments: null,
 };
 
 // Сделаем хэлпер для обработки ошибок в extraReducers
@@ -210,6 +210,22 @@ const postMichSlice = createSlice({
     [fetchPostById.fulfilled.type]: (state, action: PayloadAction<IPost>) => {
       state.status = "resolved";
       state.post = action.payload;
+    },
+    [fetchPostById.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.status = "rejected";
+      state.error = action.payload;
+    },
+    [fetchComments.pending.type]: (state) => {
+      state.status = "loading";
+      state.error = null;
+    },
+    [fetchComments.fulfilled.type]: (state, action: PayloadAction<IComment[]>) => {
+      state.status = "resolved";
+      state.comments = action.payload;
+    },
+    [fetchComments.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.status = "rejected";
+      state.errorComments = action.payload;
     },
   },
 });

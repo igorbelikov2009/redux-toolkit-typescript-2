@@ -105,43 +105,48 @@ const PostMichContainer: FC = () => {
         <RoutesBlock location={location} />
       </div>
 
-      <div className="rightBlock">
-        <div className="card mt-5">
-          <div className="containerButton mt-2 mb-4">
-            <Button variant="outline-success" onClick={() => setModal(true)}>
-              Создать новый пост
-            </Button>
-          </div>
+      <div className="rightBlock mt-6">
+        {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
 
-          <Row>
-            <h2 className="textCenter mb-4">Список постов пользователей из postMichReducer</h2>
-            <h6>
-              Логика сортировки и поиска находится в компоненте, не вынесена в отдельный хук. Пагинацию не стал делать
-              здесь: пусть редюсер и получение данных из редюсера будут без пагинации.
-            </h6>
-            <SortFilter
-              filter={filter}
-              setFilter={setFilter}
-              placeholder="Поиск по заглавию поста"
-              options={optionsSort}
-            />
+        <div>
+          {error ? (
+            <h1 className="textCenter"> {error} </h1>
+          ) : (
+            <div className="card mt-5">
+              <div className="containerButton mt-2 mb-4">
+                <Button variant="outline-success" onClick={() => setModal(true)}>
+                  Создать новый пост
+                </Button>
+              </div>
 
-            <div>
-              {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
+              <Row>
+                <h2 className="textCenter mb-4">Список постов пользователей из postMichReducer</h2>
+                <h6>Логика сортировки и поиска находится в компоненте, не вынесена в отдельный хук.</h6>
 
-              <div>{error && <h1 className="textCenter"> {error} </h1>}</div>
+                <h6>
+                  Пагинацию не стал делать здесь: пусть редюсер и получение данных из редюсера будут без пагинации.
+                  Единственное, в запросе на сервер установили лимит на получение данных _limit=80
+                </h6>
+                <SortFilter
+                  filter={filter}
+                  setFilter={setFilter}
+                  placeholder="Поиск по заглавию поста"
+                  options={optionsSort}
+                />
+
+                {sortedAndSearchedPosts &&
+                  sortedAndSearchedPosts.map((post) => <PostMichItem post={post} key={post.id} />)}
+              </Row>
+
+              <MyModal visible={modal} setVisible={setModal}>
+                <FormCreation
+                  formsOfCreation={formsOfCreation}
+                  addObject={handleAddPost}
+                  ButtonName="Добавить новый пост"
+                />
+              </MyModal>
             </div>
-
-            {sortedAndSearchedPosts && sortedAndSearchedPosts.map((post) => <PostMichItem post={post} key={post.id} />)}
-          </Row>
-
-          <MyModal visible={modal} setVisible={setModal}>
-            <FormCreation
-              formsOfCreation={formsOfCreation}
-              addObject={handleAddPost}
-              ButtonName="Добавить новый пост"
-            />
-          </MyModal>
+          )}
         </div>
       </div>
     </div>
