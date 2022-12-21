@@ -5,7 +5,7 @@ import { useAppDispanch, useAppSelector } from "../../../hooks/redux";
 import { fetchComments, fetchPostById } from "../../../store/michReducer/postMichReducer";
 import { MICHAEL_POSTS_ROUTE } from "../../../routes";
 
-interface IParams {
+interface IDParams {
   id?: string;
 }
 
@@ -13,7 +13,7 @@ const PostIdPageMich: FC = () => {
   const dispatch = useAppDispanch();
   const { post, comments, error, errorComments } = useAppSelector((state) => state.postMichReducer);
   // console.log(post, error, comments, errorComments);
-  const { id } = useParams<IParams>();
+  const { id } = useParams<IDParams>();
   // console.log(id);
   const history = useHistory();
 

@@ -12,12 +12,6 @@ export const fetchAlbumsMich = createAsyncThunk(
       );
       // console.log(response);
 
-      if (!response) {
-        // Если у меня будет ошибка, то я её поймаю
-        throw new Error("Ошибка на сервере.");
-      }
-
-      // Если ошибки нет,то....
       const totalCount = response.headers["x-total-count"];
       const albums = await response.data;
       // console.log(totalCount, albums);
@@ -27,7 +21,23 @@ export const fetchAlbumsMich = createAsyncThunk(
     } catch (error: any) {
       // и передам ошибку определённым образом в extraReducers, в метод [fetchAlbumsMich.rejected.type],
       // где её можно будет корректно обработать.
-      return rejectWithValue(error.message);
+      return rejectWithValue("Не удалось получить альбомы, ошибка сервера!");
+    }
+  }
+);
+
+export const fetchAlbumByID = createAsyncThunk(
+  "album/fetchAlbumByID",
+  async function (id: string | undefined, { rejectWithValue }) {
+    try {
+      const response = await axios.get("https://jsonplaceholder.typicode.com/albums/" + id);
+      // console.log(response);
+      //
+      const album = await response.data;
+      // console.log(album);
+      return album;
+    } catch (error: any) {
+      return rejectWithValue("Не удаётся получить альбом по ID, сетевая ошибка!");
     }
   }
 );
@@ -107,22 +117,28 @@ export const addAlbumMich = createAsyncThunk(
 
 interface IRes {
   totalCount: number;
+  // album: IAlbum;
   albums: IAlbum[];
 }
 
 interface IAlbumsMichState {
   res: IRes;
+  album: IAlbum;
   status: string | null;
   error: string | null;
+  errorPhotos: string | null;
 }
 
 const initialState: IAlbumsMichState = {
   res: {
+    // album: { userId: "", id: 0, title: "" },
     albums: [],
     totalCount: 0,
   },
+  album: { userId: "", id: 0, title: "" },
   status: null,
   error: null,
+  errorPhotos: null,
 };
 
 // Сделаем хэлпер для обработки ошибок в extraReducers
@@ -181,13 +197,21 @@ const albumsMichSlice = createSlice({
     },
     [deleteAlbumMich.rejected.type]: setError,
 
-    [deleteAlbumMich.pending.type]: (state) => {
-      state.error = null;
-    },
     [editAlbumMich.pending.type]: (state) => {
       state.error = null;
     },
     [editAlbumMich.rejected.type]: setError,
+
+    [fetchAlbumByID.pending.type]: (state) => {
+      state.status = "loading";
+      state.error = null;
+    },
+    [fetchAlbumByID.fulfilled.type]: (state, action: PayloadAction<IAlbum>) => {
+      state.status = "resolved";
+      state.album = action.payload;
+      // console.log(state.album);
+    },
+    [fetchAlbumByID.rejected.type]: setError,
   },
 });
 

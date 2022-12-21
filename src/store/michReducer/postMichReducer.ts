@@ -203,6 +203,7 @@ const postMichSlice = createSlice({
       state.error = null;
     },
     [editPostMich.rejected.type]: setError,
+
     [fetchPostById.pending.type]: (state) => {
       state.status = "loading";
       state.error = null; // Обнуляем, на всякий случай. Вдруг, прежде, была ошибка.
@@ -215,6 +216,7 @@ const postMichSlice = createSlice({
       state.status = "rejected";
       state.error = action.payload;
     },
+
     [fetchComments.pending.type]: (state) => {
       state.status = "loading";
       state.error = null;

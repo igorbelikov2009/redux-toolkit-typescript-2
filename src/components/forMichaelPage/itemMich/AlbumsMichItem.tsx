@@ -4,18 +4,25 @@ import { Button } from "react-bootstrap";
 import { IAlbum } from "../../../models/types";
 import { useAppDispanch } from "../../../hooks/redux";
 import { deleteAlbumMich, editAlbumMich } from "../../../store/michReducer/albumsMichReducer";
+import { useHistory } from "react-router-dom";
 
 interface AlbumsMichItemProps {
   album: IAlbum;
 }
 
 const AlbumsMichItem: FC<AlbumsMichItemProps> = ({ album }) => {
+  const history = useHistory();
   const dispatch = useAppDispanch();
 
   const handleUpdate = (e: React.MouseEvent) => {
     const userId = prompt("Введите номер пользователя");
     const title = prompt("Введите название альбома");
     dispatch(editAlbumMich({ ...album, userId, title }));
+  };
+
+  const handleHistory = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    history.push(`/michael/albums/${album.id}`);
   };
 
   const handleRemove = (e: React.MouseEvent) => {
@@ -43,9 +50,15 @@ const AlbumsMichItem: FC<AlbumsMichItemProps> = ({ album }) => {
         </div>
 
         <div className="cardButton">
-          <Button variant="outline-danger" className="mt-2" onClick={handleRemove}>
-            Удалить
-          </Button>
+          <div className="flexColumn">
+            <Button variant="outline-success" className="mt-2" onClick={handleHistory}>
+              Открыть
+            </Button>
+
+            <Button variant="outline-danger" className="mt-2" onClick={handleRemove}>
+              Удалить
+            </Button>
+          </div>
         </div>
       </div>
     </Card>
