@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { Button, Card } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { useAppDispanch } from "../../../hooks/redux";
 import { IPhoto } from "../../../models/types";
 import { deletePhotoMich, editPhotoMich } from "../../../store/michReducer/photosMichReducer";
@@ -9,6 +10,7 @@ interface PhotoMichItemProps {
 }
 
 const PhotoMichItem: FC<PhotoMichItemProps> = ({ photo }) => {
+  const history = useHistory();
   const dispatch = useAppDispanch();
 
   const handleUpdate = (e: React.MouseEvent) => {
@@ -24,14 +26,18 @@ const PhotoMichItem: FC<PhotoMichItemProps> = ({ photo }) => {
     e.stopPropagation();
     dispatch(deletePhotoMich(photo.id));
   };
+  const handleAlbumId = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    history.push(`/michael/albums/${photo.albumId}`);
+  };
 
   return (
     <Card className="post" onClick={handleUpdate}>
       <div className="cardBlock">
         <div className="cardDescription">
-          <Card.Title>
+          <Button variant="outline-info" onClick={handleAlbumId}>
             <i> альбом № </i> <b> {photo.albumId}</b>
-          </Card.Title>
+          </Button>
 
           <i className="displayBlock">
             <i>

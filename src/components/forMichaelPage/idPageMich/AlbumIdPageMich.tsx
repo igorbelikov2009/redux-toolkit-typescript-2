@@ -3,7 +3,7 @@ import { Card, Button } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useAppDispanch, useAppSelector } from "../../../hooks/redux";
 import { fetchAlbumByID, fetchPhotosFromAlbums } from "../../../store/michReducer/albumsMichReducer";
-import { MICHAEL_ALBUMS_ROUTE } from "../../../routes";
+import { MICHAEL_ALBUMS_ROUTE, MICHAEL_PHOTOS_ROUTE } from "../../../routes";
 
 interface IDParams {
   id?: string;
@@ -23,8 +23,11 @@ const AlbumIdPageMich: FC = () => {
     dispatch(fetchPhotosFromAlbums(id));
   }, [dispatch, id]);
 
-  const comeBack: () => void = () => {
+  const toAlbumsPage: () => void = () => {
     history.push(MICHAEL_ALBUMS_ROUTE);
+  };
+  const toPhotoPage: () => void = () => {
+    history.push(MICHAEL_PHOTOS_ROUTE);
   };
 
   return (
@@ -58,8 +61,8 @@ const AlbumIdPageMich: FC = () => {
 
                   <div className="cardButton">
                     <div className="flexColumn">
-                      <Button variant="outline-success" className="mt-2" onClick={comeBack}>
-                        Вернуться назад
+                      <Button variant="outline-success" className="mt-2" onClick={toAlbumsPage}>
+                        На страницу альбомов
                       </Button>
                     </div>
                   </div>
@@ -70,7 +73,17 @@ const AlbumIdPageMich: FC = () => {
                 <h3>{errorPhotos} </h3>
               ) : (
                 <div>
-                  <h4 className="mt-4"> Фотографии из этого альбома </h4>
+                  <div className="cardBlock">
+                    <div className="cardDescription">
+                      <h4 className="mt-4"> Фотографии из этого альбома </h4>
+                    </div>
+                    <div className="cardButton">
+                      <Button variant="outline-primary" className="mt-2" onClick={toPhotoPage}>
+                        К фотографиям
+                      </Button>
+                    </div>
+                  </div>
+
                   {photos &&
                     photos.map((photo) => (
                       <Card className="post" key={photo.id}>

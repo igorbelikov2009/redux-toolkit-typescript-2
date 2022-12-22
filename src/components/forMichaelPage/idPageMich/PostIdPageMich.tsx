@@ -3,7 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 import { Card, Button } from "react-bootstrap";
 import { useAppDispanch, useAppSelector } from "../../../hooks/redux";
 import { fetchComments, fetchPostById } from "../../../store/michReducer/postMichReducer";
-import { MICHAEL_POSTS_ROUTE } from "../../../routes";
+import { MICHAEL_POSTS_ROUTE, MICHAEL_COMMENTS_ROUTE } from "../../../routes";
 
 interface IDParams {
   id?: string;
@@ -23,8 +23,11 @@ const PostIdPageMich: FC = () => {
     dispatch(fetchComments(id));
   }, [dispatch, id]);
 
-  const comeBack: () => void = () => {
+  const toPostsPage: () => void = () => {
     history.push(MICHAEL_POSTS_ROUTE);
+  };
+  const toCommentsPage: () => void = () => {
+    history.push(MICHAEL_COMMENTS_ROUTE);
   };
 
   return (
@@ -57,8 +60,8 @@ const PostIdPageMich: FC = () => {
 
                 <div className="cardButton">
                   <div className="flexColumn">
-                    <Button variant="outline-success" className="mt-2" onClick={comeBack}>
-                      Вернуться назад
+                    <Button variant="outline-success" className="mt-2" onClick={toPostsPage}>
+                      На страницу постов
                     </Button>
                   </div>
                 </div>
@@ -69,7 +72,17 @@ const PostIdPageMich: FC = () => {
               <h1> {errorComments} </h1>
             ) : (
               <div>
-                <h1 className="mt-4"> Комментарии к этому посту </h1>
+                <div className="cardBlock">
+                  <div className="cardDescription">
+                    <h1 className="mt-4"> Комментарии к этому посту </h1>
+                  </div>
+
+                  <div className="cardButton">
+                    <Button variant="outline-primary" className="mt-2" onClick={toCommentsPage}>
+                      К комментариям
+                    </Button>
+                  </div>
+                </div>
                 {comments &&
                   comments.map((comment) => (
                     <Card key={comment.id}>

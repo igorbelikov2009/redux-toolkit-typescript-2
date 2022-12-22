@@ -105,11 +105,6 @@ interface IRes {
 }
 
 interface ICommentMichState {
-  // res: {
-  //   totalCount: number;
-  //   comments: IComment[];
-  // };
-
   res: IRes;
   status: string | null;
   error: string | null;

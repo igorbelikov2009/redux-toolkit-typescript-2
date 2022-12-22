@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { Card, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { useAppDispanch } from "../../../hooks/redux";
 import { IComment } from "../../../models/types";
 import { deleteCommentMich, editCommentMich } from "../../../store/michReducer/commentsMichReducer";
@@ -9,6 +10,7 @@ interface CommentMichItemProps {
 }
 
 const CommentMichItem: FC<CommentMichItemProps> = ({ comment }) => {
+  const history = useHistory();
   const dispatch = useAppDispanch();
 
   const handleUpdate = (e: React.MouseEvent) => {
@@ -27,13 +29,21 @@ const CommentMichItem: FC<CommentMichItemProps> = ({ comment }) => {
     dispatch(deleteCommentMich(comment.id));
   };
 
+  const handlePostId = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    // console.log(comment.postId);
+    history.push(`/michael/posts/${comment.postId}`);
+  };
+
   return (
     <Card onClick={handleUpdate}>
       <div className="cardBlock">
         <div className="cardDescription">
-          <i>
-            <i> Пост № </i> <b> {comment.postId}. </b>
-          </i>
+          <div>
+            <Button variant="outline-info" onClick={handlePostId}>
+              <i> Пост № </i> <b> {comment.postId}. </b>
+            </Button>
+          </div>
 
           <i className="displayBlock">
             <i>

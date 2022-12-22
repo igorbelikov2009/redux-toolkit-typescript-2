@@ -27,6 +27,7 @@ const PostMichItem: FC<PostMichItemProps> = ({ post }) => {
   const handleHistory = (e: React.MouseEvent) => {
     e.stopPropagation();
     history.push(`/michael/posts/${post.id}`);
+    // console.log(post.id, post.userId);
   };
 
   const handleRemove = (e: React.MouseEvent) => {
