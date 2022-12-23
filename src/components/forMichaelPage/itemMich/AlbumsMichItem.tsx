@@ -20,7 +20,7 @@ const AlbumsMichItem: FC<AlbumsMichItemProps> = ({ album }) => {
     dispatch(editAlbumMich({ ...album, userId, title }));
   };
 
-  const handleHistory = (e: React.MouseEvent) => {
+  const handleOpen = (e: React.MouseEvent) => {
     e.stopPropagation();
     history.push(`/michael/albums/${album.id}`);
   };
@@ -51,7 +51,7 @@ const AlbumsMichItem: FC<AlbumsMichItemProps> = ({ album }) => {
 
         <div className="cardButton">
           <div className="flexColumn">
-            <Button variant="outline-success" className="mt-2" onClick={handleHistory}>
+            <Button variant="outline-success" className="mt-2" onClick={handleOpen}>
               Открыть
             </Button>
 

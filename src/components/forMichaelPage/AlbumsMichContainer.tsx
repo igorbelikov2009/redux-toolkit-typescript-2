@@ -108,7 +108,7 @@ const AlbumsMichContainer: FC = () => {
 
         <div>
           {error ? (
-            <h1 className="textCenter"> {error} </h1>
+            <h1 className="textCenter colorRed"> {error} </h1>
           ) : (
             <div className="card">
               <Row>

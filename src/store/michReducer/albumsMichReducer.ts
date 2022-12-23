@@ -245,3 +245,5 @@ const albumsMichSlice = createSlice({
 
 const { addAlbum, removeAlbum, editAlbum } = albumsMichSlice.actions;
 export default albumsMichSlice.reducer;
+
+// регистрируем в store.ts
