@@ -34,7 +34,7 @@ const PostIdPageMich: FC = () => {
     <Card className="mt-6">
       <div className="mt-2 mb-4">
         {error ? (
-          <h1> {error} </h1>
+          <h1 className="colorRed"> {error} </h1>
         ) : (
           <div>
             <div>

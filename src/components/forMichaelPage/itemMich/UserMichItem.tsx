@@ -1,5 +1,6 @@
 import React, { FC } from "react";
 import { Card, Button } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
 import { useAppDispanch } from "../../../hooks/redux";
 import { IUser } from "../../../models/types";
 import { deleteUserMich, editUserMich } from "../../../store/michReducer/usersMichReducer";
@@ -10,6 +11,12 @@ interface UserMichItemProps {
 
 const UserMichItem: FC<UserMichItemProps> = ({ user }) => {
   const dispatch = useAppDispanch();
+  const history = useHistory();
+
+  const handleOpen = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    history.push(`/michael/users/${user.id}`);
+  };
 
   const handleRemove = (e: React.MouseEvent) => {
     e.stopPropagation();
@@ -47,7 +54,7 @@ const UserMichItem: FC<UserMichItemProps> = ({ user }) => {
   };
 
   return (
-    <Card className="card" onClick={handleUpdate}>
+    <Card className="card">
       <div>
         <Card.Title>
           <b> Пользователь №</b> {user.id}
@@ -110,9 +117,17 @@ const UserMichItem: FC<UserMichItemProps> = ({ user }) => {
         </i>
       </div>
 
-      <div className="containerButton">
-        <Button variant="outline-success mb-4" onClick={handleRemove}>
-          Удалить пользователя
+      <div className="displayFlex mt-4">
+        <Button variant="outline-info  mr-2" onClick={handleOpen}>
+          Открыть страницу пользователя
+        </Button>
+
+        <Button variant="outline-success  mr-2" onClick={handleUpdate}>
+          Изменить страницу пользователя
+        </Button>
+
+        <Button variant="outline-danger" onClick={handleRemove}>
+          Удалить страницу пользователя
         </Button>
       </div>
     </Card>

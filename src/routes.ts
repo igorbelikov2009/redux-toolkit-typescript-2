@@ -2,6 +2,10 @@ import AlbumsMichContainer from "./components/forMichaelPage/AlbumsMichContainer
 import CommentsMichContainer from "./components/forMichaelPage/CommentsMichContainer";
 import AlbumIdPageMich from "./components/forMichaelPage/idPageMich/AlbumIdPageMich";
 import PostIdPageMich from "./components/forMichaelPage/idPageMich/PostIdPageMich";
+import UserIdPageMich from "./components/forMichaelPage/idPageMich/UserIdPageMich";
+import PageAlbumsOfUser from "./components/forMichaelPage/pageOfUser/PageAlbumsOfUser";
+import PagePostsOfUser from "./components/forMichaelPage/pageOfUser/PagePostsOfUser";
+import PageTodosOfUser from "./components/forMichaelPage/pageOfUser/PageTodosOfUser";
 import PhotosMichContainer from "./components/forMichaelPage/PhotosMichContainer";
 import PostMichContainer from "./components/forMichaelPage/PostMichContainer";
 import ProductsMichContainer from "./components/forMichaelPage/ProductsMichContainer";
@@ -22,6 +26,10 @@ export const SLICE_ROUTE = "/slice";
 export const COUNTER_ROUTE = "/counter";
 export const MICHAEL_ROUTE = "/michael";
 export const MICHAEL_USERS_ROUTE = "/michael/users";
+export const MICHAEL_USERS_ROUTE_ID = "/michael/users/:id";
+export const MICHAEL_USERS_ROUTE_ID_POSTS = "/michael/users/:id/posts";
+export const MICHAEL_USERS_ROUTE_ID_ALBUMS = "/michael/users/:id/albums";
+export const MICHAEL_USERS_ROUTE_ID_TODOS = "/michael/users/:id/todos";
 export const MICHAEL_POSTS_ROUTE = "/michael/posts";
 export const MICHAEL_POSTS_ROUTE_ID = "/michael/posts/:id";
 export const MICHAEL_COMMENTS_ROUTE = "/michael/comments";
@@ -59,6 +67,22 @@ export const routes: IRoute[] = [
   {
     path: MICHAEL_USERS_ROUTE,
     Component: UsersMichContainer,
+  },
+  {
+    path: MICHAEL_USERS_ROUTE_ID,
+    Component: UserIdPageMich,
+  },
+  {
+    path: MICHAEL_USERS_ROUTE_ID_POSTS,
+    Component: PagePostsOfUser,
+  },
+  {
+    path: MICHAEL_USERS_ROUTE_ID_ALBUMS,
+    Component: PageAlbumsOfUser,
+  },
+  {
+    path: MICHAEL_USERS_ROUTE_ID_TODOS,
+    Component: PageTodosOfUser,
   },
   {
     path: MICHAEL_POSTS_ROUTE,

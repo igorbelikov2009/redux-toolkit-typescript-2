@@ -21,6 +21,22 @@ export const fetchUsersMich = createAsyncThunk(
   }
 );
 
+export const fetchUserMichById = createAsyncThunk(
+  "user/fetchUserMichById",
+  async function (id: string | undefined, { rejectWithValue }) {
+    try {
+      const response = await axios.get("https://jsonplaceholder.typicode.com/users/" + id);
+      // console.log(response);
+      //
+      const user = await response.data;
+      // console.log(user);
+      return user;
+    } catch (error: any) {
+      return rejectWithValue("Не удаётся открыть страницу пользователя, сетевая ошибка!");
+    }
+  }
+);
+
 export const deleteUserMich = createAsyncThunk(
   "user/deleteUserMich",
   async function (id: number, { rejectWithValue, dispatch }) {
@@ -84,7 +100,7 @@ interface IRes {
 
 interface IUsersMichState {
   res: IRes;
-  //   user: IUser;
+  user: IUser;
   isLoading: boolean;
   error: string;
 }
@@ -93,6 +109,31 @@ const initialState: IUsersMichState = {
   res: {
     users: [],
     totalCount: 0,
+  },
+  user: {
+    id: 0,
+    name: "",
+    username: "",
+    email: "",
+    phone: 0,
+    website: "",
+
+    address: {
+      street: "",
+      suite: "",
+      city: "",
+      zipcode: "",
+      geo: {
+        lat: "",
+        lng: "",
+      },
+    },
+
+    company: {
+      name: "",
+      catchPhrase: "",
+      bs: "",
+    },
   },
   isLoading: false,
   error: "",
@@ -152,6 +193,19 @@ const usersMichSlice = createSlice({
       state.error = "";
     },
     [addUserMich.rejected.type]: setError,
+
+    [fetchUserMichById.pending.type]: (state) => {
+      state.isLoading = true;
+      state.error = "";
+    },
+    [fetchUserMichById.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
+      state.isLoading = false;
+      state.user = action.payload;
+    },
+    [fetchUserMichById.rejected.type]: (state, action: PayloadAction<string>) => {
+      state.isLoading = false;
+      state.error = action.payload;
+    },
   },
 });
 const { addUser, removeUser, editUser } = usersMichSlice.actions;
