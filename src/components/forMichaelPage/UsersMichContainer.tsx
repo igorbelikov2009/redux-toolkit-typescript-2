@@ -1,13 +1,15 @@
-import React, { FC, useEffect, useState } from "react";
+import React, { FC, useEffect, useState, useMemo } from "react";
 import { Row, Button } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
-import { IUser } from "../../models/types";
+import { IFilter, IUser } from "../../models/types";
 import { fetchUsersMich, addUserMich } from "../../store/michReducer/usersMichReducer";
 import PaginationButtons from "../gui/PaginationButtons";
 import RoutesBlock from "../gui/RoutesBlock";
+import MySelect, { IOption } from "../gui/select/MySelect";
 import FormCreation, { IFormsOfCreation } from "../modal/FormCreation";
 import MyModal from "../modal/MyModal";
+import SortFilter from "../SortFilter";
 import UserMichItem from "./itemMich/UserMichItem";
 
 const UsersMichContainer: FC = () => {
@@ -26,6 +28,11 @@ const UsersMichContainer: FC = () => {
   for (let i = 0; i < countPage; i++) {
     pages.push(i + 1);
   }
+  const optionsLimit: IOption[] = [
+    { value: "1", name: 1 },
+    { value: "5", name: 5 },
+    { value: "10", name: 10 },
+  ];
   // pagination
 
   // для создания нового объекта
@@ -108,6 +115,30 @@ const UsersMichContainer: FC = () => {
     setModal(false);
   };
 
+  // Сортировка и поиск
+  const [filter, setFilter] = useState<IFilter>({ query: "", sort: "" });
+  const optionsSort: IOption[] = [
+    { value: "id", name: "По номеру пользователя" },
+    { value: "name", name: "По имени пользователя" },
+    { value: "username", name: "По нику пользователя" },
+    { value: "email", name: "По email пользователя" },
+    { value: "phone", name: "По телефону пользователя" },
+    { value: "website", name: "По ВЭБ-сайту пользователя" },
+  ];
+  // Получаем отсортированный массив.
+  const sortedUsers = useMemo(() => {
+    if (filter.sort && users) {
+      return [...users].sort((a, b) => (a[filter.sort] > b[filter.sort] ? 1 : -1));
+    }
+    return users;
+  }, [filter.sort, users]);
+  // Отсортированный и отфильтрованный массив:
+  const sortedAndSearchedUsers = useMemo(() => {
+    if (sortedUsers) {
+      return sortedUsers.filter((user) => user.name?.toLowerCase().includes(filter.query));
+    }
+  }, [filter.query, sortedUsers]);
+
   useEffect(() => {
     dispatch(fetchUsersMich({ limit, page }));
   }, [dispatch, limit, page]);
@@ -126,18 +157,39 @@ const UsersMichContainer: FC = () => {
             <h3 className="textCenter colorRed"> {error} </h3>
           ) : (
             <div className="card">
-              <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
+              <Row>
+                <div className="mb-4">
+                  <MySelect
+                    defaultValue="Выберите количество пользователей на странице"
+                    disabled={true}
+                    value={limit}
+                    onChangeValue={setLimit}
+                    titleSelect="Выберите количество пользователей на странице"
+                    options={optionsLimit}
+                  />
+                </div>
 
-              <h2 className="textCenter mb-4">Список пользователей из usersMichReducer</h2>
-              <h6>Логика сортировки и поиска вынесена в отдельный хук: useSortedAndSearchedArray.</h6>
+                <PaginationButtons countPage={countPage} page={page} pages={pages} setPage={setPage} />
 
-              <div className="containerButton mt-2 mb-4">
-                <Button variant="outline-success" onClick={() => setModal(true)}>
-                  Создать нового пользователя
-                </Button>
-              </div>
+                <h2 className="textCenter mb-4">Список пользователей из usersMichReducer</h2>
+                <h6>Логика сортировки и поиска вынесена в отдельный хук: useSortedAndSearchedArray.</h6>
 
-              <Row>{users && users.map((user) => <UserMichItem key={user.id} user={user} />)}</Row>
+                <SortFilter
+                  filter={filter}
+                  setFilter={setFilter}
+                  placeholder="Поиск по имени пользователя"
+                  options={optionsSort}
+                />
+
+                <div className="containerButton mt-2 mb-4">
+                  <Button variant="outline-success" onClick={() => setModal(true)}>
+                    Создать нового пользователя
+                  </Button>
+                </div>
+
+                {sortedAndSearchedUsers &&
+                  sortedAndSearchedUsers.map((user) => <UserMichItem key={user.id} user={user} />)}
+              </Row>
 
               <MyModal visible={modal} setVisible={setModal}>
                 <FormCreation

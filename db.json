@@ -1534,18 +1534,6 @@
         "rate": 3.6,
         "count": 145
       }
-    },
-    {
-      "title": "",
-      "price": 0,
-      "description": "",
-      "category": "",
-      "image": "sdf",
-      "rating": {
-        "rate": null,
-        "count": null
-      },
-      "id": 21
     }
   ],
   "productsarhcive": [
