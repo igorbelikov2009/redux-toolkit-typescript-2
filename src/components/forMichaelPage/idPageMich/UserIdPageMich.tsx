@@ -3,23 +3,20 @@ import { Card, Button } from "react-bootstrap";
 import { useHistory, useParams } from "react-router-dom";
 import { useAppDispanch, useAppSelector } from "../../../hooks/redux";
 import { fetchUserMichById } from "../../../store/michReducer/usersMichReducer";
-import {
-  MICHAEL_USERS_ROUTE,
-  MICHAEL_USERS_ROUTE_ID_POSTS,
-  MICHAEL_USERS_ROUTE_ID_ALBUMS,
-  MICHAEL_USERS_ROUTE_ID_TODOS,
-} from "../../../routes";
+import { MICHAEL_USERS_ROUTE } from "../../../routes";
 
 interface IDParams {
-  id?: string;
+  id: string;
 }
 
 const UserIdPageMich: FC = () => {
   const { id } = useParams<IDParams>();
+  // console.log(id);
   const dispatch = useAppDispanch();
   const { user, error } = useAppSelector((state) => state.usersMichReducer);
   //   console.log(user, error, );
   const history = useHistory();
+  // console.log(history);
 
   useEffect(() => {
     // id передаём из useParams()
@@ -99,13 +96,13 @@ const UserIdPageMich: FC = () => {
               </div>
 
               <div className="displayFlex mt-4">
-                <Button variant="outline-info  mr-2" onClick={() => history.push(MICHAEL_USERS_ROUTE_ID_POSTS)}>
+                <Button variant="outline-info  mr-2" onClick={() => history.push(`/michael/users/${id}/posts`)}>
                   Посты пользователя
                 </Button>
-                <Button variant="outline-info  mr-2" onClick={() => history.push(MICHAEL_USERS_ROUTE_ID_TODOS)}>
-                  Список дел пользователя{" "}
+                <Button variant="outline-info  mr-2" onClick={() => history.push(`/michael/users/${id}/todos`)}>
+                  Список дел пользователя
                 </Button>
-                <Button variant="outline-info" onClick={() => history.push(MICHAEL_USERS_ROUTE_ID_ALBUMS)}>
+                <Button variant="outline-info" onClick={() => history.push(`/michael/users/${id}/albums`)}>
                   Альбомы с фотографиями
                 </Button>
               </div>

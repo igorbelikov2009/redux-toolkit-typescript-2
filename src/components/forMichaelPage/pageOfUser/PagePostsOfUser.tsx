@@ -1,10 +1,14 @@
 import React, { FC } from "react";
+import { useParams } from "react-router-dom";
 
-interface PagePostsOfUserProps {
-  id?: string;
+interface IDParams {
+  id: string;
 }
 
-const PagePostsOfUser: FC<PagePostsOfUserProps> = ({ id }) => {
+const PagePostsOfUser: FC = () => {
+  const { id } = useParams<IDParams>();
+  console.log(id);
+
   return (
     <div>
       <h1 className="mt-6">Вы открыли страницу постов пользователя {id} </h1>

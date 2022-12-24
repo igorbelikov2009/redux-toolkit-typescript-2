@@ -80,9 +80,11 @@ export interface IUser {
 }
 
 export interface IRoute {
+  loadData?: any;
   exact?: boolean | undefined;
   path: string;
-  Component: React.FC<{}>;
+  Component?: React.FC<{}>;
+  Render?: React.FC<{}>;
 }
 export interface IButton {
   id: number;

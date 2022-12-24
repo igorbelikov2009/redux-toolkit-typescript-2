@@ -1,10 +1,14 @@
 import React, { FC } from "react";
+import { useParams } from "react-router-dom";
 
-interface PageTodosOfUserProps {
-  id?: string;
+interface IDParams {
+  id: string;
 }
 
-const PageTodosOfUser: FC<PageTodosOfUserProps> = ({ id }) => {
+const PageTodosOfUser: FC = () => {
+  const { id } = useParams<IDParams>();
+  console.log(id);
+
   return (
     <div>
       <h1 className="mt-6">Вы открыли страницу со списком дел пользователя {id} </h1>

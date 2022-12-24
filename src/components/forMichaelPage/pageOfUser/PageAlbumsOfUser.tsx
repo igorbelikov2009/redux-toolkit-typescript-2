@@ -1,9 +1,14 @@
 import React, { FC } from "react";
+import { useParams } from "react-router-dom";
 
-interface PageAlbumsOfUserProps {
-  id?: string;
+interface IDParams {
+  id: string;
 }
-const PageAlbumsOfUser: FC<PageAlbumsOfUserProps> = ({ id }) => {
+
+const PageAlbumsOfUser: FC = () => {
+  const { id } = useParams<IDParams>();
+  console.log(id);
+
   return (
     <div>
       <h1 className="mt-6">Вы открыли страницу альбомов пользователя {id} </h1>
