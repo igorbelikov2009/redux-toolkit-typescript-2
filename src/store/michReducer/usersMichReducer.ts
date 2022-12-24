@@ -1,4 +1,4 @@
-import { IUser } from "./../../models/types";
+import { IUser, IPost, ITodo, IAlbum } from "./../../models/types";
 import axios from "axios";
 import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 
@@ -33,6 +33,51 @@ export const fetchUserMichById = createAsyncThunk(
       return user;
     } catch (error: any) {
       return rejectWithValue("Не удаётся открыть страницу пользователя, сетевая ошибка!");
+    }
+  }
+);
+
+export const getUsersPosts = createAsyncThunk(
+  "user/getUsersPosts",
+  async function (id: string | undefined, { rejectWithValue }) {
+    try {
+      const response = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}/posts`);
+      // console.log(response);
+      const posts = await response.data;
+      // console.log(posts);
+      return posts;
+    } catch (error: any) {
+      return rejectWithValue("Не удаётся получить посты пользователя, сетевая ошибка!");
+    }
+  }
+);
+
+export const getUsersTodos = createAsyncThunk(
+  "user/getUsersTodos",
+  async function (id: string | undefined, { rejectWithValue }) {
+    try {
+      const response = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}/todos`);
+      // console.log(response);
+      const todos = await response.data;
+      // console.log(todos);
+      return todos;
+    } catch (error: any) {
+      return rejectWithValue("Не удаётся получить список дел пользователя, сетевая ошибка!");
+    }
+  }
+);
+
+export const getUsersAlbums = createAsyncThunk(
+  "user/getUsersAlbums",
+  async function (id: string | undefined, { rejectWithValue }) {
+    try {
+      const response = await axios.get(`https://jsonplaceholder.typicode.com/users/${id}/albums`);
+      // console.log(response);
+      const albums = await response.data;
+      // console.log(albums);
+      return albums;
+    } catch (error: any) {
+      return rejectWithValue("Не удаётся получить список альбомов, сетевая ошибка!");
     }
   }
 );
@@ -101,6 +146,9 @@ interface IRes {
 interface IUsersMichState {
   res: IRes;
   user: IUser;
+  posts: IPost[];
+  todos: ITodo[];
+  albums: IAlbum[];
   isLoading: boolean;
   error: string;
 }
@@ -135,6 +183,9 @@ const initialState: IUsersMichState = {
       bs: "",
     },
   },
+  posts: [],
+  todos: [],
+  albums: [],
   isLoading: false,
   error: "",
 };
@@ -143,6 +194,10 @@ const initialState: IUsersMichState = {
 const setError = (state: { isLoading: boolean; error: string }, action: PayloadAction<string>) => {
   state.isLoading = true;
   state.error = action.payload;
+};
+const setPending = (state: { isLoading: boolean; error: string }, action: PayloadAction<string>) => {
+  state.isLoading = true;
+  state.error = "";
 };
 
 const usersMichSlice = createSlice({
@@ -174,30 +229,20 @@ const usersMichSlice = createSlice({
     },
   },
   extraReducers: {
-    [fetchUsersMich.pending.type]: (state) => {
-      state.isLoading = true;
-      state.error = "";
-    },
+    [fetchUsersMich.pending.type]: setPending,
     [fetchUsersMich.fulfilled.type]: (state, action: PayloadAction<IRes>) => {
       state.isLoading = false;
       state.res = action.payload;
     },
     [fetchUsersMich.rejected.type]: setError,
-    [deleteUserMich.pending.type]: (state) => {
-      state.isLoading = true;
-      state.error = "";
-    },
+
+    [deleteUserMich.pending.type]: setPending,
     [deleteUserMich.rejected.type]: setError,
-    [addUserMich.pending.type]: (state) => {
-      state.isLoading = true;
-      state.error = "";
-    },
+
+    [addUserMich.pending.type]: setPending,
     [addUserMich.rejected.type]: setError,
 
-    [fetchUserMichById.pending.type]: (state) => {
-      state.isLoading = true;
-      state.error = "";
-    },
+    [fetchUserMichById.pending.type]: setPending,
     [fetchUserMichById.fulfilled.type]: (state, action: PayloadAction<IUser>) => {
       state.isLoading = false;
       state.user = action.payload;
@@ -206,7 +251,29 @@ const usersMichSlice = createSlice({
       state.isLoading = false;
       state.error = action.payload;
     },
+
+    [getUsersPosts.pending.type]: setPending,
+    [getUsersPosts.fulfilled.type]: (state, action: PayloadAction<IPost[]>) => {
+      state.posts = action.payload;
+      state.isLoading = false;
+    },
+    [getUsersPosts.rejected.type]: setError,
+
+    [getUsersTodos.pending.type]: setPending,
+    [getUsersTodos.fulfilled.type]: (state, action: PayloadAction<ITodo[]>) => {
+      state.isLoading = false;
+      state.todos = action.payload;
+    },
+    [getUsersTodos.rejected.type]: setError,
+
+    [getUsersAlbums.pending.type]: setPending,
+    [getUsersAlbums.fulfilled.type]: (state, action: PayloadAction<IAlbum[]>) => {
+      state.isLoading = false;
+      state.albums = action.payload;
+    },
+    [getUsersAlbums.rejected.type]: setError,
   },
 });
+
 const { addUser, removeUser, editUser } = usersMichSlice.actions;
 export default usersMichSlice.reducer;

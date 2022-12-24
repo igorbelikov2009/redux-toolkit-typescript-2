@@ -168,6 +168,10 @@
   height: auto;
   margin: auto;
 }
+
+.mAuto {
+  margin: auto;
+}
 .mY {
   margin: 2px 0;
 }
