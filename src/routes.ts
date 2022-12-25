@@ -60,6 +60,9 @@ export const routes: IRoute[] = [
     path: COUNTER_ROUTE,
     Component: CounterPage,
   },
+];
+
+export const michaelRoutes: IRoute[] = [
   {
     path: MICHAEL_ROUTE,
     Component: MichaelPage,

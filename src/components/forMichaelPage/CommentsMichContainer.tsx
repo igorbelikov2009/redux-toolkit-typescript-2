@@ -1,6 +1,7 @@
 import React, { FC, useEffect, useState, useMemo } from "react";
 import { Button, Row } from "react-bootstrap";
 import { useHistory } from "react-router-dom";
+import { CSSTransition, TransitionGroup } from "react-transition-group";
 import { useAppDispanch, useAppSelector } from "../../hooks/redux";
 import { IComment, IFilter } from "../../models/types";
 import { addCommentMich, fetchCommentsMich } from "../../store/michReducer/commentsMichReducer";
@@ -169,8 +170,14 @@ const CommentsMichContainer: FC = () => {
               </Button>
             </div>
 
-            {sortedAndSearchedComments &&
-              sortedAndSearchedComments.map((comment) => <CommentMichItem key={comment.id} comment={comment} />)}
+            <TransitionGroup>
+              {sortedAndSearchedComments &&
+                sortedAndSearchedComments.map((comment) => (
+                  <CSSTransition key={comment.id} timeout={500} classNames="post">
+                    <CommentMichItem comment={comment} />
+                  </CSSTransition>
+                ))}
+            </TransitionGroup>
           </Row>
 
           <MyModal visible={modal} setVisible={setModal}>
