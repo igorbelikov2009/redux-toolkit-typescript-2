@@ -1,13 +1,17 @@
-import React, { FC } from "react";
+import React, { FC, useContext } from "react";
 import Container from "react-bootstrap/Container";
 import Navbar from "react-bootstrap/Navbar";
 import Button from "react-bootstrap/Button";
 import { API_ROUTE, ASYNC_THUNK_ROUTE, COUNTER_ROUTE, SLICE_ROUTE, MAIN_ROUTE, MICHAEL_ROUTE } from "../routes";
 import { IButtonsRoute } from "../models/types";
 import { useHistory } from "react-router-dom";
+import { AuthContext } from "../context";
 
 const NavBar: FC = () => {
   const history = useHistory();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const { isAuth, setAuth } = useContext(AuthContext);
+  // console.log(isAuth);
 
   const buttons: IButtonsRoute[] = [
     { id: 1, path: MAIN_ROUTE, title: "Redux главная" },
@@ -18,9 +22,18 @@ const NavBar: FC = () => {
     { id: 6, path: API_ROUTE, title: "services createApi()" },
   ];
 
+  const logout = (e: React.MouseEvent) => {
+    setAuth(false);
+    localStorage.removeItem("auth");
+  };
+
   return (
     <Navbar bg="dark" variant="dark" className="navbar mb-4">
       <Container>
+        <Button variant="light" onClick={logout}>
+          Выйти
+        </Button>
+
         {buttons.map((route) => (
           <Button
             variant="outline-primary"

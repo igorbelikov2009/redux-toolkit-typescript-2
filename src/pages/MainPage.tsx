@@ -109,6 +109,221 @@ const MainPage: FC = () => {
             Redux-Saga React Полный Курс. Урок 2. Эффекты в деталях. Архитектура саг. React Router + Redux Saga. wise.js
           </a>
         </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a
+            href="https://www.youtube.com/watch?v=GNrdg3PzpJQ&list=PL6DxKON1uLOHya4bDIynPTCwZHrezUlFs&index=97&t=6398s"
+            target="_blank"
+            rel="noreferrer"
+            className="link"
+          >
+            React JS фундаментальный курс от А до Я. Ulbi TV.
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="https://www.youtube.com/watch?v=J2MWOhV8T6o&t=6s" target="_blank" rel="noreferrer" className="link">
+            Динамическая пагинация на React JS. Подгрузка при скролле страницы React JS. Ulbi TV
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="https://www.youtube.com/watch?v=d_aJdcDq6AY" target="_blank" rel="noreferrer" className="link">
+            Простая авторизация на NODE JS. Роли пользователя. Express и MongoDB. JWT Access Token, bcrypt. Ulbi TV
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a
+            href="https://www.youtube.com/watch?v=fN25fMQZ2v0&list=PL6DxKON1uLOEbfFpZQA9aztkj-guW52jn"
+            target="_blank"
+            rel="noreferrer"
+            className="link"
+          >
+            Продвинутая JWT авторизация на React и Node js. Access, refresh, активация по почте. Ulbi TV
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="https://www.youtube.com/watch?v=ElaIKk8ba5g&t=22s" target="_blank" rel="noreferrer" className="link">
+            React JS ПРОДВИНУТЫЙ КУРС. Ulbi TV.
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a
+            href="https://www.youtube.com/watch?v=o43iiH4kGqg&list=PL6DxKON1uLOEz4NoMVXoHXixotxo2CEDO"
+            target="_blank"
+            rel="noreferrer"
+            className="link"
+          >
+            Real Time КЛИЕНТ-СЕРВЕР на JavaScript. Long polling, event sourcing, websockets & комнаты. Ulbi TV
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a
+            href="https://developer.mozilla.org/en-US/docs/Web/API/Intersection_Observer_API"
+            target="_blank"
+            rel="noreferrer"
+            className="link"
+          >
+            Intersection Observer API. Динамическая подгрузка.
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a
+            href="https://www.npmjs.com/package/react-intersection-observer"
+            target="_blank"
+            rel="noreferrer"
+            className="link"
+          >
+            react-intersection-observer. Динамическая подгрузка.
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a
+            href="https://www.youtube.com/playlist?list=PL8fK_R8Bd4mgLWsX5oBRyqYcK5ad0-Uyf"
+            target="_blank"
+            rel="noreferrer"
+            className="link"
+          >
+            React Hooks. Ayub Begimkulov
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="https://www.youtube.com/watch?v=CDKIwDKgWY8" target="_blank" rel="noreferrer" className="link">
+            React hooks. useMemo и useCallback это плохо? Когда лучше использовать? React.memo
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="https://www.youtube.com/watch?v=HD3b9B-AOh8" target="_blank" rel="noreferrer" className="link">
+            SWR для CRUD операций в React-приложении. Михаил Непомнящий.
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="https://www.youtube.com/watch?v=Nw8kCK0_T3U&t=28s" target="_blank" rel="noreferrer" className="link">
+            Предзагрузка данных через роутинг. Михаил Непомнящий.
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="https://www.youtube.com/watch?v=sdlYNKjCGU0" target="_blank" rel="noreferrer" className="link">
+            Синхронизация Redux и localStorage с redux-persist. Михаил Непомнящий.
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="https://www.youtube.com/watch?v=lUf8qC_xFHo&t=15s" target="_blank" rel="noreferrer" className="link">
+            Начало работы со StoryBook. Михаил Непомнящий.
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="https://www.youtube.com/watch?v=jBAGz_mUqew&t=5s" target="_blank" rel="noreferrer" className="link">
+            Пагинация в React-приложении с Material-UI. Михаил Непомнящий.
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a
+            href="https://www.youtube.com/playlist?list=PLNkWIWHIRwMFQBDhZ6HfwO9NL09X3N3Gq"
+            target="_blank"
+            rel="noreferrer"
+            className="link"
+          >
+            TypeScript + React. webDev
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
+
+        <ListGroup.Item>
+          <a href="" target="_blank" rel="noreferrer" className="link">
+            xxx
+          </a>
+        </ListGroup.Item>
       </ListGroup>
     </Container>
   );

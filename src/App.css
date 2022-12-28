@@ -43,14 +43,13 @@
   position: absolute;
   left: 262px;
 }
-.post {
+.post.comment {
   padding: 20px;
   border: 1px solid teal;
   margin-top: 15px;
   width: 100%;
   display: flex;
   flex-direction: column;
-  /* align-items: center; */
 }
 
 /* анимация */
@@ -70,6 +69,27 @@
 }
 .post-exit-active {
   transform: translateX(-350px);
+  transition: all 500ms ease-in;
+}
+/* анимация */
+
+/* анимация */
+.remove-btn {
+  margin-right: 0.5rem;
+}
+
+.comment-enter {
+  transform: translateX(-700px);
+}
+.comment-enter-active {
+  transform: translateX(0px);
+  transition: all 500ms ease-in;
+}
+.comment-exit {
+  opacity: 1;
+}
+.comment-exit-active {
+  transform: translateX(-700px);
   transition: all 500ms ease-in;
 }
 /* анимация */
@@ -270,3 +290,11 @@
   width: 70vw;
 }
 /* post */
+.loginPage {
+  width: 100%;
+  max-width: 474px;
+}
+.lastElement {
+  height: 20px;
+  background: red;
+}

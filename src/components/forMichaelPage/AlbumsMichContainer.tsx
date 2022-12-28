@@ -16,6 +16,7 @@ import AlbumsMichItem from "./itemMich/AlbumsMichItem";
 const AlbumsMichContainer: FC = () => {
   const history = useHistory();
   const location = history.location.pathname;
+
   // title, userId для создания нового объекта
   // и формы создания нового объекта formsOfCreation
   const [userId, setUserId] = useState<string>("");
@@ -25,7 +26,7 @@ const AlbumsMichContainer: FC = () => {
   const [modal, setModal] = useState<boolean>(false);
 
   const dispatch = useAppDispanch();
-  const { res, status, error } = useAppSelector((state) => state.albumsMichReducer);
+  const { res, isLoading, error } = useAppSelector((state) => state.albumsMichReducer);
   const albums = res.albums;
 
   // pagination
@@ -85,12 +86,9 @@ const AlbumsMichContainer: FC = () => {
     { value: "id", name: "по номеру альбома" },
     { value: "title", name: "по названию альбома" },
   ];
-
   // Пусть arrayData  - это наш массив с данными.
   const arrayData = albums;
-
   const sortedAndSearchedArray = useSortedAndSearchedArray(arrayData, filter.sort, filter.query);
-
   // Сортировка и поиск
 
   useEffect(() => {
@@ -104,7 +102,7 @@ const AlbumsMichContainer: FC = () => {
       </div>
 
       <div className="rightBlock mt-6">
-        {status === "loading" && <h1 className="textCenter">Идёт загрузка</h1>}
+        {isLoading && <h1 className="textCenter">Идёт загрузка</h1>}
 
         <div>
           {error ? (

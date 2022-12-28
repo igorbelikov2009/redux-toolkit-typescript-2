@@ -14,9 +14,8 @@ export const fetchAlbumsMich = createAsyncThunk(
 
       const totalCount = response.headers["x-total-count"];
       const albums = await response.data;
-      // console.log(totalCount, albums);
       const res = { totalCount, albums };
-
+      // console.log(res.albums);
       return res;
     } catch (error: any) {
       // и передам ошибку определённым образом в extraReducers, в метод [fetchAlbumsMich.rejected.type],
@@ -133,7 +132,8 @@ interface IAlbumsMichState {
   res: IRes;
   album: IAlbum;
   photos: IPhoto[];
-  status: string | null;
+  // status: string | null;
+  isLoading: boolean;
   error: string | null;
   errorPhotos: string | null;
 }
@@ -145,14 +145,15 @@ const initialState: IAlbumsMichState = {
   },
   album: { userId: "", id: 0, title: "" },
   photos: [],
-  status: null,
+  // status: null,
+  isLoading: false,
   error: null,
   errorPhotos: null,
 };
 
 // Сделаем хэлпер для обработки ошибок в extraReducers
 const setError = (state: IAlbumsMichState, action: PayloadAction<string>) => {
-  state.status = "rejected";
+  state.isLoading = false;
   state.error = action.payload;
 };
 
@@ -192,12 +193,12 @@ const albumsMichSlice = createSlice({
   },
   extraReducers: {
     [fetchAlbumsMich.pending.type]: (state) => {
-      state.status = "loading";
+      state.isLoading = true;
       state.error = null; // Обнуляем, на всякий случай. Вдруг, прежде, была ошибка.
     },
     [fetchAlbumsMich.fulfilled.type]: (state, action: PayloadAction<IRes>) => {
       state.res = action.payload;
-      state.status = "resolved";
+      state.isLoading = false;
     },
     [fetchAlbumsMich.rejected.type]: setError,
 
@@ -212,32 +213,32 @@ const albumsMichSlice = createSlice({
     [editAlbumMich.rejected.type]: setError,
 
     [addAlbumMich.pending.type]: (state) => {
-      state.status = "loading";
+      state.isLoading = true;
       state.error = null;
     },
     [addAlbumMich.rejected.type]: setError,
 
     [fetchAlbumByID.pending.type]: (state) => {
-      state.status = "loading";
+      state.isLoading = true;
       state.error = null;
     },
     [fetchAlbumByID.fulfilled.type]: (state, action: PayloadAction<IAlbum>) => {
-      state.status = "resolved";
+      state.isLoading = false;
       state.album = action.payload;
       // console.log(state.album);
     },
     [fetchAlbumByID.rejected.type]: setError,
 
     [fetchPhotosFromAlbums.pending.type]: (state) => {
-      state.status = "loading";
+      state.isLoading = true;
       state.errorPhotos = null;
     },
     [fetchPhotosFromAlbums.fulfilled.type]: (state, action: PayloadAction<IPhoto[]>) => {
-      state.status = "resolved";
+      state.isLoading = false;
       state.photos = action.payload;
     },
     [fetchPhotosFromAlbums.rejected.type]: (state, action: PayloadAction<string>) => {
-      state.status = "rejected";
+      state.isLoading = false;
       state.errorPhotos = action.payload;
     },
   },

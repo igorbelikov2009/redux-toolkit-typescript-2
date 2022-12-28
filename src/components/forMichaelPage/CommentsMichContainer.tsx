@@ -173,7 +173,7 @@ const CommentsMichContainer: FC = () => {
             <TransitionGroup>
               {sortedAndSearchedComments &&
                 sortedAndSearchedComments.map((comment) => (
-                  <CSSTransition key={comment.id} timeout={500} classNames="post">
+                  <CSSTransition key={comment.id} timeout={500} classNames="comment">
                     <CommentMichItem comment={comment} />
                   </CSSTransition>
                 ))}

@@ -15,6 +15,7 @@ import { IRoute } from "./models/types";
 import ApiPage from "./pages/ApiPage";
 import AsyncThunkPage from "./pages/AsyncThunkPage";
 import CounterPage from "./pages/CounterPage";
+import Login from "./pages/Login";
 import MainPage from "./pages/MainPage";
 import MichaelPage from "./pages/MichaelPage";
 import SlicePage from "./pages/SlicePage";
@@ -38,6 +39,7 @@ export const MICHAEL_ALBUMS_ROUTE_ID = "/michael/albums/:id";
 export const MICHAEL_PHOTOS_ROUTE = "/michael/photos";
 export const MICHAEL_TODOS_ROUTE = "/michael/todos";
 export const MICHAEL_PRODUCTS_ROUTE = "/michael/products";
+export const LOGIN = "/login";
 
 export const routes: IRoute[] = [
   {
@@ -120,3 +122,5 @@ export const michaelRoutes: IRoute[] = [
     Component: ProductsMichContainer,
   },
 ];
+
+export const publicRoutes: IRoute[] = [{ path: LOGIN, Component: Login }];
